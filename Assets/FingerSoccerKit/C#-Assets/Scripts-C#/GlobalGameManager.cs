@@ -175,6 +175,8 @@ public class GlobalGameManager : MonoBehaviour {
 		//every now and then, play some crowd chants
 		StartCoroutine(playCrowdChants());
 
+		Debug.Log (timeLeft);
+
         //Countdown
         if (timeLeft > 0){
             timeLeft -= Time.deltaTime;
@@ -247,6 +249,9 @@ public class GlobalGameManager : MonoBehaviour {
 	public IEnumerator managePostShoot ( string _shootBy  ){
 		//get who is did the shoot
 		//if we had a goal after the shoot was done and just before the round change, leave the process to other controllers.
+
+		timeLeft = 15;
+
 		float t = 0;
 		while(t < timeStepToAdvanceRound) {	
 			t += Time.deltaTime;

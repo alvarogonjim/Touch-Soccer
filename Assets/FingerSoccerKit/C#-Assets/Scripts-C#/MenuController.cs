@@ -23,20 +23,34 @@ public class MenuController : MonoBehaviour {
                                                     // Init. Updates the 3d texts with saved values fetched from playerprefs.
                                                     //*****************************************************************************
 
-
+        
 
     void Awake() {
-		Time.timeScale = 1.0f;
+
+        PlayGamesPlatform.Activate();
+        PlayGamesPlatform.DebugLogEnabled = true;
+        Time.timeScale = 1.0f;
 		Time.fixedDeltaTime = 0.02f;
 		
 		playerWins.GetComponent<TextMesh>().text = "Wins:  " + PlayerPrefs.GetInt("PlayerWins");
 		playerMoney.GetComponent<TextMesh>().text = "Coins: " + PlayerPrefs.GetInt("PlayerMoney");
 	}
 
-	//*****************************************************************************
-	// FSM
-	//*****************************************************************************
-	void Update (){	
+    //*****************************************************************************
+    // FSM
+    //*****************************************************************************
+
+
+    void Start()
+    {
+        ((PlayGamesPlatform)Social.Active).Authenticate((bool success) => { }, true);
+
+    }
+
+    void Update (){	
+
+
+
 		if(canTap) {
 			StartCoroutine(tapManager());
 		}
@@ -157,7 +171,32 @@ public class MenuController : MonoBehaviour {
 			Application.LoadLevel(levelName);
 		}
 
-	public void Exit()
+        public void GoRanking()
+        {
+        if (Social.localUser.authenticated)
+        {
+            ((PlayGamesPlatform)Social.Active).ShowLeaderboardUI("CgkIqKW33aMMEAIQBQ");
+        }
+        else
+        {
+            Social.localUser.Authenticate((bool success) => { });
+        }
+        }
+
+    public void GoAchievements()
+    {
+        if (Social.localUser.authenticated)
+        {
+            ((PlayGamesPlatform)Social.Active).ShowAchievementsUI();
+        }
+        else
+        {
+            Social.localUser.Authenticate((bool success) => { });
+        }
+    }
+
+
+    public void Exit()
 	{
 		Application.Quit();
 	}
