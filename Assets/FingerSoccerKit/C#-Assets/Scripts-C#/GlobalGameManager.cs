@@ -80,6 +80,9 @@ public class GlobalGameManager : MonoBehaviour {
     //Timer
     public float timeLeft = 15.0f;
 
+    //Scores
+    private long score;
+
     //*****************************************************************************
     // Init. 
     //*****************************************************************************
@@ -393,11 +396,21 @@ public class GlobalGameManager : MonoBehaviour {
 				
 				int playerWins = PlayerPrefs.GetInt("PlayerWins");
 				int playerMoney = PlayerPrefs.GetInt("PlayerMoney");
-				
+                score = playerWins;
 				PlayerPrefs.SetInt("PlayerWins", ++playerWins);			//add to wins counter
 				PlayerPrefs.SetInt("PlayerMoney", playerMoney + 100);	//handful of coins as the prize!
 				
-			} else if(opponentGoals > goalLimit || opponentGoals > playerGoals) {
+                if(playerWins >= 1) {
+                    Social.ReportProgress("CgkIqKW33aMMEAIQBA", 100.0f, (bool success) => {
+                    });
+
+                }
+                Social.ReportScore(score, "CgkIqKW33aMMEAIQBQ", (bool success) => {
+              
+                });
+
+
+            } else if(opponentGoals > goalLimit || opponentGoals > playerGoals) {
 			
 				print("CPU is the winner!!");
 				statusTextureObject.GetComponent<Renderer>().material.mainTexture = statusModes[1];
@@ -419,6 +432,7 @@ public class GlobalGameManager : MonoBehaviour {
 				statusTextureObject.GetComponent<Renderer>().material.mainTexture = statusModes[3];
 			} 
 		}
+        
 	}
 	//*****************************************************************************
 	// Play a random crown sfx every now and then to spice up the game
