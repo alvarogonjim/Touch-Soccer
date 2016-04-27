@@ -83,7 +83,7 @@ public class playerController : MonoBehaviour {
 				else
 					safeDistance = GlobalGameManager.maxDistance;
 					
-				pwr = Mathf.Abs(safeDistance) * 12; //this is very important. change with extreme caution.
+				pwr = Mathf.Abs(safeDistance) * 17; //this is very important. change with extreme caution.
 				
 				//show the power arrow above the unit and scale is accordingly.
 				manageArrowTransform();		

@@ -30,7 +30,7 @@ public class MenuController : MonoBehaviour {
         PlayGamesPlatform.Activate();
         PlayGamesPlatform.DebugLogEnabled = true;
         Time.timeScale = 1.0f;
-		Time.fixedDeltaTime = 0.02f;
+		Time.fixedDeltaTime = 0.005f;
 		
 		playerWins.GetComponent<TextMesh>().text = "Wins:  " + PlayerPrefs.GetInt("PlayerWins");
 		playerMoney.GetComponent<TextMesh>().text = "Coins: " + PlayerPrefs.GetInt("PlayerMoney");

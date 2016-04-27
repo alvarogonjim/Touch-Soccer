@@ -25,7 +25,7 @@ public class PauseManager : MonoBehaviour {
 		isPaused = false;
 		
 		Time.timeScale = 1.0f;
-		Time.fixedDeltaTime = 0.02f;
+		Time.fixedDeltaTime = 0.005f;
 		
 		if(pausePlane)
 	    	pausePlane.SetActive(false); 
