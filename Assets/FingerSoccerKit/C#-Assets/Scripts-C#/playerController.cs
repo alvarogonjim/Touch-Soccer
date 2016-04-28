@@ -26,6 +26,7 @@ public class playerController : MonoBehaviour {
 
 	//this vector holds shooting direction
 	private Vector3 shootDirectionVector;
+	//private Vector3 shootDirection;
 
 	//prevent player to shoot twice in a round
 	public static bool canShoot;
@@ -45,6 +46,7 @@ public class playerController : MonoBehaviour {
 		pwr = 0.1f;
 		currentDistance = 0;
 		shootDirectionVector = new Vector3(0,0,0);
+		//shootDirection = new Vector3 (0, 0, 0);
 		canShoot = true;
 		shootTime = timeAllowedToShoot;
 		arrowPlane.GetComponent<Renderer>().enabled = false; //hide arrowPlane
@@ -64,7 +66,11 @@ public class playerController : MonoBehaviour {
 			selectionCircle.GetComponent<Renderer>().enabled = true;			
 		else	
 			selectionCircle.GetComponent<Renderer>().enabled = false;	
-		
+
+
+
+	
+
 	}
 
 	//***************************************************************************//
@@ -113,7 +119,10 @@ public class playerController : MonoBehaviour {
 				//sweepTest();
 				
 				//final vector used to shoot the unit.
+					
+
 				shootDirectionVector = Vector3.Normalize(helperBegin.transform.position - transform.position);
+			//shootDirectionVector =  Vector3.Normalize(sh);
 				//print(shootDirectionVector);
 
 			}

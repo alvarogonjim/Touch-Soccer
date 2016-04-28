@@ -3,6 +3,7 @@ using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 
 public class GlobalGameManager : MonoBehaviour {
@@ -21,6 +22,7 @@ public class GlobalGameManager : MonoBehaviour {
 	public static string player1Name = "Player_1";
 	public static string player2Name = "Player_2";
 	public static string cpuName = "CPU";
+
 
 	// Available Game Modes:
 	/*
@@ -74,14 +76,20 @@ public class GlobalGameManager : MonoBehaviour {
 
 	//Public references
 	public GameObject gameStatusPlane;		//user to show win/lose result at the end of match
-	public GameObject statusTextureObject;	//plane we use to show the result texture in 3d world
-	public Texture2D[] statusModes;         //Available status textures
+	public Text statusTextureObject;	//plane we use to show the result texture in 3d world
+	public string[] statusModes;         //Available status textures
 
     //Timer
     public float timeLeft = 15.0f;
 
     //Scores
     private long score;
+
+	//Animation of goal
+	public Animation AnimGoal;
+	public GameObject ObjectToAnimate;
+	public string nombreAni;
+	public static bool flagGoal;
 
     //*****************************************************************************
     // Init. 
@@ -129,7 +137,8 @@ public class GlobalGameManager : MonoBehaviour {
 		
 		manageGameModes();
 	}
-		
+
+
 
 	//*****************************************************************************
 	// We have all units inside the game scene by default, but at the start of the game,
@@ -161,6 +170,7 @@ public class GlobalGameManager : MonoBehaviour {
 	}
 
 	IEnumerator Start (){
+		//AnimGoal = GetComponent<Animation> ();
 		roundTurnManager();
 		yield return new WaitForSeconds(1.5f);
 		playSfx(startWistle);
@@ -178,8 +188,9 @@ public class GlobalGameManager : MonoBehaviour {
 		//every now and then, play some crowd chants
 		StartCoroutine(playCrowdChants());
 
-		Debug.Log (timeLeft);
+		//Debug.Log (timeLeft);
 
+	
         //Countdown
         if (timeLeft > 0){
             timeLeft -= Time.deltaTime;
@@ -196,7 +207,10 @@ public class GlobalGameManager : MonoBehaviour {
             roundTurnManager();
         }
 
-
+		if (flagGoal == true) {
+			StartCoroutine ("GoalOcurred");
+			//flagGoal = false;
+		}
         //If you ever needed debug inforamtions:
         //print("GameRound: " + round + " & turn is for: " + whosTurn + " and GoalHappened is: " + goalHappened);
     }
@@ -290,19 +304,23 @@ public class GlobalGameManager : MonoBehaviour {
 		
 		//soft pause the game for reformation and other things...
 		goalHappened = true;
-		
+
+
 		//add to goal counters
 		switch(_goalBy) {
 			case "Player":
+			flagGoal = true;
 				playerGoals++;
 				round = 2; //goal by player-1 and opponent should start the next round
 				break;
 			case "Opponent":
+			flagGoal = true;
 				opponentGoals++;
 				round = 1; //goal by opponent and player-1 should start the next round
 				break;
 		}
-		
+
+
 		//wait a few seconds to show the effects , and physics cooldown
 		playSfx(goalSfx[Random.Range(0, goalSfx.Length)]);
 		GetComponent<AudioSource>().PlayOneShot(goalHappenedSfx[Random.Range(0, goalHappenedSfx.Length)], 1);
@@ -339,6 +357,7 @@ public class GlobalGameManager : MonoBehaviour {
 		
 		//else, continue to the next round
 		goalHappened = false;
+		flagGoal = false;
 		roundTurnManager();
 		playSfx(startWistle);
 	}
@@ -392,7 +411,7 @@ public class GlobalGameManager : MonoBehaviour {
 				print("Player 1 is the winner!!");
 				
 				//set the result texture
-				statusTextureObject.GetComponent<Renderer>().material.mainTexture = statusModes[0];
+				statusTextureObject.GetComponent<Text>().text= statusModes[0];
 				
 				int playerWins = PlayerPrefs.GetInt("PlayerWins");
 				int playerMoney = PlayerPrefs.GetInt("PlayerMoney");
@@ -413,23 +432,23 @@ public class GlobalGameManager : MonoBehaviour {
             } else if(opponentGoals > goalLimit || opponentGoals > playerGoals) {
 			
 				print("CPU is the winner!!");
-				statusTextureObject.GetComponent<Renderer>().material.mainTexture = statusModes[1];
+				statusTextureObject.GetComponent<Text>().text = statusModes[1];
 				
 			} else if(opponentGoals == playerGoals) {
 			
 				print("(Single Player) We have a Draw!");
-				statusTextureObject.GetComponent<Renderer>().material.mainTexture = statusModes[4];
+				statusTextureObject.GetComponent<Text>().text= statusModes[4];
 			}	
 		} else if(gameMode == 1) {
 			if(playerGoals > opponentGoals) {
 				print("Player 1 is the winner!!");
-				statusTextureObject.GetComponent<Renderer>().material.mainTexture = statusModes[2];
+				statusTextureObject.GetComponent<Text>().text = statusModes[2];
 			} else if(playerGoals == opponentGoals) {
 				print("(Two-Player) We have a Draw!");
-				statusTextureObject.GetComponent<Renderer>().material.mainTexture = statusModes[4];
+				statusTextureObject.GetComponent<Text>().text = statusModes[4];
 			} else if(playerGoals < opponentGoals) {
 				print("Player 2 is the winner!!");
-				statusTextureObject.GetComponent<Renderer>().material.mainTexture = statusModes[3];
+				statusTextureObject.GetComponent<Text>().text = statusModes[3];
 			} 
 		}
         
@@ -468,6 +487,15 @@ public class GlobalGameManager : MonoBehaviour {
 	public void Exit()
 	{
 		Application.Quit();
+	}
+
+	IEnumerator GoalOcurred(){
+		//AnimGoal.Crossfade ("AnimGoal");
+		AnimGoal.CrossFade(nombreAni);
+		yield return new WaitForSeconds (AnimGoal[nombreAni].length);
+		flagGoal = false;
+		Debug.Log (flagGoal);
+		//goalHappened =! goalHappened;
 	}
 
 }
