@@ -44,6 +44,7 @@ public class PlayerAI : MonoBehaviour {
 		}
 		
 		//if this is a 2-player local game
+        //TODO-REE online, coger de prefs?
 		if(GlobalGameManager.gameMode == 1) {
 			//cache all player_2 units
 			player2Team = GameObject.FindGameObjectsWithTag("Player_2");

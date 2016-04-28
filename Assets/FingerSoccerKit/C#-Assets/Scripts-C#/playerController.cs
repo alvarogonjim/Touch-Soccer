@@ -252,6 +252,7 @@ public class playerController : MonoBehaviour {
 		GetComponent<Rigidbody>().AddForce(outPower, ForceMode.Impulse);
 		
 		//change the turn
+        //TODO-REE online change turn
 		if(GlobalGameManager.gameMode == 0)
 			StartCoroutine(gameController.GetComponent<GlobalGameManager>().managePostShoot("Player"));
 		else if(GlobalGameManager.gameMode == 1)

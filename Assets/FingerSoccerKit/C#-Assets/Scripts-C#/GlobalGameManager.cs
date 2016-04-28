@@ -29,6 +29,7 @@ public class GlobalGameManager : MonoBehaviour {
 	Indexes:
 	0 = 1 player against cpu
 	1 = 2 player against each other on the same platform/device
+    2 = 2 player online
 	*/
 	public static int gameMode;
 
@@ -161,6 +162,7 @@ public class GlobalGameManager : MonoBehaviour {
 				break;
 			
 			case 1:
+            case 2:
 				//find and deactive all AI Opponent units. This is Player-1 vs Player-2.
 				cpuTeam = GameObject.FindGameObjectsWithTag("Opponent");
 				foreach(GameObject unit in cpuTeam) {
@@ -352,15 +354,23 @@ public class GlobalGameManager : MonoBehaviour {
 		//Reformation for player_1
 		StartCoroutine(playerAIController.GetComponent<PlayerAI>().changeFormation(PlayerAI.playerTeam, PlayerPrefs.GetInt("PlayerFormation"), 0.6f, 1));
 		
-		//if this is player-1 vs player-2 match:
-		if(GlobalGameManager.gameMode == 1) {
-			StartCoroutine(playerAIController.GetComponent<PlayerAI>().changeFormation(PlayerAI.player2Team, PlayerPrefs.GetInt("Player2Formation"), 0.6f, -1));
-		} else {	//if this is player-1 vs AI match:
-			//get a new random formation everytime
-			StartCoroutine(opponentAIController.GetComponent<OpponentAI>().changeFormation(Random.Range(0, FormationManager.formations), 0.6f));
-		}
-		
-		yield return new WaitForSeconds(3);
+		if(GlobalGameManager.gameMode == 0) 
+        {   //if this is player-1 vs AI match:
+            //get a new random formation everytime
+            StartCoroutine(opponentAIController.GetComponent<OpponentAI>().changeFormation(Random.Range(0, FormationManager.formations), 0.6f));
+        }
+        else if (GlobalGameManager.gameMode == 1)
+        {
+            //if this is player-1 vs player-2 match:
+            StartCoroutine(playerAIController.GetComponent<PlayerAI>().changeFormation(PlayerAI.player2Team, PlayerPrefs.GetInt("Player2Formation"), 0.6f, -1));
+        } else if (GlobalGameManager.gameMode == 1)
+        { 
+		    //if this is online: 
+            //TODO-REE formaciones
+            StartCoroutine(playerAIController.GetComponent<OpponentAI>().changeFormation(PlayerPrefs.GetInt("PlayerFormation"), 0.6f));
+        }
+
+        yield return new WaitForSeconds(3);
 
 		//check if the game is finished or not
 		if(playerGoals > goalLimit || opponentGoals > goalLimit) {
@@ -402,7 +412,7 @@ public class GlobalGameManager : MonoBehaviour {
 		if(gameMode == 0) {
 			playerOneName.text = player1Name;
 			playerTwoName.text = cpuName;
-		} else if(gameMode == 1) {
+		} else {
 			playerOneName.text = player1Name;
 			playerTwoName.text = player2Name;
 		} 
@@ -468,7 +478,8 @@ public class GlobalGameManager : MonoBehaviour {
 				print("(Single Player) We have a Draw!");
 				statusTextureObject.GetComponent<Text>().text= statusModes[4];
 			}	
-		} else if(gameMode == 1) {
+		} else if(gameMode == 1 || gameMode == 2) {
+            //TODO-REE online
 			if(playerGoals > opponentGoals) {
 				print("Player 1 is the winner!!");
 				statusTextureObject.GetComponent<Text>().text = statusModes[2];
