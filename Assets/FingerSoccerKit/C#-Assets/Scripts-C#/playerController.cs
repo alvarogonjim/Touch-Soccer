@@ -75,7 +75,7 @@ public class playerController : MonoBehaviour {
 
         foreach (GameObject chapa in chapas)
         {
-            if(contadorPowerUp == 0)
+            if(contadorPowerUp <= 0)
                 chapa.transform.localScale = new Vector3(2.5f, 0.5f, 2.5f);
 
             

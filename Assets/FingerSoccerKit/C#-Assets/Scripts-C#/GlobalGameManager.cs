@@ -86,7 +86,7 @@ public class GlobalGameManager : MonoBehaviour {
     private long score;
 
     //Doble gol
-    public bool fueGol = false;
+    private bool fueGol = false;
 
 	//Animation of goal
 	public Animation AnimGoal;
@@ -101,13 +101,15 @@ public class GlobalGameManager : MonoBehaviour {
     public static bool powerUpFuerza;
     public static int iPowerUpFuerza;
 
-
+    GameObject myButton;
+    private string liga;
     //*****************************************************************************
     // Init. 
     //*****************************************************************************
-    void Awake (){	
-		//init
-		goalHappened = false;
+    void Awake (){
+        //init
+        liga = MenuController.getPlayerLiga();
+        goalHappened = false;
 		gameIsFinished = false;
 		playerGoals = 0;
 		opponentGoals = 0;
@@ -181,10 +183,13 @@ public class GlobalGameManager : MonoBehaviour {
 	}
 
 	IEnumerator Start (){
-		//AnimGoal = GetComponent<Animation> ();
-		roundTurnManager();
+        myButton = GameObject.Find("Button");
+        disableBoton();
+        //AnimGoal = GetComponent<Animation> ();
+        roundTurnManager();
 		yield return new WaitForSeconds(1.5f);
 		playSfx(startWistle);
+        Debug.Log(liga.ToString());
 	}
 
 	//*****************************************************************************
@@ -553,6 +558,18 @@ public class GlobalGameManager : MonoBehaviour {
     //***************************************************************
     //PowerUps
     //***************************************************************
+
+
+
+
+
+    public void disableBoton()
+    {
+        if(liga.Equals("Liga de bronce"))
+        myButton.GetComponent<Button>().interactable = false;
+        
+    }
+
 
     public void PWTamano()
     {
