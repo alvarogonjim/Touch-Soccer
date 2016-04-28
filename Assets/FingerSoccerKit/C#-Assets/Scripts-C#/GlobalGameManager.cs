@@ -94,6 +94,14 @@ public class GlobalGameManager : MonoBehaviour {
 	public string nombreAni;
 	public static bool flagGoal;
 
+    //PowerUps
+    public static bool llamadoPowerUp = false;
+    public static bool powerUpTamano;
+    public static int iPowerUpTamano = 2;
+    public static bool powerUpFuerza;
+    public static int iPowerUpFuerza;
+
+
     //*****************************************************************************
     // Init. 
     //*****************************************************************************
@@ -191,7 +199,7 @@ public class GlobalGameManager : MonoBehaviour {
 		//every now and then, play some crowd chants
 		StartCoroutine(playCrowdChants());
 
-		Debug.Log (timeLeft);
+		//Debug.Log (timeLeft);
 
 	
         //Countdown
@@ -237,6 +245,7 @@ public class GlobalGameManager : MonoBehaviour {
 			OpponentAI.opponentCanShoot = false;
 			whosTurn = "player";
             fueGol = false;
+
         }//This else if is because the opponent can shot two times.
         else if (carry == 0 && opponentsTurn == true && OpponentAI.opponentCanShoot == true)
         {
@@ -246,7 +255,8 @@ public class GlobalGameManager : MonoBehaviour {
             //In every rounds we have to increase the timer again.
             fueGol = false;
             timeLeft = 15;
-            
+            playerController.contadorPowerUp--;
+
         }
         else
         {
@@ -257,6 +267,10 @@ public class GlobalGameManager : MonoBehaviour {
             whosTurn = "opponent";
             //In every rounds we have to increase the timer again.
             timeLeft = 15;
+            playerController.contadorPowerUp =
+            playerController.contadorPowerUp -1;
+            Debug.Log(playerController.contadorPowerUp);
+
         }
         //Override
         //for two player game, players can always shoot.
@@ -536,5 +550,30 @@ public class GlobalGameManager : MonoBehaviour {
 		Debug.Log (flagGoal);
 		//goalHappened =! goalHappened;
 	}
+    //***************************************************************
+    //PowerUps
+    //***************************************************************
 
-}
+    public void PWTamano()
+    {
+
+        if (llamadoPowerUp == false)
+        {
+            if (iPowerUpTamano > 0)
+            {
+                Debug.Log(powerUpTamano.ToString());
+                iPowerUpTamano--;
+                powerUpTamano = true;
+                llamadoPowerUp = true;
+
+            }
+            else
+            {
+                powerUpTamano = false;
+            }
+        }
+    }
+    }
+
+
+
