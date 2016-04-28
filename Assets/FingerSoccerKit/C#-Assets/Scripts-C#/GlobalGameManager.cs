@@ -178,7 +178,7 @@ public class GlobalGameManager : MonoBehaviour {
 		//every now and then, play some crowd chants
 		StartCoroutine(playCrowdChants());
 
-		//Debug.Log (timeLeft);
+		Debug.Log (timeLeft);
 
         //Countdown
         if (timeLeft > 0){
