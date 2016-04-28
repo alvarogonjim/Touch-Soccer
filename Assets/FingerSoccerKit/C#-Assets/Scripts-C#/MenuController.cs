@@ -3,8 +3,11 @@ using GooglePlayGames;
 using GooglePlayGames.BasicApi;
 using UnityEngine.SocialPlatforms;
 using System.Collections;
+using GooglePlayGames.BasicApi.Multiplayer;
+using System;
 
-public class MenuController : MonoBehaviour {
+public class MenuController : MonoBehaviour
+{
 		
 	///*************************************************************************///
 	/// Main Menu Controller.
@@ -238,12 +241,15 @@ public class MenuController : MonoBehaviour {
         }
     }
 
-
     public void Exit()
-	{
-		Application.Quit();
-	}
+    {
+        Application.Quit();
+    }
 
+    public void GoOnlineQuickMatch()
+    {
+        PlayGamesPlatform.Instance.RealTime.CreateQuickGame(2, 2, 0, SoccerRealTimeMultiplayerListener.Instance);
+        PlayGamesPlatform.Instance.RealTime.ShowWaitingRoomUI();
+    }
 
-		
 }
