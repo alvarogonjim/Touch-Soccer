@@ -85,18 +85,31 @@ public class GlobalGameManager : MonoBehaviour {
     //Scores
     private long score;
 
+    //Doble gol
+    private bool fueGol = false;
+
 	//Animation of goal
 	public Animation AnimGoal;
 	public GameObject ObjectToAnimate;
 	public string nombreAni;
 	public static bool flagGoal;
 
+    //PowerUps
+    public static bool llamadoPowerUp = false;
+    public static bool powerUpTamano;
+    public static int iPowerUpTamano = 2;
+    public static bool powerUpFuerza;
+    public static int iPowerUpFuerza;
+
+    GameObject myButton;
+    private string liga;
     //*****************************************************************************
     // Init. 
     //*****************************************************************************
-    void Awake (){	
-		//init
-		goalHappened = false;
+    void Awake (){
+        //init
+        liga = MenuController.getPlayerLiga();
+        goalHappened = false;
 		gameIsFinished = false;
 		playerGoals = 0;
 		opponentGoals = 0;
@@ -170,10 +183,13 @@ public class GlobalGameManager : MonoBehaviour {
 	}
 
 	IEnumerator Start (){
-		//AnimGoal = GetComponent<Animation> ();
-		roundTurnManager();
+        myButton = GameObject.Find("Button");
+        disableBoton();
+        //AnimGoal = GetComponent<Animation> ();
+        roundTurnManager();
 		yield return new WaitForSeconds(1.5f);
 		playSfx(startWistle);
+        Debug.Log(liga.ToString());
 	}
 
 	//*****************************************************************************
@@ -233,6 +249,8 @@ public class GlobalGameManager : MonoBehaviour {
 			playerController.canShoot = true;
 			OpponentAI.opponentCanShoot = false;
 			whosTurn = "player";
+            fueGol = false;
+
         }//This else if is because the opponent can shot two times.
         else if (carry == 0 && opponentsTurn == true && OpponentAI.opponentCanShoot == true)
         {
@@ -240,7 +258,10 @@ public class GlobalGameManager : MonoBehaviour {
             opponentsTurn = false;
             OpponentAI.opponentCanShoot = false;
             //In every rounds we have to increase the timer again.
+            fueGol = false;
             timeLeft = 15;
+            playerController.contadorPowerUp--;
+
         }
         else
         {
@@ -251,6 +272,10 @@ public class GlobalGameManager : MonoBehaviour {
             whosTurn = "opponent";
             //In every rounds we have to increase the timer again.
             timeLeft = 15;
+            playerController.contadorPowerUp =
+            playerController.contadorPowerUp -1;
+            Debug.Log(playerController.contadorPowerUp);
+
         }
         //Override
         //for two player game, players can always shoot.
@@ -306,23 +331,31 @@ public class GlobalGameManager : MonoBehaviour {
 		goalHappened = true;
 
 
-		//add to goal counters
-		switch(_goalBy) {
-			case "Player":
-			flagGoal = true;
-				playerGoals++;
-				round = 2; //goal by player-1 and opponent should start the next round
-				break;
-			case "Opponent":
-			flagGoal = true;
-				opponentGoals++;
-				round = 1; //goal by opponent and player-1 should start the next round
-				break;
-		}
+        //add to goal counters
+        switch (_goalBy)
+        {
 
+            case "Player":
+                if (fueGol == false)
+                {
+                    playerGoals++;
+                    round = 2; //goal by player-1 and opponent should start the next round
+                    fueGol = true;
+                }
+                break;
 
-		//wait a few seconds to show the effects , and physics cooldown
-		playSfx(goalSfx[Random.Range(0, goalSfx.Length)]);
+            case "Opponent":
+                if (fueGol == false)
+                {
+                    opponentGoals++;
+                    round = 1; //goal by opponent and player-1 should start the next round
+                    fueGol = true;
+                }
+                break;
+        }
+
+                //wait a few seconds to show the effects , and physics cooldown
+                playSfx(goalSfx[Random.Range(0, goalSfx.Length)]);
 		GetComponent<AudioSource>().PlayOneShot(goalHappenedSfx[Random.Range(0, goalHappenedSfx.Length)], 1);
 		yield return new WaitForSeconds(1);
 		
@@ -361,7 +394,7 @@ public class GlobalGameManager : MonoBehaviour {
 		roundTurnManager();
 		playSfx(startWistle);
 	}
-
+        
 	//***************************************************************************//
 	// Game status manager
 	//***************************************************************************//
@@ -415,6 +448,21 @@ public class GlobalGameManager : MonoBehaviour {
 				
 				int playerWins = PlayerPrefs.GetInt("PlayerWins");
 				int playerMoney = PlayerPrefs.GetInt("PlayerMoney");
+                int playerGames = PlayerPrefs.GetInt("PlayerGames");
+
+               
+
+                if (playerGames < 20)
+                {
+                    //Si aun no ha jugado los 20 partidos, le sumamos 1
+                    PlayerPrefs.SetInt("PlayerGames", ++playerGames);
+                }
+                else
+                {
+                    //Si ha jugado los 20 partidos vuelve a estar el contador a 0
+                    PlayerPrefs.SetInt("PlayerGames", 0);
+                }
+
                 score = playerWins;
 				PlayerPrefs.SetInt("PlayerWins", ++playerWins);			//add to wins counter
 				PlayerPrefs.SetInt("PlayerMoney", playerMoney + 100);	//handful of coins as the prize!
@@ -473,8 +521,12 @@ public class GlobalGameManager : MonoBehaviour {
 			GetComponent<AudioSource>().Play();
 		}
 	}
+   
+    //***************************************************************
+    //Metodos Utiles
+    //***************************************************************
 
-	public void NextLevelButton(int index)
+    public void NextLevelButton(int index)
 	{
 		Application.LoadLevel(index);
 	}
@@ -489,7 +541,13 @@ public class GlobalGameManager : MonoBehaviour {
 		Application.Quit();
 	}
 
-	IEnumerator GoalOcurred(){
+
+    //***************************************************************
+    //Animacion de Gol
+    //***************************************************************
+
+
+    IEnumerator GoalOcurred(){
 		//AnimGoal.Crossfade ("AnimGoal");
 		AnimGoal.CrossFade(nombreAni);
 		yield return new WaitForSeconds (AnimGoal[nombreAni].length);
@@ -497,5 +555,42 @@ public class GlobalGameManager : MonoBehaviour {
 		Debug.Log (flagGoal);
 		//goalHappened =! goalHappened;
 	}
+    //***************************************************************
+    //PowerUps
+    //***************************************************************
 
-}
+
+
+
+
+    public void disableBoton()
+    {
+        if(liga.Equals("Liga de bronce"))
+        myButton.GetComponent<Button>().interactable = false;
+        
+    }
+
+
+    public void PWTamano()
+    {
+
+        if (llamadoPowerUp == false)
+        {
+            if (iPowerUpTamano > 0)
+            {
+                Debug.Log(powerUpTamano.ToString());
+                iPowerUpTamano--;
+                powerUpTamano = true;
+                llamadoPowerUp = true;
+
+            }
+            else
+            {
+                powerUpTamano = false;
+            }
+        }
+    }
+    }
+
+
+

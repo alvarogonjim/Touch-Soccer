@@ -31,10 +31,15 @@ public class MenuController : MonoBehaviour {
         PlayGamesPlatform.DebugLogEnabled = true;
         Time.timeScale = 1.0f;
 		Time.fixedDeltaTime = 0.005f;
-		
-		playerWins.GetComponent<TextMesh>().text = "Wins:  " + PlayerPrefs.GetInt("PlayerWins");
+
+        int playerGames = PlayerPrefs.GetInt("PlayerGames");
+        playerWins.GetComponent<TextMesh>().text = "Wins:  " + PlayerPrefs.GetInt("PlayerWins");
 		playerMoney.GetComponent<TextMesh>().text = "Coins: " + PlayerPrefs.GetInt("PlayerMoney");
-	}
+        if (playerGames == 20)
+        {
+            Debug.Log(getPlayerLiga());
+        }
+    }
 
     //*****************************************************************************
     // FSM
@@ -158,10 +163,49 @@ public class MenuController : MonoBehaviour {
 		if(!GetComponent<AudioSource>().isPlaying) {
 			GetComponent<AudioSource>().Play();
 		}
-	} 
+	}
 
 
-		public void NextLevelButton(int index)
+    //****************************************************************************
+    //Liga
+    //****************************************************************************
+
+    public static string getPlayerLiga()
+    {
+        string res = null;
+        int wins = PlayerPrefs.GetInt("PlayerWins");
+
+        if (wins >= 0 && wins <= 4)
+        {
+            //Liga de bronce
+            res = "Liga de bronce";
+           
+        }
+        else if (wins >= 5 && wins <= 9)
+        {
+            //Liga de plata
+            res = "Liga de plata";
+        }
+        else if (wins >= 10 && wins <= 14)
+        {
+            //Liga de oro
+            res = "Liga de oro";
+        }
+        else if (wins >= 15 && wins <= 20)
+        {
+            //Liga de Diamante
+            res = "Liga de diamante";
+        }
+
+        return res;
+
+    }
+
+    //***************************************************************
+    //Metodos Utiles
+    //***************************************************************
+
+    public void NextLevelButton(int index)
 		{
 			Application.LoadLevel(index);
 		}
