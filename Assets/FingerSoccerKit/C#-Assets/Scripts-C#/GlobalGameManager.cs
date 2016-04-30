@@ -260,8 +260,10 @@ public class GlobalGameManager : MonoBehaviour {
             //In every rounds we have to increase the timer again.
             fueGol = false;
             timeLeft = 15;
-            playerController.contadorPowerUp--;
-
+            if (llamadoPowerUp == true)
+            {
+                playerController.contadorPowerUp--;
+            }
         }
         else
         {
@@ -272,10 +274,11 @@ public class GlobalGameManager : MonoBehaviour {
             whosTurn = "opponent";
             //In every rounds we have to increase the timer again.
             timeLeft = 15;
-            playerController.contadorPowerUp =
-            playerController.contadorPowerUp -1;
-            Debug.Log(playerController.contadorPowerUp);
-
+            if (llamadoPowerUp == true)
+            {
+                playerController.contadorPowerUp = playerController.contadorPowerUp - 1;
+                Debug.Log(playerController.contadorPowerUp);
+            }
         }
         //Override
         //for two player game, players can always shoot.
@@ -565,11 +568,11 @@ public class GlobalGameManager : MonoBehaviour {
 
     public void disableBoton()
     {
-        if(liga.Equals("Liga de bronce"))
+       if(liga.Equals("Liga de bronce"))
         myButton.GetComponent<Button>().interactable = false;
         
     }
-
+    
 
     public void PWTamano()
     {

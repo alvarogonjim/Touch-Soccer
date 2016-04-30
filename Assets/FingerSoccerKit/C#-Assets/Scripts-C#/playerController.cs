@@ -17,7 +17,7 @@ public class playerController : MonoBehaviour {
 	private GameObject helperBegin; 	//Start helper
 	private GameObject helperEnd; 		//End Helper
 	private GameObject arrowPlane; 		//arrow plane which is used to show shotPower
-    private GameObject[] chapas;
+    public static GameObject[] chapas;
     private GameObject chapa;
     private GameObject gameController;	//Reference to main game controller
 	private float currentDistance;		//real distance of our touch/mouse position from initial drag position
@@ -72,7 +72,7 @@ public class playerController : MonoBehaviour {
 		else	
 			selectionCircle.GetComponent<Renderer>().enabled = false;
 
-
+        
         foreach (GameObject chapa in chapas)
         {
             if(contadorPowerUp <= 0)
@@ -80,7 +80,7 @@ public class playerController : MonoBehaviour {
 
             
         }
-
+        
     }
 
 	//***************************************************************************//
