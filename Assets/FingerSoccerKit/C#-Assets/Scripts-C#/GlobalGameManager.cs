@@ -183,8 +183,6 @@ public class GlobalGameManager : MonoBehaviour {
 	}
 
 	IEnumerator Start (){
-        myButton = GameObject.Find("Button");
-        disableBoton();
         //AnimGoal = GetComponent<Animation> ();
         roundTurnManager();
 		yield return new WaitForSeconds(1.5f);
