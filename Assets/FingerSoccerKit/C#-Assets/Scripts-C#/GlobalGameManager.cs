@@ -500,8 +500,9 @@ public class GlobalGameManager : MonoBehaviour {
 				statusTextureObject.GetComponent<Text>().text = statusModes[3];
 			} 
 		}
-        
-	}
+        NextLevelButton("Shop-c#");
+
+    }
 	//*****************************************************************************
 	// Play a random crown sfx every now and then to spice up the game
 	//*****************************************************************************

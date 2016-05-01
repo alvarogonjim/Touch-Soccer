@@ -41,12 +41,17 @@ public class playerController : MonoBehaviour {
 	// Init
 	//*****************************************************************************
 	void Awake (){
+       
 		//Find and cache important gameObjects
 		helperBegin = GameObject.FindGameObjectWithTag("mouseHelperBegin");
 		helperEnd = GameObject.FindGameObjectWithTag("mouseHelperEnd");
 		arrowPlane = GameObject.FindGameObjectWithTag("helperArrow");		
 		gameController = GameObject.FindGameObjectWithTag("GameController");
         chapas  = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject chapa in chapas)
+        {
+            DontDestroyOnLoad(chapa);
+        }
         //Init Variables
         pwr = 0.1f;
 		currentDistance = 0;
@@ -57,9 +62,11 @@ public class playerController : MonoBehaviour {
 		arrowPlane.GetComponent<Renderer>().enabled = false; //hide arrowPlane
 	}
 
-	void Start (){
-		
-	}
+    void Start()
+    {
+        Debug.Log("EL NUMERO ES " + PlayerPrefs.GetInt("Skin"));
+        cambiarSkin();
+    }
 
 	void Update (){
 
@@ -267,6 +274,18 @@ public class playerController : MonoBehaviour {
 		else if(GlobalGameManager.gameMode == 1)
 			StartCoroutine(gameController.GetComponent<GlobalGameManager>().managePostShoot(gameObject.tag));
 	}
+
+    
+    public static void cambiarSkin()
+    {
+        int index = PlayerPrefs.GetInt("Skin");
+        Texture2D mat = Resources.Load(index.ToString(), typeof(Texture2D)) as Texture2D;
+
+        foreach (GameObject chapa in chapas)
+        {
+            chapa.GetComponent<Renderer>().material.SetTexture("_MainTex", mat);
+        }
+    }
 
     //**************************************************
     //PowerUps
