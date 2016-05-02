@@ -48,10 +48,8 @@ public class playerController : MonoBehaviour {
 		arrowPlane = GameObject.FindGameObjectWithTag("helperArrow");		
 		gameController = GameObject.FindGameObjectWithTag("GameController");
         chapas  = GameObject.FindGameObjectsWithTag("Player");
-        foreach (GameObject chapa in chapas)
-        {
-            DontDestroyOnLoad(chapa);
-        }
+        
+       
         //Init Variables
         pwr = 0.1f;
 		currentDistance = 0;
@@ -295,11 +293,13 @@ public class playerController : MonoBehaviour {
     {
         if (GlobalGameManager.powerUpTamano == true && GlobalGameManager.soloUnaVezTamano > 0)
         {
+           
             transform.localScale = new Vector3(5.5f, 0.5f, 5.5f);
             GlobalGameManager.soloUnaVezTamano = 0;
             contadorPowerUpTamano++;
             GlobalGameManager.iPowerUpTamano = GlobalGameManager.iPowerUpTamano - 1;
-        }
+    
+    }
 
     } 
 
