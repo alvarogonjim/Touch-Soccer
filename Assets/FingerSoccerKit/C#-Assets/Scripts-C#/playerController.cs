@@ -82,7 +82,7 @@ public class playerController : MonoBehaviour {
         
         foreach (GameObject chapa in chapas)
         {
-            if(contadorPowerUpTamano <= 0)
+            if(contadorPowerUpTamano == 0)
                 chapa.transform.localScale = new Vector3(2.5f, 0.5f, 2.5f);
 
             
@@ -293,9 +293,10 @@ public class playerController : MonoBehaviour {
 
     void OnMouseDown()
     {
-        if (GlobalGameManager.powerUpTamano == true /*&& GlobalGameManager.iPowerUpTamano > 0*/)
+        if (GlobalGameManager.powerUpTamano == true && GlobalGameManager.soloUnaVezTamano > 0)
         {
             transform.localScale = new Vector3(5.5f, 0.5f, 5.5f);
+            GlobalGameManager.soloUnaVezTamano = 0;
             contadorPowerUpTamano++;
             GlobalGameManager.iPowerUpTamano = GlobalGameManager.iPowerUpTamano - 1;
         }

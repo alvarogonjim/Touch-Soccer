@@ -98,11 +98,12 @@ public class GlobalGameManager : MonoBehaviour {
     public static bool llamadoPowerUpTamano = false;
     public static bool powerUpTamano;
     public static int iPowerUpTamano = 2;
-
+    public static int soloUnaVezTamano;
 
     public static bool llamadoPowerUpElimina = false;
     public static bool powerUpElimina;
     public static int iPowerUpElimina = 2;
+    public static int soloUnaVezElimina;
 
     GameObject myButton;
     private string liga;
@@ -264,6 +265,7 @@ public class GlobalGameManager : MonoBehaviour {
             //Si en el turno se ha llamado a powerup de tamaño decrementamos la variable contador
             if (llamadoPowerUpTamano == true)
             {
+                Debug.Log(playerController.contadorPowerUpTamano);
                 playerController.contadorPowerUpTamano--;
             }
         }
@@ -277,9 +279,11 @@ public class GlobalGameManager : MonoBehaviour {
             //In every rounds we have to increase the timer again.
             timeLeft = 15;
             //Si en el turno se ha llamado a powerup de tamaño decrementamos la variable contador
-
+            Debug.Log(llamadoPowerUpTamano);
             if (llamadoPowerUpTamano == true)
             {
+                Debug.Log(llamadoPowerUpTamano);
+                Debug.Log(playerController.contadorPowerUpTamano);
                 playerController.contadorPowerUpTamano = playerController.contadorPowerUpTamano - 1;
 
             }
@@ -581,6 +585,9 @@ public class GlobalGameManager : MonoBehaviour {
                 iPowerUpTamano--;
                 //La habilidad la tiene
                 powerUpTamano = true;
+
+                //SOLO UN USO DE LA HABILIDAD:
+                soloUnaVezTamano = 1;
                 //Ponemos el llamado de tamaño a true
                 llamadoPowerUpTamano = true;
 
