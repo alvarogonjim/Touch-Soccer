@@ -101,6 +101,7 @@ public class GlobalGameManager : MonoBehaviour {
     public static bool powerUpFuerza;
     public static int iPowerUpFuerza;
 
+
     GameObject myButton;
     private string liga;
     //*****************************************************************************
