@@ -173,7 +173,7 @@ public class MenuController : MonoBehaviour
     //Liga
     //****************************************************************************
 
-    public string getPlayerLiga()
+    public static string getPlayerLiga()
     {
         string res = null;
         int wins = PlayerPrefs.GetInt("PlayerWins");
@@ -182,6 +182,7 @@ public class MenuController : MonoBehaviour
         {
             //Liga de bronce
             res = "Liga de bronce";
+           
         }
         else if (wins >= 5 && wins <= 9)
         {

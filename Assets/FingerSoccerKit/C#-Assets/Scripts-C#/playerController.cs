@@ -17,11 +17,12 @@ public class playerController : MonoBehaviour {
 	private GameObject helperBegin; 	//Start helper
 	private GameObject helperEnd; 		//End Helper
 	private GameObject arrowPlane; 		//arrow plane which is used to show shotPower
-
-	private GameObject gameController;	//Reference to main game controller
+    public static GameObject[] chapas;
+    private GameObject chapa;
+    private GameObject gameController;	//Reference to main game controller
 	private float currentDistance;		//real distance of our touch/mouse position from initial drag position
 	private float safeDistance; 			//A safe distance value which is always between min and max to avoid supershoots
-
+    
 	private float pwr;					//shoot power
 
 	//this vector holds shooting direction
@@ -32,18 +33,27 @@ public class playerController : MonoBehaviour {
 	public static bool canShoot;
 	internal float shootTime;
 	private int timeAllowedToShoot = 10000; //In Seconds (in this kit we give players unlimited time to perform their turn of shooting)
+
+
+    public static int contadorPowerUp=1;
+    
 	//*****************************************************************************
 	// Init
 	//*****************************************************************************
 	void Awake (){
+       
 		//Find and cache important gameObjects
 		helperBegin = GameObject.FindGameObjectWithTag("mouseHelperBegin");
 		helperEnd = GameObject.FindGameObjectWithTag("mouseHelperEnd");
 		arrowPlane = GameObject.FindGameObjectWithTag("helperArrow");		
 		gameController = GameObject.FindGameObjectWithTag("GameController");
-		
-		//Init Variables
-		pwr = 0.1f;
+        chapas  = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject chapa in chapas)
+        {
+            DontDestroyOnLoad(chapa);
+        }
+        //Init Variables
+        pwr = 0.1f;
 		currentDistance = 0;
 		shootDirectionVector = new Vector3(0,0,0);
 		//shootDirection = new Vector3 (0, 0, 0);
@@ -52,9 +62,11 @@ public class playerController : MonoBehaviour {
 		arrowPlane.GetComponent<Renderer>().enabled = false; //hide arrowPlane
 	}
 
-	void Start (){
-		
-	}
+    void Start()
+    {
+        Debug.Log("EL NUMERO ES " + PlayerPrefs.GetInt("Skin"));
+        cambiarSkin();
+    }
 
 	void Update (){
 
@@ -65,13 +77,18 @@ public class playerController : MonoBehaviour {
 		else if(GlobalGameManager.opponentsTurn && gameObject.tag == "Player_2" && !GlobalGameManager.goalHappened)
 			selectionCircle.GetComponent<Renderer>().enabled = true;			
 		else	
-			selectionCircle.GetComponent<Renderer>().enabled = false;	
+			selectionCircle.GetComponent<Renderer>().enabled = false;
 
+        
+        foreach (GameObject chapa in chapas)
+        {
+            if(contadorPowerUp <= 0)
+                chapa.transform.localScale = new Vector3(2.5f, 0.5f, 2.5f);
 
-
-	
-
-	}
+            
+        }
+        
+    }
 
 	//***************************************************************************//
 	// Works fine with mouse and touch
@@ -258,5 +275,31 @@ public class playerController : MonoBehaviour {
 		else if(GlobalGameManager.gameMode == 1)
 			StartCoroutine(gameController.GetComponent<GlobalGameManager>().managePostShoot(gameObject.tag));
 	}
+
+    
+    public static void cambiarSkin()
+    {
+        int index = PlayerPrefs.GetInt("Skin");
+        Texture2D mat = Resources.Load(index.ToString(), typeof(Texture2D)) as Texture2D;
+
+        foreach (GameObject chapa in chapas)
+        {
+            chapa.GetComponent<Renderer>().material.SetTexture("_MainTex", mat);
+        }
+    }
+
+    //**************************************************
+    //PowerUps
+    //**************************************************
+
+    void OnMouseDown()
+    {
+        if (GlobalGameManager.powerUpTamano == true && GlobalGameManager.iPowerUpTamano > 0)
+        {
+            transform.localScale = new Vector3(5.5f, 0.5f, 5.5f);
+            contadorPowerUp++;
+            GlobalGameManager.iPowerUpTamano = GlobalGameManager.iPowerUpTamano - 1;
+        }
+    } 
 
 }

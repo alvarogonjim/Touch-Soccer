@@ -87,7 +87,7 @@ public class GlobalGameManager : MonoBehaviour {
     private long score;
 
     //Doble gol
-    public bool fueGol = false;
+    private bool fueGol = false;
 
 	//Animation of goal
 	public Animation AnimGoal;
@@ -95,12 +95,22 @@ public class GlobalGameManager : MonoBehaviour {
 	public string nombreAni;
 	public static bool flagGoal;
 
+    //PowerUps
+    public static bool llamadoPowerUp = false;
+    public static bool powerUpTamano;
+    public static int iPowerUpTamano = 2;
+    public static bool powerUpFuerza;
+    public static int iPowerUpFuerza;
+
+    GameObject myButton;
+    private string liga;
     //*****************************************************************************
     // Init. 
     //*****************************************************************************
-    void Awake (){	
-		//init
-		goalHappened = false;
+    void Awake (){
+        //init
+        liga = MenuController.getPlayerLiga();
+        goalHappened = false;
 		gameIsFinished = false;
 		playerGoals = 0;
 		opponentGoals = 0;
@@ -177,10 +187,11 @@ public class GlobalGameManager : MonoBehaviour {
 	}
 
 	IEnumerator Start (){
-		//AnimGoal = GetComponent<Animation> ();
-		roundTurnManager();
+        //AnimGoal = GetComponent<Animation> ();
+        roundTurnManager();
 		yield return new WaitForSeconds(1.5f);
 		playSfx(startWistle);
+        Debug.Log(liga.ToString());
 	}
 
 	//*****************************************************************************
@@ -195,7 +206,7 @@ public class GlobalGameManager : MonoBehaviour {
 		//every now and then, play some crowd chants
 		StartCoroutine(playCrowdChants());
 
-		Debug.Log (timeLeft);
+		//Debug.Log (timeLeft);
 
 	
         //Countdown
@@ -241,6 +252,7 @@ public class GlobalGameManager : MonoBehaviour {
 			OpponentAI.opponentCanShoot = false;
 			whosTurn = "player";
             fueGol = false;
+
         }//This else if is because the opponent can shot two times.
         else if (carry == 0 && opponentsTurn == true && OpponentAI.opponentCanShoot == true)
         {
@@ -250,7 +262,10 @@ public class GlobalGameManager : MonoBehaviour {
             //In every rounds we have to increase the timer again.
             fueGol = false;
             timeLeft = 15;
-            
+            if (llamadoPowerUp == true)
+            {
+                playerController.contadorPowerUp--;
+            }
         }
         else
         {
@@ -261,6 +276,11 @@ public class GlobalGameManager : MonoBehaviour {
             whosTurn = "opponent";
             //In every rounds we have to increase the timer again.
             timeLeft = 15;
+            if (llamadoPowerUp == true)
+            {
+                playerController.contadorPowerUp = playerController.contadorPowerUp - 1;
+                Debug.Log(playerController.contadorPowerUp);
+            }
         }
         //Override
         //for two player game, players can always shoot.
@@ -493,8 +513,9 @@ public class GlobalGameManager : MonoBehaviour {
 				statusTextureObject.GetComponent<Text>().text = statusModes[3];
 			} 
 		}
-        
-	}
+        NextLevelButton("Shop-c#");
+
+    }
 	//*****************************************************************************
 	// Play a random crown sfx every now and then to spice up the game
 	//*****************************************************************************
@@ -549,5 +570,42 @@ public class GlobalGameManager : MonoBehaviour {
 		Debug.Log (flagGoal);
 		//goalHappened =! goalHappened;
 	}
+    //***************************************************************
+    //PowerUps
+    //***************************************************************
 
-}
+
+
+
+
+    public void disableBoton()
+    {
+       if(liga.Equals("Liga de bronce"))
+        myButton.GetComponent<Button>().interactable = false;
+        
+    }
+    
+
+    public void PWTamano()
+    {
+
+        if (llamadoPowerUp == false)
+        {
+            if (iPowerUpTamano > 0)
+            {
+                Debug.Log(powerUpTamano.ToString());
+                iPowerUpTamano--;
+                powerUpTamano = true;
+                llamadoPowerUp = true;
+
+            }
+            else
+            {
+                powerUpTamano = false;
+            }
+        }
+    }
+    }
+
+
+
