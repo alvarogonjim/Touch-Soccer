@@ -35,12 +35,12 @@ public class playerController : MonoBehaviour {
 	private int timeAllowedToShoot = 10000; //In Seconds (in this kit we give players unlimited time to perform their turn of shooting)
 
 
-    public static int contadorPowerUp=1;
-    
-	//*****************************************************************************
-	// Init
-	//*****************************************************************************
-	void Awake (){
+    public static int contadorPowerUpTamano=1;
+    public static int contadorPowerUpElimina = 1;
+    //*****************************************************************************
+    // Init
+    //*****************************************************************************
+    void Awake (){
        
 		//Find and cache important gameObjects
 		helperBegin = GameObject.FindGameObjectWithTag("mouseHelperBegin");
@@ -82,7 +82,7 @@ public class playerController : MonoBehaviour {
         
         foreach (GameObject chapa in chapas)
         {
-            if(contadorPowerUp <= 0)
+            if(contadorPowerUpTamano <= 0)
                 chapa.transform.localScale = new Vector3(2.5f, 0.5f, 2.5f);
 
             
@@ -293,12 +293,13 @@ public class playerController : MonoBehaviour {
 
     void OnMouseDown()
     {
-        if (GlobalGameManager.powerUpTamano == true && GlobalGameManager.iPowerUpTamano > 0)
+        if (GlobalGameManager.powerUpTamano == true /*&& GlobalGameManager.iPowerUpTamano > 0*/)
         {
             transform.localScale = new Vector3(5.5f, 0.5f, 5.5f);
-            contadorPowerUp++;
+            contadorPowerUpTamano++;
             GlobalGameManager.iPowerUpTamano = GlobalGameManager.iPowerUpTamano - 1;
         }
+
     } 
 
 }
