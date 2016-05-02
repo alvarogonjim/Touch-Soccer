@@ -134,7 +134,9 @@ public class GlobalGameManager : MonoBehaviour {
 			gameMode = PlayerPrefs.GetInt("GameMode");
 		else
 			gameMode = 0; // Deafault Mode (Player-1 vs AI)
-		
+
+        gameMode = 2; //TODO online gameMode
+
 		playerAIController = GameObject.FindGameObjectWithTag("playerAI");
 		opponentAIController = GameObject.FindGameObjectWithTag("opponentAI");
 		ball = GameObject.FindGameObjectWithTag("ball");

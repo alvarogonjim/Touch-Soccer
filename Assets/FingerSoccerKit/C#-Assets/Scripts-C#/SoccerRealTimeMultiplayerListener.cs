@@ -23,11 +23,12 @@ public class SoccerRealTimeMultiplayerListener : RealTimeMultiplayerListener
 
     public void OnRoomSetupProgress(float progress)
     {
-
+        Debug.Log("OnRoomSetup " + progress);
     }
 
     public void OnRoomConnected(bool success)
     {
+        Debug.Log("OnRoomConnected " + success);
         if (success)
         {
             // Successfully connected to room!
@@ -42,7 +43,7 @@ public class SoccerRealTimeMultiplayerListener : RealTimeMultiplayerListener
 
     public void OnLeftRoom()
     {
-
+        Debug.Log("OnLeftRoom");
     }
 
     public void OnParticipantLeft(Participant participant)
@@ -62,7 +63,7 @@ public class SoccerRealTimeMultiplayerListener : RealTimeMultiplayerListener
 
     public void OnRealTimeMessageReceived(bool isReliable, string senderId, byte[] data)
     {
-
+        Debug.Log("OnRealTimeMessageReceived");
     }
 
 }
