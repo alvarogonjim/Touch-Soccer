@@ -17,7 +17,7 @@ public class playerController : MonoBehaviour {
 	private GameObject helperBegin; 	//Start helper
 	private GameObject helperEnd; 		//End Helper
 	private GameObject arrowPlane; 		//arrow plane which is used to show shotPower
-    private GameObject[] chapas;
+    public static GameObject[] chapas;
     private GameObject chapa;
     private GameObject gameController;	//Reference to main game controller
 	private float currentDistance;		//real distance of our touch/mouse position from initial drag position
@@ -35,18 +35,21 @@ public class playerController : MonoBehaviour {
 	private int timeAllowedToShoot = 10000; //In Seconds (in this kit we give players unlimited time to perform their turn of shooting)
 
 
-    public static int contadorPowerUp=1;
-    
-	//*****************************************************************************
-	// Init
-	//*****************************************************************************
-	void Awake (){
+    public static int contadorPowerUpTamano=1;
+    public static int contadorPowerUpElimina = 1;
+    //*****************************************************************************
+    // Init
+    //*****************************************************************************
+    void Awake (){
+       
 		//Find and cache important gameObjects
 		helperBegin = GameObject.FindGameObjectWithTag("mouseHelperBegin");
 		helperEnd = GameObject.FindGameObjectWithTag("mouseHelperEnd");
 		arrowPlane = GameObject.FindGameObjectWithTag("helperArrow");		
 		gameController = GameObject.FindGameObjectWithTag("GameController");
         chapas  = GameObject.FindGameObjectsWithTag("Player");
+        
+       
         //Init Variables
         pwr = 0.1f;
 		currentDistance = 0;
@@ -57,9 +60,11 @@ public class playerController : MonoBehaviour {
 		arrowPlane.GetComponent<Renderer>().enabled = false; //hide arrowPlane
 	}
 
-	void Start (){
-		
-	}
+    void Start()
+    {
+        Debug.Log("EL NUMERO ES " + PlayerPrefs.GetInt("Skin"));
+        cambiarSkin();
+    }
 
 	void Update (){
 
@@ -72,15 +77,15 @@ public class playerController : MonoBehaviour {
 		else	
 			selectionCircle.GetComponent<Renderer>().enabled = false;
 
-
+        
         foreach (GameObject chapa in chapas)
         {
-            if(contadorPowerUp <= 0)
+            if(contadorPowerUpTamano == 0)
                 chapa.transform.localScale = new Vector3(2.5f, 0.5f, 2.5f);
 
             
         }
-
+        
     }
 
 	//***************************************************************************//
@@ -268,18 +273,34 @@ public class playerController : MonoBehaviour {
 			StartCoroutine(gameController.GetComponent<GlobalGameManager>().managePostShoot(gameObject.tag));
 	}
 
+    
+    public static void cambiarSkin()
+    {
+        int index = PlayerPrefs.GetInt("Skin");
+        Texture2D mat = Resources.Load(index.ToString(), typeof(Texture2D)) as Texture2D;
+
+        foreach (GameObject chapa in chapas)
+        {
+            chapa.GetComponent<Renderer>().material.SetTexture("_MainTex", mat);
+        }
+    }
+
     //**************************************************
     //PowerUps
     //**************************************************
 
     void OnMouseDown()
     {
-        if (GlobalGameManager.powerUpTamano == true && GlobalGameManager.iPowerUpTamano > 0)
+        if (GlobalGameManager.powerUpTamano == true && GlobalGameManager.soloUnaVezTamano > 0)
         {
+           
             transform.localScale = new Vector3(5.5f, 0.5f, 5.5f);
-            contadorPowerUp++;
+            GlobalGameManager.soloUnaVezTamano = 0;
+            contadorPowerUpTamano++;
             GlobalGameManager.iPowerUpTamano = GlobalGameManager.iPowerUpTamano - 1;
-        }
+    
+    }
+
     } 
 
 }

@@ -81,6 +81,11 @@ public class FormationManager : MonoBehaviour {
 				if(_UnitIndex == 4) output = new Vector3(-1.5f, 5.5f + yFixer, fixedZ);
 				break;
 		}
+
+
+        //Flag si tiene Formacion 5
+
+
 		
 		return output;
 	}

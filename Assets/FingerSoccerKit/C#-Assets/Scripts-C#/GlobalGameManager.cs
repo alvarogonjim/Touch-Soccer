@@ -95,11 +95,15 @@ public class GlobalGameManager : MonoBehaviour {
 	public static bool flagGoal;
 
     //PowerUps
-    public static bool llamadoPowerUp = false;
+    public static bool llamadoPowerUpTamano = false;
     public static bool powerUpTamano;
     public static int iPowerUpTamano = 2;
-    public static bool powerUpFuerza;
-    public static int iPowerUpFuerza;
+    public static int soloUnaVezTamano;
+
+    public static bool llamadoPowerUpElimina = false;
+    public static bool powerUpElimina;
+    public static int iPowerUpElimina = 2;
+    public static int soloUnaVezElimina;
 
 
     GameObject myButton;
@@ -184,13 +188,11 @@ public class GlobalGameManager : MonoBehaviour {
 	}
 
 	IEnumerator Start (){
-        myButton = GameObject.Find("Button");
-        disableBoton();
         //AnimGoal = GetComponent<Animation> ();
         roundTurnManager();
 		yield return new WaitForSeconds(1.5f);
 		playSfx(startWistle);
-        Debug.Log(liga.ToString());
+ 
 	}
 
 	//*****************************************************************************
@@ -261,8 +263,12 @@ public class GlobalGameManager : MonoBehaviour {
             //In every rounds we have to increase the timer again.
             fueGol = false;
             timeLeft = 15;
-            playerController.contadorPowerUp--;
-
+            //Si en el turno se ha llamado a powerup de tamaño decrementamos la variable contador
+            if (llamadoPowerUpTamano == true)
+            {
+                Debug.Log(playerController.contadorPowerUpTamano);
+                playerController.contadorPowerUpTamano--;
+            }
         }
         else
         {
@@ -273,10 +279,15 @@ public class GlobalGameManager : MonoBehaviour {
             whosTurn = "opponent";
             //In every rounds we have to increase the timer again.
             timeLeft = 15;
-            playerController.contadorPowerUp =
-            playerController.contadorPowerUp -1;
-            Debug.Log(playerController.contadorPowerUp);
+            //Si en el turno se ha llamado a powerup de tamaño decrementamos la variable contador
+            Debug.Log(llamadoPowerUpTamano);
+            if (llamadoPowerUpTamano == true)
+            {
+                Debug.Log(llamadoPowerUpTamano);
+                Debug.Log(playerController.contadorPowerUpTamano);
+                playerController.contadorPowerUpTamano = playerController.contadorPowerUpTamano - 1;
 
+            }
         }
         //Override
         //for two player game, players can always shoot.
@@ -500,8 +511,9 @@ public class GlobalGameManager : MonoBehaviour {
 				statusTextureObject.GetComponent<Text>().text = statusModes[3];
 			} 
 		}
-        
-	}
+        NextLevelButton("Shop-c#");
+
+    }
 	//*****************************************************************************
 	// Play a random crown sfx every now and then to spice up the game
 	//*****************************************************************************
@@ -560,31 +572,28 @@ public class GlobalGameManager : MonoBehaviour {
     //PowerUps
     //***************************************************************
 
-
-
-
-
-    public void disableBoton()
-    {
-        if(liga.Equals("Liga de bronce"))
-        myButton.GetComponent<Button>().interactable = false;
-        
-    }
-
-
+        //Power up Tamaño
     public void PWTamano()
     {
-
-        if (llamadoPowerUp == false)
+        //Se ha llamado al powerup del tamaño anteriormente?
+        if (llamadoPowerUpTamano == false)
         {
+            //Si no vemos si tiene la habilidad disponible (mas de 0)
             if (iPowerUpTamano > 0)
             {
                 Debug.Log(powerUpTamano.ToString());
+                //Decrementamos la habilidad
                 iPowerUpTamano--;
+                //La habilidad la tiene
                 powerUpTamano = true;
-                llamadoPowerUp = true;
+
+                //SOLO UN USO DE LA HABILIDAD:
+                soloUnaVezTamano = 1;
+                //Ponemos el llamado de tamaño a true
+                llamadoPowerUpTamano = true;
 
             }
+            //En caso contrario falso
             else
             {
                 powerUpTamano = false;
