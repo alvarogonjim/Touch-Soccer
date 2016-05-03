@@ -62,8 +62,10 @@ public class playerController : MonoBehaviour {
 
     void Start()
     {
+
         Debug.Log("EL NUMERO ES " + PlayerPrefs.GetInt("Skin"));
         cambiarSkin();
+        cambiarAura();
     }
 
 	void Update (){
@@ -283,6 +285,61 @@ public class playerController : MonoBehaviour {
         {
             chapa.GetComponent<Renderer>().material.SetTexture("_MainTex", mat);
         }
+    }
+
+    public static void cambiarAura()
+    {
+        int i = PlayerPrefs.GetInt("Aura");
+       /* rojo
+            azul
+            verde
+            amarillo
+            rosa
+    */     
+    GameObject[] circulos = GameObject.FindGameObjectsWithTag("selectionCirclePlayer");
+
+
+        switch (i)
+        {
+            case 0:
+
+                foreach (GameObject circulo in circulos)
+                {
+                    Renderer rend = circulo.GetComponent<Renderer>();
+                    rend.material.color = Color.red;
+                }
+                break;
+            case 1:
+                foreach (GameObject circulo in circulos)
+                {
+                    Renderer rend = circulo.GetComponent<Renderer>();
+                    rend.material.color = Color.blue;
+                }
+                break;
+            case 2:
+                foreach (GameObject circulo in circulos)
+                {
+                    Renderer rend = circulo.GetComponent<Renderer>();
+                    rend.material.color = Color.green;
+                }
+                break;
+            case 3:
+                foreach (GameObject circulo in circulos)
+                {
+                    Renderer rend = circulo.GetComponent<Renderer>();
+                    rend.material.color = Color.yellow;
+                }
+                break;
+            case 4:
+                foreach (GameObject circulo in circulos)
+                {
+                Color rosa = new Color(255F, 0F, 255F, 255F);
+                 Renderer rend = circulo.GetComponent<Renderer>();
+                    rend.material.color = rosa;
+                }
+
+                break;
+            }
     }
 
     //**************************************************
