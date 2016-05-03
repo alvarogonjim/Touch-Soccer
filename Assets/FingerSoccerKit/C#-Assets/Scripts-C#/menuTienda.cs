@@ -27,42 +27,45 @@ public class menuTienda : MonoBehaviour
         dinero = PlayerPrefs.GetInt("PlayerMoney");
         //Cargamos las chapas compradas
 
-        for(int i = 0; i<totalChapas.Length; i++) 
+        for (int i = 0; i < totalChapas.Length; i++)
         {
             string index = totalChapas[i].GetComponent<ShopItemProperties>().itemIndex.ToString();
             string useButton = totalChapas[i].GetComponent<ShopItemProperties>().useButton;
             string shopItem = "Chapa-" + index;
-
+           
             if (PlayerPrefs.GetInt(shopItem) == 1)
             {
-                //Encontramos el boton y lo desactivamos
                 GameObject BuyButton = GameObject.Find(index.ToString());
+                //Encontramos el boton y lo 
                 BuyButton.SetActive(false);
                 //Encontramos el boton de usar y lo activamos
                 GameObject ActiveButton = GameObject.Find(useButton);
                 ActiveButton.GetComponent<Button>().interactable = true;
             }
-
-            string indexAura = totalAuras[i].GetComponent<ShopItemProperties>().itemIndex.ToString();
-            string useButtonAura = totalAuras[i].GetComponent<ShopItemProperties>().useButton;
-            string shopItemAura = "Aura-" + index;
-            if (PlayerPrefs.GetInt(shopItemAura) == 1)
+        }
+            for (int j = 0; j < totalAuras.Length; j++)
             {
-                //Encontramos el boton y lo desactivamos
-                GameObject BuyButton = GameObject.Find(indexAura.ToString());
-                BuyButton.SetActive(false);
-                //Encontramos el boton de usar y lo activamos
-                GameObject ActiveButton = GameObject.Find(useButtonAura);
-                ActiveButton.GetComponent<Button>().interactable = true;
+                string indexAura = totalAuras[j].GetComponent<ShopItemProperties>().itemIndex.ToString();
+                string useButtonAura = totalAuras[j].GetComponent<ShopItemProperties>().useButton;
+                string shopItemAura = "Aura-" + indexAura;
+                if (PlayerPrefs.GetInt(shopItemAura) == 1)
+                {
+                    //Encontramos el boton y lo desactivamos
+                    GameObject BuyButton = GameObject.Find(indexAura.ToString());
+                    BuyButton.SetActive(false);
+                    //Encontramos el boton de usar y lo activamos
+                    GameObject ActiveButton = GameObject.Find(useButtonAura);
+                    ActiveButton.GetComponent<Button>().interactable = true;
+                }
             }
 
-
-
-        }
-
-
-
-
+    }
+    void Start()
+    {
+        GameObject.Find("Chapas").SetActive(false);
+        GameObject.Find("Auras").SetActive(false);
+        GameObject.Find("Formaciones").SetActive(false);
+        GameObject.Find("PanelChapas").SetActive(false);
     }
     // Update is called once per frame
     void Update()
