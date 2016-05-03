@@ -31,12 +31,9 @@ public class menuTienda : MonoBehaviour
             string index = totalChapas[i].GetComponent<ShopItemProperties>().itemIndex.ToString();
             string useButton = totalChapas[i].GetComponent<ShopItemProperties>().useButton;
             string shopItem = "Chapa-" + index;
-<<<<<<< HEAD
-			Debug.Log (shopItem);
-           
-=======
 
->>>>>>> 3f478ac60814d95623693fa94a6b5602d1a3aa55
+			Debug.Log (shopItem);
+          
             if (PlayerPrefs.GetInt(shopItem) == 1)
             {
                 //Encontramos el boton y lo desactivamos
@@ -47,7 +44,7 @@ public class menuTienda : MonoBehaviour
                 ActiveButton.GetComponent<Button>().interactable = true;
             }
         }
-<<<<<<< HEAD
+
             for (int j = 0; j < totalAuras.Length; j++)
             {
                 string indexAura = totalAuras[j].GetComponent<ShopItemProperties>().itemIndex.ToString();
@@ -72,12 +69,7 @@ public class menuTienda : MonoBehaviour
        GameObject.Find("Auras").SetActive(false);
        GameObject.Find("Formaciones").SetActive(false);
        GameObject.Find("PanelChapas").SetActive(false);
-=======
 
-
-       
-
->>>>>>> 3f478ac60814d95623693fa94a6b5602d1a3aa55
     }
     // Update is called once per frame
     void Update()
@@ -111,7 +103,7 @@ public class menuTienda : MonoBehaviour
        
             }
         }
-<<<<<<< HEAD
+
     public void comprarAura(int index)
     {
         precioItem = totalAuras[index].GetComponent<ShopItemProperties>().itemPrice;
@@ -135,10 +127,7 @@ public class menuTienda : MonoBehaviour
 
         }
     }
-=======
->>>>>>> 3f478ac60814d95623693fa94a6b5602d1a3aa55
 
-    
    public void setIndex(int index)
     {
         //Debug

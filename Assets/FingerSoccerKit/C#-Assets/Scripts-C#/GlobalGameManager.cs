@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 
 public class GlobalGameManager : MonoBehaviour {
-		
+
 	///*************************************************************************///
 	/// Main Game Controller.
 	/// This class controls main aspects of the game like rounds, levels, scores and ...
@@ -79,14 +79,14 @@ public class GlobalGameManager : MonoBehaviour {
 	public Text statusTextureObject;	//plane we use to show the result texture in 3d world
 	public string[] statusModes;         //Available status textures
 
-    //Timer
-    public float timeLeft = 15.0f;
+	//Timer
+	public float timeLeft = 15.0f;
 	public Text timerCountTurn;
-    //Scores
-    private long score;
+	//Scores
+	private long score;
 
-    //Doble gol
-    private bool fueGol = false;
+	//Doble gol
+	private bool fueGol = false;
 
 	//Animation of goal
 	public Animation AnimGoal;
@@ -94,27 +94,27 @@ public class GlobalGameManager : MonoBehaviour {
 	public string nombreAni;
 	public static bool flagGoal;
 
-    //PowerUps
-    public static bool llamadoPowerUpTamano = false;
-    public static bool powerUpTamano;
-    public static int iPowerUpTamano = 2;
-    public static int soloUnaVezTamano;
+	//PowerUps
+	public static bool llamadoPowerUpTamano = false;
+	public static bool powerUpTamano;
+	public static int iPowerUpTamano = 2;
+	public static int soloUnaVezTamano;
 
-    public static bool llamadoPowerUpElimina = false;
-    public static bool powerUpElimina;
-    public static int iPowerUpElimina = 2;
-    public static int soloUnaVezElimina;
+	public static bool llamadoPowerUpElimina = false;
+	public static bool powerUpElimina;
+	public static int iPowerUpElimina = 2;
+	public static int soloUnaVezElimina;
 
 
-    GameObject myButton;
-    private string liga;
-    //*****************************************************************************
-    // Init. 
-    //*****************************************************************************
-    void Awake (){
-        //init
-        liga = MenuController.getPlayerLiga();
-        goalHappened = false;
+	GameObject myButton;
+	private string liga;
+	//*****************************************************************************
+	// Init. 
+	//*****************************************************************************
+	void Awake (){
+		//init
+		liga = MenuController.getPlayerLiga();
+		goalHappened = false;
 		gameIsFinished = false;
 		playerGoals = 0;
 		opponentGoals = 0;
@@ -126,33 +126,33 @@ public class GlobalGameManager : MonoBehaviour {
 
 		//hide gameStatusPlane
 		gameStatusPlane.SetActive(false);
-		
+
 		//Translate gameTimer index to actual seconds
 		switch(PlayerPrefs.GetInt("GameTime")) {
-			case 0:
-				gameTimer = 180;
-				break;
-			case 1:
-				gameTimer = 300;
-				break;
-			case 2:
-				gameTimer = 480;
-				break;
-			
+		case 0:
+			gameTimer = 180;
+			break;
+		case 1:
+			gameTimer = 300;
+			break;
+		case 2:
+			gameTimer = 480;
+			break;
+
 			//You can add more cases and options here.
 		}
-		
-		
+
+
 		//Get Game Mode
 		if(PlayerPrefs.HasKey("GameMode"))
 			gameMode = PlayerPrefs.GetInt("GameMode");
 		else
 			gameMode = 0; // Deafault Mode (Player-1 vs AI)
-		
+
 		playerAIController = GameObject.FindGameObjectWithTag("playerAI");
 		opponentAIController = GameObject.FindGameObjectWithTag("opponentAI");
 		ball = GameObject.FindGameObjectWithTag("ball");
-		
+
 		manageGameModes();
 	}
 
@@ -167,33 +167,33 @@ public class GlobalGameManager : MonoBehaviour {
 	private GameObject[] cpuTeam;		//array of all AI units in the game
 	void manageGameModes (){
 		switch(gameMode) {
-			case 0:
-				//find and deactive all player2 units. This is player-1 vs AI.
-				player2Team = GameObject.FindGameObjectsWithTag("Player_2");
-				foreach(GameObject unit in player2Team) {
-					unit.SetActive(false);
-				}
-				break;
-			
-			case 1:
-				//find and deactive all AI Opponent units. This is Player-1 vs Player-2.
-				cpuTeam = GameObject.FindGameObjectsWithTag("Opponent");
-				foreach(GameObject unit in cpuTeam) {
-					unit.SetActive(false);
-				}
-				//deactive opponent's AI
-				opponentAIController.SetActive(false);
-				break;
+		case 0:
+			//find and deactive all player2 units. This is player-1 vs AI.
+			player2Team = GameObject.FindGameObjectsWithTag("Player_2");
+			foreach(GameObject unit in player2Team) {
+				unit.SetActive(false);
+			}
+			break;
+
+		case 1:
+			//find and deactive all AI Opponent units. This is Player-1 vs Player-2.
+			cpuTeam = GameObject.FindGameObjectsWithTag("Opponent");
+			foreach(GameObject unit in cpuTeam) {
+				unit.SetActive(false);
+			}
+			//deactive opponent's AI
+			opponentAIController.SetActive(false);
+			break;
 		}
 	}
 
 	IEnumerator Start (){
-        //AnimGoal = GetComponent<Animation> ();
-        roundTurnManager();
+		//AnimGoal = GetComponent<Animation> ();
+		roundTurnManager();
 		yield return new WaitForSeconds(1.5f);
 		playSfx(startWistle);
 
- 
+
 	}
 
 	//*****************************************************************************
@@ -204,52 +204,52 @@ public class GlobalGameManager : MonoBehaviour {
 		if(!gameIsFinished) {
 			manageGameStatus();
 		}
-		
+
 		//every now and then, play some crowd chants
 		StartCoroutine(playCrowdChants());
 
 		//Debug.Log (timeLeft);
 
-	
-        //Countdown
-        if (timeLeft > 0){
-            timeLeft -= Time.deltaTime;
+
+		//Countdown
+		if (timeLeft > 0){
+			timeLeft -= Time.deltaTime;
 			timerCountTurn.text = timeLeft.ToString ();
 			decimal aux=decimal.Parse (string.Format ("{0:N0}", timeLeft));
 			timerCountTurn.text = aux.ToString ();
-        }//If the time is 0 change the round --> change the turn
-        else if (timeLeft <= 0 && round == 1){
-            round = 2;
-            timeLeft = 15;
+		}//If the time is 0 change the round --> change the turn
+		else if (timeLeft <= 0 && round == 1){
+			round = 2;
+			timeLeft = 15;
 			timerCountTurn.text = timeLeft.ToString ();
-            roundTurnManager();
-           //If the time is 0 change the round --> change the turn
-        }else if (timeLeft <= 0 && round == 2){
-            round = 1;
-            timeLeft = 15;
+			roundTurnManager();
+			//If the time is 0 change the round --> change the turn
+		}else if (timeLeft <= 0 && round == 2){
+			round = 1;
+			timeLeft = 15;
 			timerCountTurn.text = timeLeft.ToString ();
-            roundTurnManager();
-        }
+			roundTurnManager();
+		}
 
 		if (flagGoal == true) {
 			StartCoroutine ("GoalOcurred");
 			//flagGoal = false;
 		}
-        //If you ever needed debug inforamtions:
-        //print("GameRound: " + round + " & turn is for: " + whosTurn + " and GoalHappened is: " + goalHappened);
+		//If you ever needed debug inforamtions:
+		//print("GameRound: " + round + " & turn is for: " + whosTurn + " and GoalHappened is: " + goalHappened);
 
 
-    }
+	}
 
-    //*****************************************************************************
-    // This function gives turn to players in the game.
-    //*****************************************************************************
-    public static string whosTurn;
+	//*****************************************************************************
+	// This function gives turn to players in the game.
+	//*****************************************************************************
+	public static string whosTurn;
 	void roundTurnManager (){
-		
+
 		if(gameIsFinished || goalHappened)
 			return;
-		
+
 		//if round number is odd, it's players turn, else it's AI or player-2 's turn
 		int carry;
 		carry = round % 2;
@@ -259,49 +259,49 @@ public class GlobalGameManager : MonoBehaviour {
 			playerController.canShoot = true;
 			OpponentAI.opponentCanShoot = false;
 			whosTurn = "player";
-            fueGol = false;
+			fueGol = false;
 
-        }//This else if is because the opponent can shot two times.
-        else if (carry == 0 && opponentsTurn == true && OpponentAI.opponentCanShoot == true)
-        {
-            round = 1;
-            opponentsTurn = false;
-            OpponentAI.opponentCanShoot = false;
-            //In every rounds we have to increase the timer again.
-            fueGol = false;
-            timeLeft = 15;
+		}//This else if is because the opponent can shot two times.
+		else if (carry == 0 && opponentsTurn == true && OpponentAI.opponentCanShoot == true)
+		{
+			round = 1;
+			opponentsTurn = false;
+			OpponentAI.opponentCanShoot = false;
+			//In every rounds we have to increase the timer again.
+			fueGol = false;
+			timeLeft = 15;
 			timerCountTurn.text = timeLeft.ToString ();
-            //Si en el turno se ha llamado a powerup de tama�o decrementamos la variable contador
-            if (llamadoPowerUpTamano == true)
-            {
-                Debug.Log(playerController.contadorPowerUpTamano);
-                playerController.contadorPowerUpTamano--;
-            }
+			//Si en el turno se ha llamado a powerup de tama�o decrementamos la variable contador
+			if (llamadoPowerUpTamano == true)
+			{
+				Debug.Log(playerController.contadorPowerUpTamano);
+				playerController.contadorPowerUpTamano--;
+			}
 
 			if (llamadoPowerUpElimina == true) {
 				Debug.Log (playerController.contadorPowerUpElimina);
 				playerController.contadorPowerUpElimina--;
 			}
-        }
-        else
-        {
-            playersTurn = false;
-            opponentsTurn = true;
-            playerController.canShoot = false;
-            OpponentAI.opponentCanShoot = true;
-            whosTurn = "opponent";
-            //In every rounds we have to increase the timer again.
-            timeLeft = 15;
+		}
+		else
+		{
+			playersTurn = false;
+			opponentsTurn = true;
+			playerController.canShoot = false;
+			OpponentAI.opponentCanShoot = true;
+			whosTurn = "opponent";
+			//In every rounds we have to increase the timer again.
+			timeLeft = 15;
 			timerCountTurn.text = timeLeft.ToString ();
-            //Si en el turno se ha llamado a powerup de tama�o decrementamos la variable contador
-            Debug.Log(llamadoPowerUpTamano);
-            if (llamadoPowerUpTamano == true)
-            {
-                Debug.Log(llamadoPowerUpTamano);
-                Debug.Log(playerController.contadorPowerUpTamano);
-                playerController.contadorPowerUpTamano = playerController.contadorPowerUpTamano - 1;
+			//Si en el turno se ha llamado a powerup de tama�o decrementamos la variable contador
+			Debug.Log(llamadoPowerUpTamano);
+			if (llamadoPowerUpTamano == true)
+			{
+				Debug.Log(llamadoPowerUpTamano);
+				Debug.Log(playerController.contadorPowerUpTamano);
+				playerController.contadorPowerUpTamano = playerController.contadorPowerUpTamano - 1;
 
-            }
+			}
 
 			if (llamadoPowerUpElimina == true)
 			{
@@ -310,12 +310,12 @@ public class GlobalGameManager : MonoBehaviour {
 				playerController.contadorPowerUpElimina = playerController.contadorPowerUpElimina - 1;
 
 			}
-        }
-        //Override
-        //for two player game, players can always shoot.
-        //we override this because both human players play on the same device and must be able to shoot at every turn.
-        //we just limit their actions to their own units.
-        if (gameMode == 1)
+		}
+		//Override
+		//for two player game, players can always shoot.
+		//we override this because both human players play on the same device and must be able to shoot at every turn.
+		//we just limit their actions to their own units.
+		if (gameMode == 1)
 			playerController.canShoot = true;		
 	}
 
@@ -337,63 +337,63 @@ public class GlobalGameManager : MonoBehaviour {
 			} 		
 			yield return 0;
 		}
-		
+
 		//we had a simple shoot with no goal result
 		if(t >= timeStepToAdvanceRound) {
 			//add to round counters
 			switch(_shootBy) {
-				case "Player":
-					round = 2;
-					break;		
-				case "Player_2":
-					round = 1;
-					break;	
-				case "Opponent":
-					round = 1;
-					break;
+			case "Player":
+				round = 2;
+				break;		
+			case "Player_2":
+				round = 1;
+				break;	
+			case "Opponent":
+				round = 1;
+				break;
 			}	
 			roundTurnManager(); //cycle again between players
 		}
 	}
-			
+
 	//*****************************************************************************
 	// If we had a goal in this round, this is the function that manages all aspects of it.
 	//*****************************************************************************								
 	public IEnumerator managePostGoal ( string _goalBy  ){
 		//get who did the goal.
-		
+
 		//soft pause the game for reformation and other things...
 		goalHappened = true;
 
 
-        //add to goal counters
-        switch (_goalBy)
-        {
+		//add to goal counters
+		switch (_goalBy)
+		{
 
-            case "Player":
-                if (fueGol == false)
-                {
-                    playerGoals++;
-                    round = 2; //goal by player-1 and opponent should start the next round
-                    fueGol = true;
-                }
-                break;
+		case "Player":
+			if (fueGol == false)
+			{
+				playerGoals++;
+				round = 2; //goal by player-1 and opponent should start the next round
+				fueGol = true;
+			}
+			break;
 
-            case "Opponent":
-                if (fueGol == false)
-                {
-                    opponentGoals++;
-                    round = 1; //goal by opponent and player-1 should start the next round
-                    fueGol = true;
-                }
-                break;
-        }
+		case "Opponent":
+			if (fueGol == false)
+			{
+				opponentGoals++;
+				round = 1; //goal by opponent and player-1 should start the next round
+				fueGol = true;
+			}
+			break;
+		}
 
-                //wait a few seconds to show the effects , and physics cooldown
-                playSfx(goalSfx[Random.Range(0, goalSfx.Length)]);
+		//wait a few seconds to show the effects , and physics cooldown
+		playSfx(goalSfx[Random.Range(0, goalSfx.Length)]);
 		GetComponent<AudioSource>().PlayOneShot(goalHappenedSfx[Random.Range(0, goalHappenedSfx.Length)], 1);
 		yield return new WaitForSeconds(1);
-		
+
 		//bring the ball back to it's initial position
 		ball.GetComponent<TrailRenderer>().enabled = false;
 		ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
@@ -401,11 +401,11 @@ public class GlobalGameManager : MonoBehaviour {
 		ball.transform.position = new Vector3(0, -0.81f, -0.7f);
 		yield return new WaitForSeconds(1);
 		ball.GetComponent<TrailRenderer>().enabled = true;
-		
+
 		//*** reformation of units ***//
 		//Reformation for player_1
 		StartCoroutine(playerAIController.GetComponent<PlayerAI>().changeFormation(PlayerAI.playerTeam, PlayerPrefs.GetInt("PlayerFormation"), 0.6f, 1));
-		
+
 		//if this is player-1 vs player-2 match:
 		if(GlobalGameManager.gameMode == 1) {
 			StartCoroutine(playerAIController.GetComponent<PlayerAI>().changeFormation(PlayerAI.player2Team, PlayerPrefs.GetInt("Player2Formation"), 0.6f, -1));
@@ -413,7 +413,7 @@ public class GlobalGameManager : MonoBehaviour {
 			//get a new random formation everytime
 			StartCoroutine(opponentAIController.GetComponent<OpponentAI>().changeFormation(Random.Range(0, FormationManager.formations), 0.6f));
 		}
-		
+
 		yield return new WaitForSeconds(3);
 
 		//check if the game is finished or not
@@ -422,14 +422,14 @@ public class GlobalGameManager : MonoBehaviour {
 			manageGameFinishState();
 			yield break;
 		} 
-		
+
 		//else, continue to the next round
 		goalHappened = false;
 		flagGoal = false;
 		roundTurnManager();
 		playSfx(startWistle);
 	}
-        
+
 	//***************************************************************************//
 	// Game status manager
 	//***************************************************************************//
@@ -441,12 +441,12 @@ public class GlobalGameManager : MonoBehaviour {
 	void manageGameStatus (){
 		seconds = Mathf.CeilToInt(gameTimer - Time.timeSinceLevelLoad) % 60;
 		minutes = Mathf.CeilToInt(gameTimer - Time.timeSinceLevelLoad) / 60; 
-		
+
 		if(seconds == 0 && minutes == 0) {
 			gameIsFinished = true;
 			manageGameFinishState();
 		}
-		
+
 		remainingTime = string.Format("{0:00} : {1:00}", minutes, seconds); 
 		timeText.text = remainingTime.ToString();
 
@@ -469,56 +469,56 @@ public class GlobalGameManager : MonoBehaviour {
 		//Play gameFinish wistle
 		playSfx(finishWistle);
 		print("GAME IS FINISHED.");
-		
+
 		//show gameStatusPlane
 		gameStatusPlane.SetActive(true);
-		
+
 		//for single player game, we should give the player some bonuses in case of winning the match
 		if(gameMode == 0) {
 			if(playerGoals > goalLimit || playerGoals > opponentGoals) {
 				print("Player 1 is the winner!!");
-				
+
 				//set the result texture
 				statusTextureObject.GetComponent<Text>().text= statusModes[0];
-				
+
 				int playerWins = PlayerPrefs.GetInt("PlayerWins");
 				int playerMoney = PlayerPrefs.GetInt("PlayerMoney");
-                int playerGames = PlayerPrefs.GetInt("PlayerGames");
+				int playerGames = PlayerPrefs.GetInt("PlayerGames");
 
-               
 
-                if (playerGames < 20)
-                {
-                    //Si aun no ha jugado los 20 partidos, le sumamos 1
-                    PlayerPrefs.SetInt("PlayerGames", ++playerGames);
-                }
-                else
-                {
-                    //Si ha jugado los 20 partidos vuelve a estar el contador a 0
-                    PlayerPrefs.SetInt("PlayerGames", 0);
-                }
 
-                score = playerWins;
+				if (playerGames < 20)
+				{
+					//Si aun no ha jugado los 20 partidos, le sumamos 1
+					PlayerPrefs.SetInt("PlayerGames", ++playerGames);
+				}
+				else
+				{
+					//Si ha jugado los 20 partidos vuelve a estar el contador a 0
+					PlayerPrefs.SetInt("PlayerGames", 0);
+				}
+
+				score = playerWins;
 				PlayerPrefs.SetInt("PlayerWins", ++playerWins);			//add to wins counter
 				PlayerPrefs.SetInt("PlayerMoney", playerMoney + 100);	//handful of coins as the prize!
-				
-                if(playerWins >= 1) {
-                    Social.ReportProgress("CgkIqKW33aMMEAIQBA", 100.0f, (bool success) => {
-                    });
 
-                }
-                Social.ReportScore(score, "CgkIqKW33aMMEAIQBQ", (bool success) => {
-              
-                });
+				if(playerWins >= 1) {
+					Social.ReportProgress("CgkIqKW33aMMEAIQBA", 100.0f, (bool success) => {
+					});
+
+				}
+				Social.ReportScore(score, "CgkIqKW33aMMEAIQBQ", (bool success) => {
+
+				});
 
 
-            } else if(opponentGoals > goalLimit || opponentGoals > playerGoals) {
-			
+			} else if(opponentGoals > goalLimit || opponentGoals > playerGoals) {
+
 				print("CPU is the winner!!");
 				statusTextureObject.GetComponent<Text>().text = statusModes[1];
-				
+
 			} else if(opponentGoals == playerGoals) {
-			
+
 				print("(Single Player) We have a Draw!");
 				statusTextureObject.GetComponent<Text>().text= statusModes[4];
 			}	
@@ -534,9 +534,9 @@ public class GlobalGameManager : MonoBehaviour {
 				statusTextureObject.GetComponent<Text>().text = statusModes[3];
 			} 
 		}
-        NextLevelButton("Shop-c#");
+		NextLevelButton("Shop-c#");
 
-    }
+	}
 	//*****************************************************************************
 	// Play a random crown sfx every now and then to spice up the game
 	//*****************************************************************************
@@ -557,12 +557,12 @@ public class GlobalGameManager : MonoBehaviour {
 			GetComponent<AudioSource>().Play();
 		}
 	}
-   
-    //***************************************************************
-    //Metodos Utiles
-    //***************************************************************
 
-    public void NextLevelButton(int index)
+	//***************************************************************
+	//Metodos Utiles
+	//***************************************************************
+
+	public void NextLevelButton(int index)
 	{
 		Application.LoadLevel(index);
 	}
@@ -578,12 +578,12 @@ public class GlobalGameManager : MonoBehaviour {
 	}
 
 
-    //***************************************************************
-    //Animacion de Gol
-    //***************************************************************
+	//***************************************************************
+	//Animacion de Gol
+	//***************************************************************
 
 
-    IEnumerator GoalOcurred(){
+	IEnumerator GoalOcurred(){
 		//AnimGoal.Crossfade ("AnimGoal");
 		AnimGoal.CrossFade(nombreAni);
 		yield return new WaitForSeconds (AnimGoal[nombreAni].length);
@@ -591,38 +591,38 @@ public class GlobalGameManager : MonoBehaviour {
 		Debug.Log (flagGoal);
 		//goalHappened =! goalHappened;
 	}
-    //***************************************************************
-    //PowerUps
-    //***************************************************************
+	//***************************************************************
+	//PowerUps
+	//***************************************************************
 
-        //Power up Tamano
-    public void PWTamano()
-    {
-        //Se ha llamado al powerup del tama�o anteriormente?
-        if (llamadoPowerUpTamano == false)
-        {
-            //Si no vemos si tiene la habilidad disponible (mas de 0)
-            if (iPowerUpTamano > 0)
-            {
-                Debug.Log(powerUpTamano.ToString());
-                //Decrementamos la habilidad
-                iPowerUpTamano--;
-                //La habilidad la tiene
-                powerUpTamano = true;
+	//Power up Tamano
+	public void PWTamano()
+	{
+		//Se ha llamado al powerup del tama�o anteriormente?
+		if (llamadoPowerUpTamano == false)
+		{
+			//Si no vemos si tiene la habilidad disponible (mas de 0)
+			if (iPowerUpTamano > 0)
+			{
+				Debug.Log(powerUpTamano.ToString());
+				//Decrementamos la habilidad
+				iPowerUpTamano--;
+				//La habilidad la tiene
+				powerUpTamano = true;
 
-                //SOLO UN USO DE LA HABILIDAD:
-                soloUnaVezTamano = 1;
-                //Ponemos el llamado de tama�o a true
-                llamadoPowerUpTamano = true;
+				//SOLO UN USO DE LA HABILIDAD:
+				soloUnaVezTamano = 1;
+				//Ponemos el llamado de tama�o a true
+				llamadoPowerUpTamano = true;
 
-            }
-            //En caso contrario falso
-            else
-            {
-                powerUpTamano = false;
-            }
-        }
-    }
+			}
+			//En caso contrario falso
+			else
+			{
+				powerUpTamano = false;
+			}
+		}
+	}
 
 	public void PWElimina()
 	{
