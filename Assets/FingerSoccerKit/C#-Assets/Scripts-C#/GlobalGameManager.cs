@@ -81,7 +81,7 @@ public class GlobalGameManager : MonoBehaviour {
 
     //Timer
     public float timeLeft = 15.0f;
-
+	public Text timerCountTurn;
     //Scores
     private long score;
 
@@ -123,7 +123,7 @@ public class GlobalGameManager : MonoBehaviour {
 		seconds = 0;
 		minutes = 0;
 		canPlayCrowdChants = true;
-		
+
 		//hide gameStatusPlane
 		gameStatusPlane.SetActive(false);
 		
@@ -192,6 +192,7 @@ public class GlobalGameManager : MonoBehaviour {
         roundTurnManager();
 		yield return new WaitForSeconds(1.5f);
 		playSfx(startWistle);
+
  
 	}
 
@@ -213,16 +214,20 @@ public class GlobalGameManager : MonoBehaviour {
         //Countdown
         if (timeLeft > 0){
             timeLeft -= Time.deltaTime;
-            
+			timerCountTurn.text = timeLeft.ToString ();
+			decimal aux=decimal.Parse (string.Format ("{0:N0}", timeLeft));
+			timerCountTurn.text = aux.ToString ();
         }//If the time is 0 change the round --> change the turn
         else if (timeLeft <= 0 && round == 1){
             round = 2;
             timeLeft = 15;
+			timerCountTurn.text = timeLeft.ToString ();
             roundTurnManager();
            //If the time is 0 change the round --> change the turn
         }else if (timeLeft <= 0 && round == 2){
             round = 1;
             timeLeft = 15;
+			timerCountTurn.text = timeLeft.ToString ();
             roundTurnManager();
         }
 
@@ -232,6 +237,8 @@ public class GlobalGameManager : MonoBehaviour {
 		}
         //If you ever needed debug inforamtions:
         //print("GameRound: " + round + " & turn is for: " + whosTurn + " and GoalHappened is: " + goalHappened);
+
+
     }
 
     //*****************************************************************************
@@ -263,12 +270,18 @@ public class GlobalGameManager : MonoBehaviour {
             //In every rounds we have to increase the timer again.
             fueGol = false;
             timeLeft = 15;
-            //Si en el turno se ha llamado a powerup de tamaño decrementamos la variable contador
+			timerCountTurn.text = timeLeft.ToString ();
+            //Si en el turno se ha llamado a powerup de tamaï¿½o decrementamos la variable contador
             if (llamadoPowerUpTamano == true)
             {
                 Debug.Log(playerController.contadorPowerUpTamano);
                 playerController.contadorPowerUpTamano--;
             }
+
+			if (llamadoPowerUpElimina == true) {
+				Debug.Log (playerController.contadorPowerUpElimina);
+				playerController.contadorPowerUpElimina--;
+			}
         }
         else
         {
@@ -279,7 +292,8 @@ public class GlobalGameManager : MonoBehaviour {
             whosTurn = "opponent";
             //In every rounds we have to increase the timer again.
             timeLeft = 15;
-            //Si en el turno se ha llamado a powerup de tamaño decrementamos la variable contador
+			timerCountTurn.text = timeLeft.ToString ();
+            //Si en el turno se ha llamado a powerup de tamaï¿½o decrementamos la variable contador
             Debug.Log(llamadoPowerUpTamano);
             if (llamadoPowerUpTamano == true)
             {
@@ -288,6 +302,14 @@ public class GlobalGameManager : MonoBehaviour {
                 playerController.contadorPowerUpTamano = playerController.contadorPowerUpTamano - 1;
 
             }
+
+			if (llamadoPowerUpElimina == true)
+			{
+				Debug.Log(llamadoPowerUpElimina);
+				Debug.Log(playerController.contadorPowerUpElimina);
+				playerController.contadorPowerUpElimina = playerController.contadorPowerUpElimina - 1;
+
+			}
         }
         //Override
         //for two player game, players can always shoot.
@@ -305,6 +327,7 @@ public class GlobalGameManager : MonoBehaviour {
 		//if we had a goal after the shoot was done and just before the round change, leave the process to other controllers.
 
 		timeLeft = 15;
+		timerCountTurn.text = timeLeft.ToString ();
 
 		float t = 0;
 		while(t < timeStepToAdvanceRound) {	
@@ -572,10 +595,10 @@ public class GlobalGameManager : MonoBehaviour {
     //PowerUps
     //***************************************************************
 
-        //Power up Tamaño
+        //Power up Tamano
     public void PWTamano()
     {
-        //Se ha llamado al powerup del tamaño anteriormente?
+        //Se ha llamado al powerup del tamaï¿½o anteriormente?
         if (llamadoPowerUpTamano == false)
         {
             //Si no vemos si tiene la habilidad disponible (mas de 0)
@@ -589,7 +612,7 @@ public class GlobalGameManager : MonoBehaviour {
 
                 //SOLO UN USO DE LA HABILIDAD:
                 soloUnaVezTamano = 1;
-                //Ponemos el llamado de tamaño a true
+                //Ponemos el llamado de tamaï¿½o a true
                 llamadoPowerUpTamano = true;
 
             }
@@ -600,7 +623,37 @@ public class GlobalGameManager : MonoBehaviour {
             }
         }
     }
-    }
+
+	public void PWElimina()
+	{
+		//Se ha llamado al powerup del elimina anteriormente?
+		if (llamadoPowerUpElimina == false)
+		{
+			//Si no vemos si tiene la habilidad disponible (mas de 0)
+			if (iPowerUpElimina > 0)
+			{
+				Debug.Log(powerUpElimina.ToString());
+				//Decrementamos la habilidad
+				iPowerUpElimina--;
+				//La habilidad la tiene
+				powerUpElimina = true;
+
+				//SOLO UN USO DE LA HABILIDAD:
+				soloUnaVezElimina = 1;
+				//Ponemos el llamado de elimina a true
+				llamadoPowerUpElimina = true;
+
+			}
+			//En caso contrario falso
+			else
+			{
+				powerUpElimina = false;
+			}
+		}
+	}
+
+
+}
 
 
 
