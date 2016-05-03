@@ -105,6 +105,7 @@ public class GlobalGameManager : MonoBehaviour {
     public static int iPowerUpElimina = 2;
     public static int soloUnaVezElimina;
 
+
     GameObject myButton;
     private string liga;
     //*****************************************************************************

@@ -51,7 +51,12 @@ public class playerController : MonoBehaviour {
 		arrowPlane = GameObject.FindGameObjectWithTag("helperArrow");		
 		gameController = GameObject.FindGameObjectWithTag("GameController");
         chapas  = GameObject.FindGameObjectsWithTag("Player");
+<<<<<<< HEAD
 		enemigos = GameObject.FindGameObjectsWithTag ("Opponent");
+=======
+        
+       
+>>>>>>> c0e82544408420ff84b20de7c59c26860bee982f
         //Init Variables
         pwr = 0.1f;
 		currentDistance = 0;
@@ -64,8 +69,10 @@ public class playerController : MonoBehaviour {
 
     void Start()
     {
+
         Debug.Log("EL NUMERO ES " + PlayerPrefs.GetInt("Skin"));
         cambiarSkin();
+        cambiarAura();
     }
 
 	void Update (){
@@ -310,6 +317,60 @@ public class playerController : MonoBehaviour {
         }
     }
 
+    public static void cambiarAura()
+    {
+        int i = PlayerPrefs.GetInt("Aura");
+       /* rojo
+            azul
+            verde
+            amarillo
+            rosa
+    */     
+    GameObject[] circulos = GameObject.FindGameObjectsWithTag("selectionCirclePlayer");
+
+
+        switch (i)
+        {
+            case 0:
+
+                foreach (GameObject circulo in circulos)
+                {
+                    Renderer rend = circulo.GetComponent<Renderer>();
+                    rend.material.color = Color.red;
+                }
+                break;
+            case 1:
+                foreach (GameObject circulo in circulos)
+                {
+                    Renderer rend = circulo.GetComponent<Renderer>();
+                    rend.material.color = Color.blue;
+                }
+                break;
+            case 2:
+                foreach (GameObject circulo in circulos)
+                {
+                    Renderer rend = circulo.GetComponent<Renderer>();
+                    rend.material.color = Color.green;
+                }
+                break;
+            case 3:
+                foreach (GameObject circulo in circulos)
+                {
+                    Renderer rend = circulo.GetComponent<Renderer>();
+                    rend.material.color = Color.yellow;
+                }
+                break;
+            case 4:
+                foreach (GameObject circulo in circulos)
+                {
+                 Renderer rend = circulo.GetComponent<Renderer>();
+				rend.material.color = Color.magenta;
+                }
+
+                break;
+            }
+    }
+
     //**************************************************
     //PowerUps
     //**************************************************
@@ -318,11 +379,13 @@ public class playerController : MonoBehaviour {
     {
         if (GlobalGameManager.powerUpTamano == true && GlobalGameManager.soloUnaVezTamano > 0)
         {
+           
             transform.localScale = new Vector3(5.5f, 0.5f, 5.5f);
             GlobalGameManager.soloUnaVezTamano = 0;
             contadorPowerUpTamano++;
             GlobalGameManager.iPowerUpTamano = GlobalGameManager.iPowerUpTamano - 1;
-        }
+    
+    }
 
 		if (GlobalGameManager.powerUpElimina == true && GlobalGameManager.soloUnaVezElimina > 0)
 		{
