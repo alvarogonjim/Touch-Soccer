@@ -51,12 +51,12 @@ public class playerController : MonoBehaviour {
 		arrowPlane = GameObject.FindGameObjectWithTag("helperArrow");		
 		gameController = GameObject.FindGameObjectWithTag("GameController");
         chapas  = GameObject.FindGameObjectsWithTag("Player");
-<<<<<<< HEAD
+
 		enemigos = GameObject.FindGameObjectsWithTag ("Opponent");
-=======
+
         
        
->>>>>>> c0e82544408420ff84b20de7c59c26860bee982f
+
         //Init Variables
         pwr = 0.1f;
 		currentDistance = 0;

@@ -81,7 +81,7 @@ public class GlobalGameManager : MonoBehaviour {
 
     //Timer
     public float timeLeft = 15.0f;
-
+	public Text timerCountTurn;
     //Scores
     private long score;
 
@@ -214,16 +214,20 @@ public class GlobalGameManager : MonoBehaviour {
         //Countdown
         if (timeLeft > 0){
             timeLeft -= Time.deltaTime;
-            
+			timerCountTurn.text = timeLeft.ToString ();
+			decimal aux=decimal.Parse (string.Format ("{0:N0}", timeLeft));
+			timerCountTurn.text = aux.ToString ();
         }//If the time is 0 change the round --> change the turn
         else if (timeLeft <= 0 && round == 1){
             round = 2;
             timeLeft = 15;
+			timerCountTurn.text = timeLeft.ToString ();
             roundTurnManager();
            //If the time is 0 change the round --> change the turn
         }else if (timeLeft <= 0 && round == 2){
             round = 1;
             timeLeft = 15;
+			timerCountTurn.text = timeLeft.ToString ();
             roundTurnManager();
         }
 
@@ -266,6 +270,7 @@ public class GlobalGameManager : MonoBehaviour {
             //In every rounds we have to increase the timer again.
             fueGol = false;
             timeLeft = 15;
+			timerCountTurn.text = timeLeft.ToString ();
             //Si en el turno se ha llamado a powerup de tama�o decrementamos la variable contador
             if (llamadoPowerUpTamano == true)
             {
@@ -287,6 +292,7 @@ public class GlobalGameManager : MonoBehaviour {
             whosTurn = "opponent";
             //In every rounds we have to increase the timer again.
             timeLeft = 15;
+			timerCountTurn.text = timeLeft.ToString ();
             //Si en el turno se ha llamado a powerup de tama�o decrementamos la variable contador
             Debug.Log(llamadoPowerUpTamano);
             if (llamadoPowerUpTamano == true)
@@ -321,6 +327,7 @@ public class GlobalGameManager : MonoBehaviour {
 		//if we had a goal after the shoot was done and just before the round change, leave the process to other controllers.
 
 		timeLeft = 15;
+		timerCountTurn.text = timeLeft.ToString ();
 
 		float t = 0;
 		while(t < timeStepToAdvanceRound) {	
