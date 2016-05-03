@@ -333,9 +333,8 @@ public class playerController : MonoBehaviour {
             case 4:
                 foreach (GameObject circulo in circulos)
                 {
-                Color rosa = new Color(255F, 0F, 255F, 255F);
                  Renderer rend = circulo.GetComponent<Renderer>();
-                    rend.material.color = rosa;
+				rend.material.color = Color.magenta;
                 }
 
                 break;
