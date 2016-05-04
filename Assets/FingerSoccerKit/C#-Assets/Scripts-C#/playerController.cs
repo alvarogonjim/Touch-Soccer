@@ -88,37 +88,13 @@ public class playerController : MonoBehaviour {
 
         
         foreach (GameObject chapa in chapas)
-        {
+          {
             if(contadorPowerUpTamano == 0)
-                chapa.transform.localScale = new Vector3(2.5f, 0.5f, 2.5f);
-
-            
+                chapa.transform.localScale = new Vector3(2.5f, 0.5f, 2.5f);         
+             }
+	  
         }
-		if (GlobalGameManager.powerUpElimina == true && GlobalGameManager.soloUnaVezElimina > 0 && gameObject.tag=="Opponent")
-		{
-		if (Input.GetMouseButtonDown(0))
-		{
-			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-			RaycastHit hit;
-
-			if (Physics.Raycast(ray, out hit, 100))
-			{
-				opponent = hit.transform.gameObject.name;
-					if (opponent.Equals ("Opponent-Player-1") || opponent.Equals ("Opponent-Player-2") || opponent.Equals ("Opponent-Player-3")
-					   || opponent.Equals ("Opponent-Player-4") || opponent.Equals ("Opponent-Player-5")) {
-						enemigo=GameObject.Find (opponent);
-						enemigo.GetComponent<MeshRenderer> ().enabled = false;
-						enemigo.GetComponent<MeshCollider> ().enabled = false;
-						//enemigo.GetComponent<OpponentUnitController> ().selectionCircle.SetActive (false);
-
-					}
-			}
-
-		}
 	
-        
-    }
-	}
 
 	//***************************************************************************//
 	// Works fine with mouse and touch
@@ -387,15 +363,36 @@ public class playerController : MonoBehaviour {
     
     }
 
-		if (GlobalGameManager.powerUpElimina == true && GlobalGameManager.soloUnaVezElimina > 0)
-		{
 
-			Destroy (GameObject.FindGameObjectWithTag("Opponent"));
-			GlobalGameManager.soloUnaVezElimina = 0;
-			contadorPowerUpElimina++;
-			GlobalGameManager.iPowerUpElimina = GlobalGameManager.iPowerUpElimina - 1;
-		}
-    } 
-		
+        if (Input.GetMouseButtonDown(0) && GlobalGameManager.powerUpElimina == true && GlobalGameManager.soloUnaVezElimina > 0)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, 100))
+            {
+                opponent = hit.transform.gameObject.name;
+                if (opponent.Equals("Player2Unit-1") || opponent.Equals("Player2Unit-2") || opponent.Equals("Player2Unit-3")
+                    || opponent.Equals("Player2Unit-4") || opponent.Equals("Player2Unit-5"))
+                {
+
+                    enemigo = GameObject.Find(opponent);
+                    enemigo.GetComponent<MeshRenderer>().enabled = false;
+                    enemigo.GetComponent<MeshCollider>().enabled = false;
+                    enemigo.GetComponent<Renderer>().enabled = false;
+                    enemigo.GetComponent<playerController>().enabled = false;
+
+                    //rend.material.color = Color.clear;
+
+
+                    GlobalGameManager.soloUnaVezElimina = 0;
+                    contadorPowerUpElimina++;
+                    GlobalGameManager.iPowerUpElimina = GlobalGameManager.iPowerUpElimina - 1;
+                }
+            }
+        }
+
+    }
+
 }
 
