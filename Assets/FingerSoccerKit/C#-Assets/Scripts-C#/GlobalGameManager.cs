@@ -254,6 +254,7 @@ public class GlobalGameManager : MonoBehaviour {
 		int carry;
 		carry = round % 2;
 		if(carry == 1){
+			timeLeft = 15;
 			playersTurn = true;
 			opponentsTurn = false;
 			playerController.canShoot = true;

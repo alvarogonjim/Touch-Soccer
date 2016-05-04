@@ -74,6 +74,7 @@ public class menuTienda : MonoBehaviour
 		GameObject.Find("Auras").SetActive(false);
 		GameObject.Find("Formaciones").SetActive(false);
 		GameObject.Find("PanelChapas").SetActive(false);
+		GameObject.Find("Personalizadas").SetActive(false);
 	}
 	// Update is called once per frame
 	void Update()
