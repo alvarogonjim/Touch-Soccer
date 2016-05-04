@@ -17,7 +17,7 @@ public class menuTienda : MonoBehaviour
 
 	public  GameObject[] totalChapas;
 	public GameObject[] totalAuras;
-	public List<Vector3> totalFormaciones;
+	public GameObject[] totalFormaciones;
 	private static GameObject[] chapas;
 	public static int  precioItem;
 	public static int dinero = 500;
@@ -66,8 +66,24 @@ public class menuTienda : MonoBehaviour
 				ActiveButton.GetComponent<Button>().interactable = true;
 			}
 		}
+        for (int k = 0; k < totalFormaciones.Length; k++)
+        {
+            string indexFormacion = totalFormaciones[k].GetComponent<ShopItemProperties>().itemIndex.ToString();
+            string useButtonFormacion = totalFormaciones[k].GetComponent<ShopItemProperties>().useButton;
+            string shopItemFormacion = "Formacion-" + indexFormacion;
+            Debug.Log(shopItemFormacion);
+            if (PlayerPrefs.GetInt(shopItemFormacion) == 1)
+            {
+                //Encontramos el boton y lo desactivamos
+                GameObject BuyButton = GameObject.Find(indexFormacion.ToString());
+                BuyButton.SetActive(false);
+                //Encontramos el boton de usar y lo activamos
+                GameObject ActiveButton = GameObject.Find(useButtonFormacion);
+                ActiveButton.GetComponent<Button>().interactable = true;
+            }
+        }
 
-	}
+    }
 	void Start()
 	{
 		GameObject.Find("Chapas").SetActive(false);
@@ -144,6 +160,36 @@ public class menuTienda : MonoBehaviour
 		Debug.Log(index);
 		PlayerPrefs.SetInt("Aura", index);
 	}
+
+    public void comprarFormacion(int index)
+    {
+        precioItem = totalFormaciones[index].GetComponent<ShopItemProperties>().itemPrice;
+        nombreBoton = totalFormaciones[index].GetComponent<ShopItemProperties>().useButton;
+
+        if (dinero >= precioItem)
+        {
+            //Decrementamos el dinero 
+            dinero = dinero - precioItem;
+            PlayerPrefs.SetInt("PlayerMoney", dinero);
+
+            //Guardamos el objeto
+            PlayerPrefs.SetInt("Formacion-" + index.ToString(), 1);
+
+            //Encontramos el boton y lo desactivamos
+            GameObject BuyButton = GameObject.Find(index.ToString());
+            BuyButton.SetActive(false);
+            //Encontramos el boton de usar y lo activamos
+            GameObject ActiveButton = GameObject.Find(nombreBoton);
+            ActiveButton.GetComponent<Button>().interactable = true;
+
+        }
+    }
+    public void setIndexFormaciones(int index)
+    {
+        //Debug
+        Debug.Log(index);
+        PlayerPrefs.SetInt("Formaciones", index);
+    }
 
 }
 
