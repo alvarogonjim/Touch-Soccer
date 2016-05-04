@@ -18,6 +18,9 @@ public class playerController : MonoBehaviour {
 	private GameObject helperEnd; 		//End Helper
 	private GameObject arrowPlane; 		//arrow plane which is used to show shotPower
     public static GameObject[] chapas;
+	public static GameObject[] enemigos;
+	private GameObject enemigo;
+	public string opponent;
     private GameObject chapa;
     private GameObject gameController;	//Reference to main game controller
 	private float currentDistance;		//real distance of our touch/mouse position from initial drag position
@@ -48,8 +51,12 @@ public class playerController : MonoBehaviour {
 		arrowPlane = GameObject.FindGameObjectWithTag("helperArrow");		
 		gameController = GameObject.FindGameObjectWithTag("GameController");
         chapas  = GameObject.FindGameObjectsWithTag("Player");
+
+		enemigos = GameObject.FindGameObjectsWithTag ("Opponent");
+
         
        
+
         //Init Variables
         pwr = 0.1f;
 		currentDistance = 0;
@@ -87,8 +94,31 @@ public class playerController : MonoBehaviour {
 
             
         }
+		if (GlobalGameManager.powerUpElimina == true && GlobalGameManager.soloUnaVezElimina > 0 && gameObject.tag=="Opponent")
+		{
+		if (Input.GetMouseButtonDown(0))
+		{
+			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			RaycastHit hit;
+
+			if (Physics.Raycast(ray, out hit, 100))
+			{
+				opponent = hit.transform.gameObject.name;
+					if (opponent.Equals ("Opponent-Player-1") || opponent.Equals ("Opponent-Player-2") || opponent.Equals ("Opponent-Player-3")
+					   || opponent.Equals ("Opponent-Player-4") || opponent.Equals ("Opponent-Player-5")) {
+						enemigo=GameObject.Find (opponent);
+						enemigo.GetComponent<MeshRenderer> ().enabled = false;
+						enemigo.GetComponent<MeshCollider> ().enabled = false;
+						//enemigo.GetComponent<OpponentUnitController> ().selectionCircle.SetActive (false);
+
+					}
+			}
+
+		}
+	
         
     }
+	}
 
 	//***************************************************************************//
 	// Works fine with mouse and touch
@@ -357,6 +387,15 @@ public class playerController : MonoBehaviour {
     
     }
 
-    } 
+		if (GlobalGameManager.powerUpElimina == true && GlobalGameManager.soloUnaVezElimina > 0)
+		{
 
+			Destroy (GameObject.FindGameObjectWithTag("Opponent"));
+			GlobalGameManager.soloUnaVezElimina = 0;
+			contadorPowerUpElimina++;
+			GlobalGameManager.iPowerUpElimina = GlobalGameManager.iPowerUpElimina - 1;
+		}
+    } 
+		
 }
+
