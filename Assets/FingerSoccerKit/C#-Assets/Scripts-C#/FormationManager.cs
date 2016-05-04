@@ -37,7 +37,8 @@ public class FormationManager : MonoBehaviour {
 	//*****************************************************************************
 	public static Vector3 getPositionInFormation ( int _formationIndex ,   int _UnitIndex  ){
 		Vector3 output = Vector3.zero;
-		switch(_formationIndex) {
+        int index = PlayerPrefs.GetInt("Formaciones");
+        switch (index) {
 		case 0:
 			
 				if(_UnitIndex == 0) output = new Vector3(-15, 0 + yFixer, fixedZ);
@@ -65,7 +66,7 @@ public class FormationManager : MonoBehaviour {
 				if(_UnitIndex == 4) output = new Vector3(-3, 0 + yFixer, fixedZ);
 				break;
 			
-			case 3:
+		case 3:
 				if(_UnitIndex == 0) output = new Vector3(-14, 0 + yFixer, fixedZ);
 				if(_UnitIndex == 1) output = new Vector3(-11, 5.5f + yFixer, fixedZ);
 				if(_UnitIndex == 2) output = new Vector3(-11, 2 + yFixer, fixedZ);
@@ -73,7 +74,7 @@ public class FormationManager : MonoBehaviour {
 				if(_UnitIndex == 4) output = new Vector3(-11, -5.5f + yFixer, fixedZ);
 				break;
 			
-			case 4:
+		case 4:
 				if(_UnitIndex == 0) output = new Vector3(-15, 0 + yFixer, fixedZ);
 				if(_UnitIndex == 1) output = new Vector3(-12.5f, 2.5f + yFixer, fixedZ);
 				if(_UnitIndex == 2) output = new Vector3(-9, 4.5f + yFixer, fixedZ);
