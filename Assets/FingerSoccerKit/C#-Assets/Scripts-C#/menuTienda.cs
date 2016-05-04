@@ -32,6 +32,7 @@ public class menuTienda : MonoBehaviour
             string index = totalChapas[i].GetComponent<ShopItemProperties>().itemIndex.ToString();
             string useButton = totalChapas[i].GetComponent<ShopItemProperties>().useButton;
             string shopItem = "Chapa-" + index;
+			Debug.Log (shopItem);
            
             if (PlayerPrefs.GetInt(shopItem) == 1)
             {
@@ -48,6 +49,7 @@ public class menuTienda : MonoBehaviour
                 string indexAura = totalAuras[j].GetComponent<ShopItemProperties>().itemIndex.ToString();
                 string useButtonAura = totalAuras[j].GetComponent<ShopItemProperties>().useButton;
                 string shopItemAura = "Aura-" + indexAura;
+			Debug.Log (shopItemAura);
                 if (PlayerPrefs.GetInt(shopItemAura) == 1)
                 {
                     //Encontramos el boton y lo desactivamos
@@ -62,10 +64,10 @@ public class menuTienda : MonoBehaviour
     }
     void Start()
     {
-        GameObject.Find("Chapas").SetActive(false);
-        GameObject.Find("Auras").SetActive(false);
-        GameObject.Find("Formaciones").SetActive(false);
-        GameObject.Find("PanelChapas").SetActive(false);
+       GameObject.Find("Chapas").SetActive(false);
+       GameObject.Find("Auras").SetActive(false);
+       GameObject.Find("Formaciones").SetActive(false);
+       GameObject.Find("PanelChapas").SetActive(false);
     }
     // Update is called once per frame
     void Update()
@@ -111,7 +113,7 @@ public class menuTienda : MonoBehaviour
             PlayerPrefs.SetInt("PlayerMoney", dinero);
 
             //Guardamos el objeto
-            PlayerPrefs.SetInt("Aura-" + index.ToString(), 1);
+            PlayerPrefs.SetInt("Aura-" + index.ToString(),1);
 
             //Encontramos el boton y lo desactivamos
             GameObject BuyButton = GameObject.Find(index.ToString());
