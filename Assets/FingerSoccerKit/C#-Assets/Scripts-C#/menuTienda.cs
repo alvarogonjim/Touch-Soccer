@@ -10,7 +10,6 @@ public class menuTienda : MonoBehaviour
 
 
     public  GameObject[] totalChapas;
-    public GameObject[] totalAuras;
     public List<Vector3> totalFormaciones;
     private static GameObject[] chapas;
     public static int  precioItem;
@@ -27,23 +26,25 @@ public class menuTienda : MonoBehaviour
         dinero = PlayerPrefs.GetInt("PlayerMoney");
         //Cargamos las chapas compradas
 
-        for (int i = 0; i < totalChapas.Length; i++)
+        for(int i = 0; i<totalChapas.Length; i++) 
         {
             string index = totalChapas[i].GetComponent<ShopItemProperties>().itemIndex.ToString();
             string useButton = totalChapas[i].GetComponent<ShopItemProperties>().useButton;
             string shopItem = "Chapa-" + index;
+
 			Debug.Log (shopItem);
-           
+          
             if (PlayerPrefs.GetInt(shopItem) == 1)
             {
+                //Encontramos el boton y lo desactivamos
                 GameObject BuyButton = GameObject.Find(index.ToString());
-                //Encontramos el boton y lo 
                 BuyButton.SetActive(false);
                 //Encontramos el boton de usar y lo activamos
                 GameObject ActiveButton = GameObject.Find(useButton);
                 ActiveButton.GetComponent<Button>().interactable = true;
             }
         }
+
             for (int j = 0; j < totalAuras.Length; j++)
             {
                 string indexAura = totalAuras[j].GetComponent<ShopItemProperties>().itemIndex.ToString();
@@ -68,6 +69,7 @@ public class menuTienda : MonoBehaviour
        GameObject.Find("Auras").SetActive(false);
        GameObject.Find("Formaciones").SetActive(false);
        GameObject.Find("PanelChapas").SetActive(false);
+
     }
     // Update is called once per frame
     void Update()
@@ -101,6 +103,7 @@ public class menuTienda : MonoBehaviour
        
             }
         }
+
     public void comprarAura(int index)
     {
         precioItem = totalAuras[index].GetComponent<ShopItemProperties>().itemPrice;
@@ -125,20 +128,15 @@ public class menuTienda : MonoBehaviour
         }
     }
 
-    public void setIndexChapa(int index)
+   public void setIndex(int index)
     {
         //Debug
         Debug.Log(index);
         PlayerPrefs.SetInt("Skin", index);
     }
-    public void setIndexAuras(int index)
-    {
-        //Debug
-        Debug.Log(index);
-        PlayerPrefs.SetInt("Aura", index);
-    }
 
-}
+
+        }
        
 
     
