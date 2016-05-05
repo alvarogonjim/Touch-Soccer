@@ -73,6 +73,7 @@ public class GlobalGameManager : MonoBehaviour {
 	public AudioClip[] goalHappenedSfx;
 	public AudioClip[] crowdChants;
 	private bool canPlayCrowdChants;
+	public AudioClip finalPartido;
 
 	//Public references
 	public GameObject gameStatusPlane;		//user to show win/lose result at the end of match
@@ -105,6 +106,11 @@ public class GlobalGameManager : MonoBehaviour {
 	public static int iPowerUpElimina = 2;
 	public static int soloUnaVezElimina;
 
+	//volumen del sonido final del partido
+	private float volumen =0.6f;
+	private float reducir =0.0f;
+	public static bool ok = false;
+	public int segundos = 1;
 
 	GameObject myButton;
 	private string liga;
@@ -238,7 +244,14 @@ public class GlobalGameManager : MonoBehaviour {
 		//If you ever needed debug inforamtions:
 		//print("GameRound: " + round + " & turn is for: " + whosTurn + " and GoalHappened is: " + goalHappened);
 
-
+		if (ok) {
+			reducir += Time.deltaTime / segundos;
+			volumen = Mathf.Lerp (0.5f, 1.0f, reducir);
+		} else {
+			volumen = 1.0f;
+			reducir = 0f;
+		}
+		GetComponent<AudioSource>().volume= volumen;
 	}
 
 	//*****************************************************************************
@@ -254,7 +267,6 @@ public class GlobalGameManager : MonoBehaviour {
 		int carry;
 		carry = round % 2;
 		if(carry == 1){
-			timeLeft = 15;
 			playersTurn = true;
 			opponentsTurn = false;
 			playerController.canShoot = true;
@@ -272,7 +284,7 @@ public class GlobalGameManager : MonoBehaviour {
 			fueGol = false;
 			timeLeft = 15;
 			timerCountTurn.text = timeLeft.ToString ();
-			//Si en el turno se ha llamado a powerup de tama�o decrementamos la variable contador
+			//Si en el turno se ha llamado a powerup de tamaï¿½o decrementamos la variable contador
 			if (llamadoPowerUpTamano == true)
 			{
 				Debug.Log(playerController.contadorPowerUpTamano);
@@ -294,7 +306,7 @@ public class GlobalGameManager : MonoBehaviour {
 			//In every rounds we have to increase the timer again.
 			timeLeft = 15;
 			timerCountTurn.text = timeLeft.ToString ();
-			//Si en el turno se ha llamado a powerup de tama�o decrementamos la variable contador
+			//Si en el turno se ha llamado a powerup de tamaï¿½o decrementamos la variable contador
 			Debug.Log(llamadoPowerUpTamano);
 			if (llamadoPowerUpTamano == true)
 			{
@@ -442,7 +454,11 @@ public class GlobalGameManager : MonoBehaviour {
 	void manageGameStatus (){
 		seconds = Mathf.CeilToInt(gameTimer - Time.timeSinceLevelLoad) % 60;
 		minutes = Mathf.CeilToInt(gameTimer - Time.timeSinceLevelLoad) / 60; 
+		if (seconds == 50 && minutes == 2) {
+			ok = true;
+			playSfx (finalPartido);
 
+		}
 		if(seconds == 0 && minutes == 0) {
 			gameIsFinished = true;
 			manageGameFinishState();
@@ -599,7 +615,7 @@ public class GlobalGameManager : MonoBehaviour {
 	//Power up Tamano
 	public void PWTamano()
 	{
-		//Se ha llamado al powerup del tama�o anteriormente?
+		//Se ha llamado al powerup del tamaï¿½o anteriormente?
 		if (llamadoPowerUpTamano == false)
 		{
 			//Si no vemos si tiene la habilidad disponible (mas de 0)
@@ -613,7 +629,7 @@ public class GlobalGameManager : MonoBehaviour {
 
 				//SOLO UN USO DE LA HABILIDAD:
 				soloUnaVezTamano = 1;
-				//Ponemos el llamado de tama�o a true
+				//Ponemos el llamado de tamaï¿½o a true
 				llamadoPowerUpTamano = true;
 
 			}
