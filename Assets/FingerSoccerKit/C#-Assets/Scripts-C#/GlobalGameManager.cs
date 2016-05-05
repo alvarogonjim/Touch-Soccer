@@ -377,7 +377,8 @@ public class GlobalGameManager : MonoBehaviour {
 
 		//soft pause the game for reformation and other things...
 		goalHappened = true;
-
+		flagGoal = true;
+		fueGol = true;
 
 		//add to goal counters
 		switch (_goalBy)
@@ -389,6 +390,7 @@ public class GlobalGameManager : MonoBehaviour {
 				playerGoals++;
 				round = 2; //goal by player-1 and opponent should start the next round
 				fueGol = true;
+
 			}
 			break;
 
@@ -454,7 +456,7 @@ public class GlobalGameManager : MonoBehaviour {
 	void manageGameStatus (){
 		seconds = Mathf.CeilToInt(gameTimer - Time.timeSinceLevelLoad) % 60;
 		minutes = Mathf.CeilToInt(gameTimer - Time.timeSinceLevelLoad) / 60; 
-		if (seconds == 50 && minutes == 2) {
+		if (seconds == 20 && minutes == 0) {
 			ok = true;
 			playSfx (finalPartido);
 
@@ -603,8 +605,9 @@ public class GlobalGameManager : MonoBehaviour {
 	IEnumerator GoalOcurred(){
 		//AnimGoal.Crossfade ("AnimGoal");
 		AnimGoal.CrossFade(nombreAni);
-		yield return new WaitForSeconds (AnimGoal[nombreAni].length);
+		yield return new WaitForSeconds (AnimGoal["AnimGoal"].length);
 		flagGoal = false;
+		fueGol = false;
 		Debug.Log (flagGoal);
 		//goalHappened =! goalHappened;
 	}
