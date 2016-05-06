@@ -33,6 +33,7 @@ public class SoccerRealTimeMultiplayerListener : RealTimeMultiplayerListener
         {
             // Successfully connected to room!
             // ...start playing game...
+            Application.LoadLevel("Game-c#");
         }
         else
         {

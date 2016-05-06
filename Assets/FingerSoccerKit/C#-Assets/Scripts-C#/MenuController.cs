@@ -249,8 +249,15 @@ public class MenuController : MonoBehaviour
 
     public void GoOnlineQuickMatch()
     {
-        PlayGamesPlatform.Instance.RealTime.CreateQuickGame(2, 2, 0, SoccerRealTimeMultiplayerListener.Instance);
-        PlayGamesPlatform.Instance.RealTime.ShowWaitingRoomUI();
+        if (Social.localUser.authenticated)
+        {
+            PlayGamesPlatform.Instance.RealTime.CreateQuickGame(1, 1, 0, SoccerRealTimeMultiplayerListener.Instance);
+            PlayGamesPlatform.Instance.RealTime.ShowWaitingRoomUI();
+        }
+        else
+        {
+            Social.localUser.Authenticate((bool success) => { });
+        }
     }
 
 }
