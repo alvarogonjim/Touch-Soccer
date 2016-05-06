@@ -378,7 +378,8 @@ public class GlobalGameManager : MonoBehaviour {
 		//soft pause the game for reformation and other things...
 		goalHappened = true;
 		flagGoal = true;
-		fueGol = true;
+		Debug.Log (flagGoal);
+
 
 		//add to goal counters
 		switch (_goalBy)
@@ -440,7 +441,7 @@ public class GlobalGameManager : MonoBehaviour {
 
 		//else, continue to the next round
 		goalHappened = false;
-		flagGoal = false;
+		//flagGoal = false;
 		roundTurnManager();
 		playSfx(startWistle);
 	}
@@ -604,12 +605,13 @@ public class GlobalGameManager : MonoBehaviour {
 
 	IEnumerator GoalOcurred(){
 		//AnimGoal.Crossfade ("AnimGoal");
-		AnimGoal.CrossFade(nombreAni);
-		yield return new WaitForSeconds (AnimGoal["AnimGoal"].length);
 		flagGoal = false;
-		fueGol = false;
-		Debug.Log (flagGoal);
-		//goalHappened =! goalHappened;
+		AnimGoal.CrossFade(nombreAni);
+		yield return new WaitForSeconds (AnimGoal[nombreAni].length);
+		//flagGoal = false;
+		//fueGol = false;
+
+
 	}
 	//***************************************************************
 	//PowerUps
