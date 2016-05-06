@@ -24,13 +24,14 @@ public class GlobalGameManager : MonoBehaviour {
 	public static string cpuName = "CPU";
 
 
-	// Available Game Modes:
-	/*
+    // Available Game Modes:
+    /*
 	Indexes:
 	0 = 1 player against cpu
 	1 = 2 player against each other on the same platform/device
+    2 = online
 	*/
-	public static int gameMode;
+    public static int gameMode;
 
 	//Odd rounds are player (Player-1) turn and Even rounds are AI (Player-2)'s
 	public static int round;
@@ -60,6 +61,9 @@ public class GlobalGameManager : MonoBehaviour {
 	static int playerGoals;
 	static int opponentGoals;
 	public static float gameTime; //Main game timer (in seconds). Always fixed.
+
+    //Online
+    public static bool amIPlayerOne;
 
 	//gameObject references
 	private GameObject playerAIController;
@@ -155,6 +159,9 @@ public class GlobalGameManager : MonoBehaviour {
 		else
 			gameMode = 0; // Deafault Mode (Player-1 vs AI)
 
+        //TODO-REE online
+        gameMode = 2;
+
 		playerAIController = GameObject.FindGameObjectWithTag("playerAI");
 		opponentAIController = GameObject.FindGameObjectWithTag("opponentAI");
 		ball = GameObject.FindGameObjectWithTag("ball");
@@ -173,24 +180,34 @@ public class GlobalGameManager : MonoBehaviour {
 	private GameObject[] cpuTeam;		//array of all AI units in the game
 	void manageGameModes (){
 		switch(gameMode) {
-		case 0:
-			//find and deactive all player2 units. This is player-1 vs AI.
-			player2Team = GameObject.FindGameObjectsWithTag("Player_2");
-			foreach(GameObject unit in player2Team) {
-				unit.SetActive(false);
-			}
-			break;
+		    case 0:
+			    //find and deactive all player2 units. This is player-1 vs AI.
+			    player2Team = GameObject.FindGameObjectsWithTag("Player_2");
+			    foreach(GameObject unit in player2Team) {
+				    unit.SetActive(false);
+			    }
+			    break;
 
-		case 1:
-			//find and deactive all AI Opponent units. This is Player-1 vs Player-2.
-			cpuTeam = GameObject.FindGameObjectsWithTag("Opponent");
-			foreach(GameObject unit in cpuTeam) {
-				unit.SetActive(false);
-			}
-			//deactive opponent's AI
-			opponentAIController.SetActive(false);
-			break;
-		}
+		    case 1:
+			    //find and deactive all AI Opponent units. This is Player-1 vs Player-2.
+			    cpuTeam = GameObject.FindGameObjectsWithTag("Opponent");
+			    foreach(GameObject unit in cpuTeam) {
+				    unit.SetActive(false);
+			    }
+			    //deactive opponent's AI
+			    opponentAIController.SetActive(false);
+			    break;
+            case 2:
+                if(amIPlayerOne)
+                {
+
+                }
+                else
+                {
+
+                }
+                break;
+		    }
 	}
 
 	IEnumerator Start (){
@@ -202,40 +219,42 @@ public class GlobalGameManager : MonoBehaviour {
 
 	}
 
-	//*****************************************************************************
-	// FSM
-	//*****************************************************************************
-	void Update (){
-		//check game finish status every frame
-		if(!gameIsFinished) {
-			manageGameStatus();
-		}
+    //*****************************************************************************
+    // FSM
+    //*****************************************************************************
+    void Update() {
+        //check game finish status every frame
+        if (!gameIsFinished) {
+            manageGameStatus();
+        }
 
-		//every now and then, play some crowd chants
-		StartCoroutine(playCrowdChants());
+        //every now and then, play some crowd chants
+        StartCoroutine(playCrowdChants());
 
-		//Debug.Log (timeLeft);
+        //Debug.Log (timeLeft);
 
 
-		//Countdown
-		if (timeLeft > 0){
-			timeLeft -= Time.deltaTime;
-			timerCountTurn.text = timeLeft.ToString ();
-			decimal aux=decimal.Parse (string.Format ("{0:N0}", timeLeft));
-			timerCountTurn.text = aux.ToString ();
-		}//If the time is 0 change the round --> change the turn
-		else if (timeLeft <= 0 && round == 1){
-			round = 2;
-			timeLeft = 15;
-			timerCountTurn.text = timeLeft.ToString ();
-			roundTurnManager();
-			//If the time is 0 change the round --> change the turn
-		}else if (timeLeft <= 0 && round == 2){
-			round = 1;
-			timeLeft = 15;
-			timerCountTurn.text = timeLeft.ToString ();
-			roundTurnManager();
-		}
+        //Countdown
+        if (gameMode != 2) {
+            if (timeLeft > 0) {
+                timeLeft -= Time.deltaTime;
+                timerCountTurn.text = timeLeft.ToString();
+                decimal aux = decimal.Parse(string.Format("{0:N0}", timeLeft));
+                timerCountTurn.text = aux.ToString();
+            }//If the time is 0 change the round --> change the turn
+            else if (timeLeft <= 0 && round == 1) {
+                round = 2;
+                timeLeft = 15;
+                timerCountTurn.text = timeLeft.ToString();
+                roundTurnManager();
+                //If the time is 0 change the round --> change the turn
+            } else if (timeLeft <= 0 && round == 2) {
+                round = 1;
+                timeLeft = 15;
+                timerCountTurn.text = timeLeft.ToString();
+                roundTurnManager();
+            }
+        }
 
 		if (flagGoal == true) {
 			StartCoroutine ("GoalOcurred");

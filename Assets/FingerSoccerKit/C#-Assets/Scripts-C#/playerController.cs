@@ -271,14 +271,13 @@ public class playerController : MonoBehaviour {
 		Vector3 outPower = shootDirectionVector * pwr * -1;
 		
 		//always make the player to move only in x-y plane and not on the z direction
-		print("shoot power: " + outPower.magnitude);		
+		print("shoot power: " + outPower.magnitude + " " + outPower);		
 		GetComponent<Rigidbody>().AddForce(outPower, ForceMode.Impulse);
 		
 		//change the turn
-        //TODO-REE online change turn
 		if(GlobalGameManager.gameMode == 0)
 			StartCoroutine(gameController.GetComponent<GlobalGameManager>().managePostShoot("Player"));
-		else if(GlobalGameManager.gameMode == 1)
+		else
 			StartCoroutine(gameController.GetComponent<GlobalGameManager>().managePostShoot(gameObject.tag));
 	}
 
