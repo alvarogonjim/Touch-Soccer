@@ -18,6 +18,9 @@ public class playerController : MonoBehaviour {
 	private GameObject helperEnd; 		//End Helper
 	private GameObject arrowPlane; 		//arrow plane which is used to show shotPower
     public static GameObject[] chapas;
+	public static GameObject[] enemigos;
+	private GameObject enemigo;
+	public string opponent;
     private GameObject chapa;
     private GameObject gameController;	//Reference to main game controller
 	private float currentDistance;		//real distance of our touch/mouse position from initial drag position
@@ -35,12 +38,12 @@ public class playerController : MonoBehaviour {
 	private int timeAllowedToShoot = 10000; //In Seconds (in this kit we give players unlimited time to perform their turn of shooting)
 
 
-    public static int contadorPowerUp=1;
-    
-	//*****************************************************************************
-	// Init
-	//*****************************************************************************
-	void Awake (){
+    public static int contadorPowerUpTamano=1;
+    public static int contadorPowerUpElimina = 1;
+    //*****************************************************************************
+    // Init
+    //*****************************************************************************
+    void Awake (){
        
 		//Find and cache important gameObjects
 		helperBegin = GameObject.FindGameObjectWithTag("mouseHelperBegin");
@@ -48,10 +51,12 @@ public class playerController : MonoBehaviour {
 		arrowPlane = GameObject.FindGameObjectWithTag("helperArrow");		
 		gameController = GameObject.FindGameObjectWithTag("GameController");
         chapas  = GameObject.FindGameObjectsWithTag("Player");
-        foreach (GameObject chapa in chapas)
-        {
-            DontDestroyOnLoad(chapa);
-        }
+
+		enemigos = GameObject.FindGameObjectsWithTag ("Opponent");
+
+        
+       
+
         //Init Variables
         pwr = 0.1f;
 		currentDistance = 0;
@@ -64,8 +69,10 @@ public class playerController : MonoBehaviour {
 
     void Start()
     {
+
         Debug.Log("EL NUMERO ES " + PlayerPrefs.GetInt("Skin"));
         cambiarSkin();
+        cambiarAura();
     }
 
 	void Update (){
@@ -81,14 +88,13 @@ public class playerController : MonoBehaviour {
 
         
         foreach (GameObject chapa in chapas)
-        {
-            if(contadorPowerUp <= 0)
-                chapa.transform.localScale = new Vector3(2.5f, 0.5f, 2.5f);
-
-            
+          {
+            if(contadorPowerUpTamano == 0)
+                chapa.transform.localScale = new Vector3(2.5f, 0.5f, 2.5f);         
+             }
+	  
         }
-        
-    }
+	
 
 	//***************************************************************************//
 	// Works fine with mouse and touch
@@ -288,18 +294,106 @@ public class playerController : MonoBehaviour {
         }
     }
 
+    public static void cambiarAura()
+    {
+        int i = PlayerPrefs.GetInt("Aura");
+       /* rojo
+            azul
+            verde
+            amarillo
+            rosa
+    */     
+    GameObject[] circulos = GameObject.FindGameObjectsWithTag("selectionCirclePlayer");
+
+
+        switch (i)
+        {
+            case 0:
+
+                foreach (GameObject circulo in circulos)
+                {
+                    Renderer rend = circulo.GetComponent<Renderer>();
+                    rend.material.color = Color.red;
+                }
+                break;
+            case 1:
+                foreach (GameObject circulo in circulos)
+                {
+                    Renderer rend = circulo.GetComponent<Renderer>();
+                    rend.material.color = Color.blue;
+                }
+                break;
+            case 2:
+                foreach (GameObject circulo in circulos)
+                {
+                    Renderer rend = circulo.GetComponent<Renderer>();
+                    rend.material.color = Color.green;
+                }
+                break;
+            case 3:
+                foreach (GameObject circulo in circulos)
+                {
+                    Renderer rend = circulo.GetComponent<Renderer>();
+                    rend.material.color = Color.yellow;
+                }
+                break;
+            case 4:
+                foreach (GameObject circulo in circulos)
+                {
+                 Renderer rend = circulo.GetComponent<Renderer>();
+				rend.material.color = Color.magenta;
+                }
+
+                break;
+            }
+    }
+
     //**************************************************
     //PowerUps
     //**************************************************
 
     void OnMouseDown()
     {
-        if (GlobalGameManager.powerUpTamano == true && GlobalGameManager.iPowerUpTamano > 0)
+        if (GlobalGameManager.powerUpTamano == true && GlobalGameManager.soloUnaVezTamano > 0)
         {
+           
             transform.localScale = new Vector3(5.5f, 0.5f, 5.5f);
-            contadorPowerUp++;
+            GlobalGameManager.soloUnaVezTamano = 0;
+            contadorPowerUpTamano++;
             GlobalGameManager.iPowerUpTamano = GlobalGameManager.iPowerUpTamano - 1;
+    
+    }
+
+
+        if (Input.GetMouseButtonDown(0) && GlobalGameManager.powerUpElimina == true && GlobalGameManager.soloUnaVezElimina > 0)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, 100))
+            {
+                opponent = hit.transform.gameObject.name;
+                if (opponent.Equals("Player2Unit-1") || opponent.Equals("Player2Unit-2") || opponent.Equals("Player2Unit-3")
+                    || opponent.Equals("Player2Unit-4") || opponent.Equals("Player2Unit-5"))
+                {
+
+                    enemigo = GameObject.Find(opponent);
+                    enemigo.GetComponent<MeshRenderer>().enabled = false;
+                    enemigo.GetComponent<MeshCollider>().enabled = false;
+                    enemigo.GetComponent<Renderer>().enabled = false;
+                    enemigo.GetComponent<playerController>().enabled = false;
+
+                    //rend.material.color = Color.clear;
+
+
+                    GlobalGameManager.soloUnaVezElimina = 0;
+                    contadorPowerUpElimina++;
+                    GlobalGameManager.iPowerUpElimina = GlobalGameManager.iPowerUpElimina - 1;
+                }
+            }
         }
-    } 
+
+    }
 
 }
+
