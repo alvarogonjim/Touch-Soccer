@@ -22,6 +22,7 @@ public class menuTienda : MonoBehaviour
 	public static int  precioItem;
 	public static int dinero = 500;
 	public static string nombreBoton;
+	public GameObject banner;
 
 	// Use this for initialization
 	void Awake()
@@ -90,6 +91,8 @@ public class menuTienda : MonoBehaviour
 		GameObject.Find("Auras").SetActive(false);
 		GameObject.Find("Formaciones").SetActive(false);
 		GameObject.Find("PanelChapas").SetActive(false);
+		GameObject.Find("Personalizadas").SetActive(false);
+		banner.SetActive (true);
 	}
 	// Update is called once per frame
 	void Update()
