@@ -260,8 +260,8 @@ public class GlobalGameManager : MonoBehaviour {
 			OpponentAI.opponentCanShoot = false;
 			whosTurn = "player";
 			fueGol = false;
-
-		}//This else if is because the opponent can shot two times.
+            timeLeft = 15;
+        }//This else if is because the opponent can shot two times.
 		else if (carry == 0 && opponentsTurn == true && OpponentAI.opponentCanShoot == true)
 		{
 			round = 1;
