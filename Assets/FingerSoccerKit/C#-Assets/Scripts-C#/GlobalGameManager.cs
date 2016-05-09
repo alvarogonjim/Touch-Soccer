@@ -105,8 +105,12 @@ public class GlobalGameManager : MonoBehaviour {
 	public static int iPowerUpElimina = 2;
 	public static int soloUnaVezElimina;
 
+    public static bool llamadoPowerUpBarrera = false;
+    public static bool powerUpBarrera;
+    public static int iPowerUpBarrera = 2;
+    public static int soloUnaVezBarrera;
 
-	GameObject myButton;
+    GameObject myButton;
 	private string liga;
 	//*****************************************************************************
 	// Init. 
@@ -282,7 +286,14 @@ public class GlobalGameManager : MonoBehaviour {
 				Debug.Log (playerController.contadorPowerUpElimina);
 				playerController.contadorPowerUpElimina--;
 			}
-		}
+
+            if(llamadoPowerUpBarrera == true)
+            {
+                Debug.Log(playerController.contadorPowerUpBarrera);
+                playerController.contadorPowerUpBarrera--;
+            }
+        }
+
 		else
 		{
 			playersTurn = false;
@@ -311,11 +322,16 @@ public class GlobalGameManager : MonoBehaviour {
 
 			}
 		}
-		//Override
-		//for two player game, players can always shoot.
-		//we override this because both human players play on the same device and must be able to shoot at every turn.
-		//we just limit their actions to their own units.
-		if (gameMode == 1)
+            if (llamadoPowerUpBarrera == true)
+         {
+            Debug.Log(playerController.contadorPowerUpBarrera);
+             playerController.contadorPowerUpBarrera--;
+             }
+        //Override
+        //for two player game, players can always shoot.
+        //we override this because both human players play on the same device and must be able to shoot at every turn.
+        //we just limit their actions to their own units.
+        if (gameMode == 1)
 			playerController.canShoot = true;		
 	}
 
@@ -651,7 +667,33 @@ public class GlobalGameManager : MonoBehaviour {
 			}
 		}
 	}
+    public void PWBarrera()
+    {
+        //Se ha llamado al powerup del elimina anteriormente?
+        if (llamadoPowerUpBarrera == false)
+        {
+            //Si no vemos si tiene la habilidad disponible (mas de 0)
+            if (iPowerUpBarrera > 0)
+            {
+                Debug.Log(powerUpBarrera.ToString());
+                //Decrementamos la habilidad
+                iPowerUpBarrera--;
+                //La habilidad la tiene
+                powerUpBarrera = true;
 
+                //SOLO UN USO DE LA HABILIDAD:
+                soloUnaVezBarrera = 1;
+                //Ponemos el llamado de elimina a true
+                llamadoPowerUpBarrera = true;
+
+            }
+            //En caso contrario falso
+            else
+            {
+                powerUpBarrera = false;
+            }
+        }
+    }
 
 }
 
