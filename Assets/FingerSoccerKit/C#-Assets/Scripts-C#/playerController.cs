@@ -372,8 +372,8 @@ public class playerController : MonoBehaviour {
             if (Physics.Raycast(ray, out hit, 100))
             {
                 opponent = hit.transform.gameObject.name;
-                if (opponent.Equals("Player2Unit-1") || opponent.Equals("Player2Unit-2") || opponent.Equals("Player2Unit-3")
-                    || opponent.Equals("Player2Unit-4") || opponent.Equals("Player2Unit-5"))
+				if (opponent.Equals("Opponent-Player-1") || opponent.Equals("Opponent-Player-2") || opponent.Equals("Opponent-Player-3")
+					|| opponent.Equals("Opponent-Player-4") || opponent.Equals("Opponent-Player-5"))
                 {
 
                     enemigo = GameObject.Find(opponent);
