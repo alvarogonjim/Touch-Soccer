@@ -73,7 +73,6 @@ public class GlobalGameManager : MonoBehaviour {
 	public AudioClip[] goalHappenedSfx;
 	public AudioClip[] crowdChants;
 	private bool canPlayCrowdChants;
-	public AudioClip finalPartido;
 
 	//Public references
 	public GameObject gameStatusPlane;		//user to show win/lose result at the end of match
@@ -106,13 +105,12 @@ public class GlobalGameManager : MonoBehaviour {
 	public static int iPowerUpElimina = 2;
 	public static int soloUnaVezElimina;
 
-	//volumen del sonido final del partido
-	private float volumen =0.6f;
-	private float reducir =0.0f;
-	public static bool ok = false;
-	public int segundos = 1;
+    public static bool llamadoPowerUpBarrera = false;
+    public static bool powerUpBarrera;
+    public static int iPowerUpBarrera = 2;
+    public static int soloUnaVezBarrera;
 
-	GameObject myButton;
+    GameObject myButton;
 	private string liga;
 	//*****************************************************************************
 	// Init. 
@@ -244,14 +242,7 @@ public class GlobalGameManager : MonoBehaviour {
 		//If you ever needed debug inforamtions:
 		//print("GameRound: " + round + " & turn is for: " + whosTurn + " and GoalHappened is: " + goalHappened);
 
-		if (ok) {
-			reducir += Time.deltaTime / segundos;
-			volumen = Mathf.Lerp (0.5f, 1.0f, reducir);
-		} else {
-			volumen = 1.0f;
-			reducir = 0f;
-		}
-		GetComponent<AudioSource>().volume= volumen;
+
 	}
 
 	//*****************************************************************************
@@ -273,8 +264,8 @@ public class GlobalGameManager : MonoBehaviour {
 			OpponentAI.opponentCanShoot = false;
 			whosTurn = "player";
 			fueGol = false;
-
-		}//This else if is because the opponent can shot two times.
+            timeLeft = 15;
+        }//This else if is because the opponent can shot two times.
 		else if (carry == 0 && opponentsTurn == true && OpponentAI.opponentCanShoot == true)
 		{
 			round = 1;
@@ -284,7 +275,7 @@ public class GlobalGameManager : MonoBehaviour {
 			fueGol = false;
 			timeLeft = 15;
 			timerCountTurn.text = timeLeft.ToString ();
-			//Si en el turno se ha llamado a powerup de tamaï¿½o decrementamos la variable contador
+			//Si en el turno se ha llamado a powerup de tama�o decrementamos la variable contador
 			if (llamadoPowerUpTamano == true)
 			{
 				Debug.Log(playerController.contadorPowerUpTamano);
@@ -295,7 +286,14 @@ public class GlobalGameManager : MonoBehaviour {
 				Debug.Log (playerController.contadorPowerUpElimina);
 				playerController.contadorPowerUpElimina--;
 			}
-		}
+
+            if(llamadoPowerUpBarrera == true)
+            {
+                Debug.Log(playerController.contadorPowerUpBarrera);
+                playerController.contadorPowerUpBarrera--;
+            }
+        }
+
 		else
 		{
 			playersTurn = false;
@@ -306,7 +304,7 @@ public class GlobalGameManager : MonoBehaviour {
 			//In every rounds we have to increase the timer again.
 			timeLeft = 15;
 			timerCountTurn.text = timeLeft.ToString ();
-			//Si en el turno se ha llamado a powerup de tamaï¿½o decrementamos la variable contador
+			//Si en el turno se ha llamado a powerup de tama�o decrementamos la variable contador
 			Debug.Log(llamadoPowerUpTamano);
 			if (llamadoPowerUpTamano == true)
 			{
@@ -324,11 +322,16 @@ public class GlobalGameManager : MonoBehaviour {
 
 			}
 		}
-		//Override
-		//for two player game, players can always shoot.
-		//we override this because both human players play on the same device and must be able to shoot at every turn.
-		//we just limit their actions to their own units.
-		if (gameMode == 1)
+            if (llamadoPowerUpBarrera == true)
+         {
+            Debug.Log(playerController.contadorPowerUpBarrera);
+             playerController.contadorPowerUpBarrera--;
+             }
+        //Override
+        //for two player game, players can always shoot.
+        //we override this because both human players play on the same device and must be able to shoot at every turn.
+        //we just limit their actions to their own units.
+        if (gameMode == 1)
 			playerController.canShoot = true;		
 	}
 
@@ -377,8 +380,6 @@ public class GlobalGameManager : MonoBehaviour {
 
 		//soft pause the game for reformation and other things...
 		goalHappened = true;
-		flagGoal = true;
-		Debug.Log (flagGoal);
 
 
 		//add to goal counters
@@ -391,7 +392,6 @@ public class GlobalGameManager : MonoBehaviour {
 				playerGoals++;
 				round = 2; //goal by player-1 and opponent should start the next round
 				fueGol = true;
-
 			}
 			break;
 
@@ -441,7 +441,7 @@ public class GlobalGameManager : MonoBehaviour {
 
 		//else, continue to the next round
 		goalHappened = false;
-		//flagGoal = false;
+		flagGoal = false;
 		roundTurnManager();
 		playSfx(startWistle);
 	}
@@ -457,11 +457,7 @@ public class GlobalGameManager : MonoBehaviour {
 	void manageGameStatus (){
 		seconds = Mathf.CeilToInt(gameTimer - Time.timeSinceLevelLoad) % 60;
 		minutes = Mathf.CeilToInt(gameTimer - Time.timeSinceLevelLoad) / 60; 
-		if (seconds == 20 && minutes == 0) {
-			ok = true;
-			playSfx (finalPartido);
 
-		}
 		if(seconds == 0 && minutes == 0) {
 			gameIsFinished = true;
 			manageGameFinishState();
@@ -605,13 +601,11 @@ public class GlobalGameManager : MonoBehaviour {
 
 	IEnumerator GoalOcurred(){
 		//AnimGoal.Crossfade ("AnimGoal");
-		flagGoal = false;
 		AnimGoal.CrossFade(nombreAni);
 		yield return new WaitForSeconds (AnimGoal[nombreAni].length);
-		//flagGoal = false;
-		//fueGol = false;
-
-
+		flagGoal = false;
+		Debug.Log (flagGoal);
+		//goalHappened =! goalHappened;
 	}
 	//***************************************************************
 	//PowerUps
@@ -620,7 +614,7 @@ public class GlobalGameManager : MonoBehaviour {
 	//Power up Tamano
 	public void PWTamano()
 	{
-		//Se ha llamado al powerup del tamaï¿½o anteriormente?
+		//Se ha llamado al powerup del tama�o anteriormente?
 		if (llamadoPowerUpTamano == false)
 		{
 			//Si no vemos si tiene la habilidad disponible (mas de 0)
@@ -634,7 +628,7 @@ public class GlobalGameManager : MonoBehaviour {
 
 				//SOLO UN USO DE LA HABILIDAD:
 				soloUnaVezTamano = 1;
-				//Ponemos el llamado de tamaï¿½o a true
+				//Ponemos el llamado de tama�o a true
 				llamadoPowerUpTamano = true;
 
 			}
@@ -673,7 +667,33 @@ public class GlobalGameManager : MonoBehaviour {
 			}
 		}
 	}
+    public void PWBarrera()
+    {
+        //Se ha llamado al powerup del elimina anteriormente?
+        if (llamadoPowerUpBarrera == false)
+        {
+            //Si no vemos si tiene la habilidad disponible (mas de 0)
+            if (iPowerUpBarrera > 0)
+            {
+                Debug.Log(powerUpBarrera.ToString());
+                //Decrementamos la habilidad
+                iPowerUpBarrera--;
+                //La habilidad la tiene
+                powerUpBarrera = true;
 
+                //SOLO UN USO DE LA HABILIDAD:
+                soloUnaVezBarrera = 1;
+                //Ponemos el llamado de elimina a true
+                llamadoPowerUpBarrera = true;
+
+            }
+            //En caso contrario falso
+            else
+            {
+                powerUpBarrera = false;
+            }
+        }
+    }
 
 }
 

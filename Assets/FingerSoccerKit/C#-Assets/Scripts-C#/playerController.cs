@@ -40,6 +40,9 @@ public class playerController : MonoBehaviour {
 
     public static int contadorPowerUpTamano=1;
     public static int contadorPowerUpElimina = 1;
+    public static int contadorPowerUpBarrera = 1;
+
+    ActivarBarrera activarBarrera;
     //*****************************************************************************
     // Init
     //*****************************************************************************
@@ -101,56 +104,56 @@ public class playerController : MonoBehaviour {
 	// This is the main functiuon used to manage drag on units, calculating the power and debug vectors, and set the final parameters to shoot.
 	//***************************************************************************//
 	void OnMouseDrag (){
-		if( canShoot && ((GlobalGameManager.playersTurn && gameObject.tag == "Player") || (GlobalGameManager.opponentsTurn && gameObject.tag == "Player_2")))
-			{
-				//print("Draged");
-				currentDistance = Vector3.Distance(helperBegin.transform.position, transform.position);
-				
-				//limiters
-				if(currentDistance <= GlobalGameManager.maxDistance)
-					safeDistance = currentDistance;
-				else
-					safeDistance = GlobalGameManager.maxDistance;
-					
-				pwr = Mathf.Abs(safeDistance) * 17; //this is very important. change with extreme caution.
-				
-				//show the power arrow above the unit and scale is accordingly.
-				manageArrowTransform();		
-				
-				//position of helperEnd
-				//HelperEnd is the exact opposite (mirrored) version of our helperBegin object 
-				//and help us to calculate debug vectors and lines for a perfect shoot.
-				//Please refer to the basic geometry references of your choice to understand the math.
-				Vector3 dxy = helperBegin.transform.position - transform.position;
-				float diff = dxy.magnitude;
-				helperEnd.transform.position = transform.position + ((dxy / diff) * currentDistance * -1);
-				
-				helperEnd.transform.position = new Vector3( helperEnd.transform.position.x,
-					                                        helperEnd.transform.position.y,
-					                                        -0.5f);				
-				
-				//debug line from initial position to our current touch position
-				Debug.DrawLine(transform.position, helperBegin.transform.position, Color.red);
-				//debug line from initial position to maximum power position (mirrored)
-				Debug.DrawLine(transform.position, arrowPlane.transform.position, Color.blue);
-				//debug line from initial position to the exact opposite position (mirrored) of our current touch position
-				Debug.DrawLine(transform.position, (2 * transform.position) - helperBegin.transform.position, Color.yellow);
-				//cast ray forward and collect informations
-				castRay();
-				
-				//Not used! You can extend this function to have more precise control over physics of the game
-				//sweepTest();
-				
-				//final vector used to shoot the unit.
-					
+        if (canShoot && ((GlobalGameManager.playersTurn && gameObject.tag == "Player") || (GlobalGameManager.opponentsTurn && gameObject.tag == "Player_2")))
+                {
+            
+                   //print("Draged");
+                    currentDistance = Vector3.Distance(helperBegin.transform.position, transform.position);
 
-				shootDirectionVector = Vector3.Normalize(helperBegin.transform.position - transform.position);
-			//shootDirectionVector =  Vector3.Normalize(sh);
-				//print(shootDirectionVector);
+                    //limiters
+                    if(currentDistance <= GlobalGameManager.maxDistance)
+                        safeDistance = currentDistance;
+                    else
+                        safeDistance = GlobalGameManager.maxDistance;
 
-			}
+                    pwr = Mathf.Abs(safeDistance) * 17; //this is very important. change with extreme caution.
 
-	}
+                    //show the power arrow above the unit and scale is accordingly.
+                    manageArrowTransform();		
+
+                    //position of helperEnd
+                    //HelperEnd is the exact opposite (mirrored) version of our helperBegin object 
+                    //and help us to calculate debug vectors and lines for a perfect shoot.
+                    //Please refer to the basic geometry references of your choice to understand the math.
+                    Vector3 dxy = helperBegin.transform.position - transform.position;
+                    float diff = dxy.magnitude;
+                    helperEnd.transform.position = transform.position + ((dxy / diff) * currentDistance * -1);
+
+                    helperEnd.transform.position = new Vector3( helperEnd.transform.position.x,
+                                                                helperEnd.transform.position.y,
+                                                                -0.5f);				
+
+                    //debug line from initial position to our current touch position
+                    Debug.DrawLine(transform.position, helperBegin.transform.position, Color.red);
+                    //debug line from initial position to maximum power position (mirrored)
+                    Debug.DrawLine(transform.position, arrowPlane.transform.position, Color.blue);
+                    //debug line from initial position to the exact opposite position (mirrored) of our current touch position
+                    Debug.DrawLine(transform.position, (2 * transform.position) - helperBegin.transform.position, Color.yellow);
+                    //cast ray forward and collect informations
+                    castRay();
+
+                    //Not used! You can extend this function to have more precise control over physics of the game
+                    //sweepTest();
+
+                    //final vector used to shoot the unit.
+
+
+                    shootDirectionVector = Vector3.Normalize(helperBegin.transform.position - transform.position);
+                //shootDirectionVector =  Vector3.Normalize(sh);
+                    //print(shootDirectionVector);
+
+                }
+    }
 
 	//***************************************************************************//
 	// Cast the rigidbody's shape forward to see if it is about to hit anything.
@@ -381,7 +384,7 @@ public class playerController : MonoBehaviour {
                     enemigo.GetComponent<MeshCollider>().enabled = false;
                     enemigo.GetComponent<Renderer>().enabled = false;
                     enemigo.GetComponent<playerController>().enabled = false;
-
+                    
                     //rend.material.color = Color.clear;
 
 
@@ -391,6 +394,17 @@ public class playerController : MonoBehaviour {
                 }
             }
         }
+
+       if(GlobalGameManager.powerUpBarrera == true && GlobalGameManager.soloUnaVezBarrera > 0)
+        {
+            //activarBarrera.activarBoolBarrera();
+            GlobalGameManager.soloUnaVezBarrera = 0;
+            contadorPowerUpBarrera++;
+            GlobalGameManager.iPowerUpBarrera = GlobalGameManager.soloUnaVezBarrera - 1;
+
+
+        }
+
 
     }
 
