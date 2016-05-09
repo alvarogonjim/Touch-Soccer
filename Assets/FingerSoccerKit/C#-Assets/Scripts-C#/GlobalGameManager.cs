@@ -106,6 +106,13 @@ public class GlobalGameManager : MonoBehaviour {
 	public static int iPowerUpElimina = 2;
 	public static int soloUnaVezElimina;
 
+	public static bool llamadoPowerUpBarrera = false;
+	public static bool powerUpBarrera;
+	public static int iPowerUpBarrera = 2;
+	public static int soloUnaVezBarrera;
+
+
+
 	//volumen del sonido final del partido
 	private float volumen =0.6f;
 	private float reducir =0.0f;
@@ -295,6 +302,12 @@ public class GlobalGameManager : MonoBehaviour {
 				Debug.Log (playerController.contadorPowerUpElimina);
 				playerController.contadorPowerUpElimina--;
 			}
+
+			if (llamadoPowerUpBarrera == true) {
+				Debug.Log (playerController.contadorPowerUpBarrera);
+				playerController.contadorPowerUpBarrera--;
+			}
+
 		}
 		else
 		{
@@ -322,6 +335,12 @@ public class GlobalGameManager : MonoBehaviour {
 				Debug.Log(playerController.contadorPowerUpElimina);
 				playerController.contadorPowerUpElimina = playerController.contadorPowerUpElimina - 1;
 
+			}
+
+			if (llamadoPowerUpBarrera == true) {
+				Debug.Log (llamadoPowerUpBarrera);
+				Debug.Log (playerController.contadorPowerUpBarrera);
+				playerController.contadorPowerUpBarrera = playerController.contadorPowerUpBarrera - 1;
 			}
 		}
 		//Override
@@ -674,7 +693,33 @@ public class GlobalGameManager : MonoBehaviour {
 		}
 	}
 
+	/*
+	public void PWBarrera(){
+		//Se ha llamado al powerup del elimina anteriormente?
+		if (llamadoPowerUpBarrera == false)
+		{
+			//Si no vemos si tiene la habilidad disponible (mas de 0)
+			if (iPowerUpBarrera > 0)
+			{
+				Debug.Log(powerUpBarrera.ToString());
+				//Decrementamos la habilidad
+				iPowerUpBarrera--;
+				//La habilidad la tiene
+				powerUpBarrera = true;
 
+				//SOLO UN USO DE LA HABILIDAD:
+				soloUnaVezBarrera = 1;
+				//Ponemos el llamado de elimina a true
+				llamadoPowerUpBarrera = true;
+
+			}
+			//En caso contrario falso
+			else
+			{
+				powerUpBarrera = false;
+			}
+		}
+	}*/
 }
 
 

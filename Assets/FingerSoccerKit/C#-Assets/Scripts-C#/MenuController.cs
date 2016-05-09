@@ -19,7 +19,7 @@ public class MenuController : MonoBehaviour {
 	//Reference to GameObjects
 	public GameObject playerWins;					//UI 3d text object
 	public GameObject playerMoney;                  //UI 3d text object
-                                                    //*****************************************************************************
+	public GameObject banner;                                               //*****************************************************************************
                                                     // Init. Updates the 3d texts with saved values fetched from playerprefs.
                                                     //*****************************************************************************
 
@@ -49,7 +49,7 @@ public class MenuController : MonoBehaviour {
     void Start()
     {
         ((PlayGamesPlatform)Social.Active).Authenticate((bool success) => { }, true);
-
+		banner.SetActive (true);
     }
 
     void Update (){	

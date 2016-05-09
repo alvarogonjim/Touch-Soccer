@@ -40,6 +40,9 @@ public class playerController : MonoBehaviour {
 
     public static int contadorPowerUpTamano=1;
     public static int contadorPowerUpElimina = 1;
+	public static int contadorPowerUpBarrera=1;
+
+	ActivarBarrera activarBarrera;
     //*****************************************************************************
     // Init
     //*****************************************************************************
@@ -362,6 +365,12 @@ public class playerController : MonoBehaviour {
             GlobalGameManager.iPowerUpTamano = GlobalGameManager.iPowerUpTamano - 1;
     
     }
+		if (GlobalGameManager.powerUpBarrera == true && GlobalGameManager.soloUnaVezBarrera > 0) {
+			//activarBarrera.activaBoolBarrera ();
+			GlobalGameManager.soloUnaVezBarrera = 0;
+			contadorPowerUpBarrera++;
+			GlobalGameManager.iPowerUpBarrera = GlobalGameManager.soloUnaVezBarrera - 1;
+		}
 
 
         if (Input.GetMouseButtonDown(0) && GlobalGameManager.powerUpElimina == true && GlobalGameManager.soloUnaVezElimina > 0)
