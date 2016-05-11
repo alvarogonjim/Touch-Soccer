@@ -380,7 +380,7 @@ public class GlobalGameManager : MonoBehaviour {
 
 		//soft pause the game for reformation and other things...
 		goalHappened = true;
-
+		flagGoal = true;
 
 		//add to goal counters
 		switch (_goalBy)
@@ -599,13 +599,22 @@ public class GlobalGameManager : MonoBehaviour {
 	//***************************************************************
 
 
-	IEnumerator GoalOcurred(){
-		//AnimGoal.Crossfade ("AnimGoal");
-		AnimGoal.CrossFade(nombreAni);
-		yield return new WaitForSeconds (AnimGoal[nombreAni].length);
-		flagGoal = false;
-		Debug.Log (flagGoal);
-		//goalHappened =! goalHappened;
+		IEnumerator GoalOcurred(){
+			flagGoal = false;
+			AnimGoal.CrossFade (nombreAni);
+		yield return new WaitForSeconds (AnimGoal [nombreAni].length);
+			Debug.Log (flagGoal);
+			
+
+//		GameObject Camera = 
+//		GameObject.Find ("Camera");
+//		Animation AnimGoal = Camera.GetComponent<Animation> ();
+//		AnimGoal.Play();
+//		//flagGoal = false;
+//		//AnimGoal.CrossFade("AnimGoal");
+//		yield return new WaitForSeconds (AnimGoal.clip.length);
+//		Debug.Log (flagGoal);
+//		//goalHappened =! goalHappened;
 	}
 	//***************************************************************
 	//PowerUps
