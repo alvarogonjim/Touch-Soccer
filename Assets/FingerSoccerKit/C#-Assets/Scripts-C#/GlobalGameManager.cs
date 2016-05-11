@@ -110,6 +110,16 @@ public class GlobalGameManager : MonoBehaviour {
     public static int iPowerUpBarrera = 2;
     public static int soloUnaVezBarrera;
 
+	public string nombreAnimacion;
+	public GameObject ObjectToAnimateBarrera;
+	public Animation animBarrera;
+	public static bool estaSubida;
+	public GameObject barrera;
+
+
+	public AudioSource sonidoBarrera;
+	public AudioSource sonidoTamano;
+
     GameObject myButton;
 	private string liga;
 	//*****************************************************************************
@@ -127,6 +137,7 @@ public class GlobalGameManager : MonoBehaviour {
 		seconds = 0;
 		minutes = 0;
 		canPlayCrowdChants = true;
+		estaSubida = false;
 
 		//hide gameStatusPlane
 		gameStatusPlane.SetActive(false);
@@ -298,6 +309,7 @@ public class GlobalGameManager : MonoBehaviour {
 		{
 			playersTurn = false;
 			opponentsTurn = true;
+			//barrera.SetActive (false);
 			playerController.canShoot = false;
 			OpponentAI.opponentCanShoot = true;
 			whosTurn = "opponent";
@@ -326,6 +338,7 @@ public class GlobalGameManager : MonoBehaviour {
          {
             Debug.Log(playerController.contadorPowerUpBarrera);
              playerController.contadorPowerUpBarrera--;
+
              }
         //Override
         //for two player game, players can always shoot.
@@ -630,6 +643,7 @@ public class GlobalGameManager : MonoBehaviour {
 				soloUnaVezTamano = 1;
 				//Ponemos el llamado de tama�o a true
 				llamadoPowerUpTamano = true;
+				sonidoTamano.Play ();
 
 			}
 			//En caso contrario falso
@@ -669,9 +683,11 @@ public class GlobalGameManager : MonoBehaviour {
 	}
     public void PWBarrera()
     {
-        //Se ha llamado al powerup del elimina anteriormente?
+        //Se ha llamado al powerup de la barrera anteriormente?
         if (llamadoPowerUpBarrera == false)
         {
+			estaSubida = true;
+			StartCoroutine("subeBarrera");
             //Si no vemos si tiene la habilidad disponible (mas de 0)
             if (iPowerUpBarrera > 0)
             {
@@ -683,7 +699,7 @@ public class GlobalGameManager : MonoBehaviour {
 
                 //SOLO UN USO DE LA HABILIDAD:
                 soloUnaVezBarrera = 1;
-                //Ponemos el llamado de elimina a true
+                //Ponemos el llamado de barrera a true
                 llamadoPowerUpBarrera = true;
 
             }
@@ -691,9 +707,18 @@ public class GlobalGameManager : MonoBehaviour {
             else
             {
                 powerUpBarrera = false;
+
             }
         }
     }
+	IEnumerator subeBarrera(){
+		if (estaSubida == true) {
+			animBarrera.CrossFade (nombreAnimacion);
+			sonidoBarrera.Play ();
+			yield return new WaitForSeconds (animBarrera [nombreAnimacion].length);
+		}
+		estaSubida = false;
+	}
 
 }
 
