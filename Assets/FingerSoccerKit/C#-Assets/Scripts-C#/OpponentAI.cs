@@ -233,7 +233,7 @@ public class OpponentAI : MonoBehaviour {
 		print(bestShooter.name + " shot the ball with a power of " + appliedPower.magnitude);
 		StartCoroutine(visualDebug());
 
-		StartCoroutine(gameController.GetComponent<GlobalGameManager>().managePostShoot("Opponent"));
+		StartCoroutine(gameController.GetComponent<GlobalGameManager>().managePostShoot("Opponent", bestShooter.GetComponent<OpponentUnitController>().unitIndex, appliedPower));
 	}
 	//*****************************************************************************
 	// Draw the debug lines of AI controller in editor

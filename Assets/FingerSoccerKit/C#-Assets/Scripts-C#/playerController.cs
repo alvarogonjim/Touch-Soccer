@@ -276,9 +276,9 @@ public class playerController : MonoBehaviour {
 		
 		//change the turn
 		if(GlobalGameManager.gameMode == 0)
-			StartCoroutine(gameController.GetComponent<GlobalGameManager>().managePostShoot("Player"));
+			StartCoroutine(gameController.GetComponent<GlobalGameManager>().managePostShoot("Player", unitIndex, outPower));
 		else
-			StartCoroutine(gameController.GetComponent<GlobalGameManager>().managePostShoot(gameObject.tag));
+			StartCoroutine(gameController.GetComponent<GlobalGameManager>().managePostShoot(gameObject.tag, unitIndex, outPower));
 	}
 
     

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-
+using System;
 
 public class GlobalGameManager : MonoBehaviour {
 
@@ -129,7 +129,6 @@ public class GlobalGameManager : MonoBehaviour {
 		playerGoals = 0;
 		opponentGoals = 0;
 		gameTime = 0;
-		round = 1;
 		seconds = 0;
 		minutes = 0;
 		canPlayCrowdChants = true;
@@ -161,6 +160,8 @@ public class GlobalGameManager : MonoBehaviour {
 
         //TODO-REE online
         gameMode = 2;
+
+        round = gameMode == 2 ? 0 : 1; //Si es online, round empieza en 0
 
 		playerAIController = GameObject.FindGameObjectWithTag("playerAI");
 		opponentAIController = GameObject.FindGameObjectWithTag("opponentAI");
@@ -198,31 +199,37 @@ public class GlobalGameManager : MonoBehaviour {
 			    opponentAIController.SetActive(false);
 			    break;
             case 2:
-                if(amIPlayerOne)
+                //find and deactive all AI Opponent units. This is online
+                cpuTeam = GameObject.FindGameObjectsWithTag("Opponent");
+                foreach (GameObject unit in cpuTeam)
                 {
-
+                    unit.SetActive(false);
                 }
-                else
-                {
-
-                }
+                //deactive opponent's AI
+                opponentAIController.SetActive(false);
                 break;
 		    }
 	}
 
 	IEnumerator Start (){
-		//AnimGoal = GetComponent<Animation> ();
-		roundTurnManager();
-		yield return new WaitForSeconds(1.5f);
+        //AnimGoal = GetComponent<Animation> ();
+        roundTurnManager();
+        yield return new WaitForSeconds(1.5f);
 		playSfx(startWistle);
-
-
 	}
 
     //*****************************************************************************
     // FSM
     //*****************************************************************************
     void Update() {
+        if (SoccerRealTimeMultiplayerListener.Instance.CurrentState == SoccerRealTimeMultiplayerListener.State.WAIT)
+        {
+            Time.timeScale = 0;
+        }
+        else
+        {
+            Time.timeScale = 1;
+        }
         //check game finish status every frame
         if (!gameIsFinished) {
             manageGameStatus();
@@ -278,6 +285,12 @@ public class GlobalGameManager : MonoBehaviour {
 	//*****************************************************************************
 	public static string whosTurn;
 	void roundTurnManager (){
+        if (gameMode == 2)
+        {
+            //Modo online tenemos método aparte
+            roundTurnManagerOnline();
+            return;
+        }
 
 		if(gameIsFinished || goalHappened)
 			return;
@@ -351,14 +364,47 @@ public class GlobalGameManager : MonoBehaviour {
 			playerController.canShoot = true;		
 	}
 
-	//*****************************************************************************
-	// What happens after a shoot is performed?
-	//*****************************************************************************
-	public IEnumerator managePostShoot ( string _shootBy  ){
-		//get who is did the shoot
-		//if we had a goal after the shoot was done and just before the round change, leave the process to other controllers.
+    void roundTurnManagerOnline()
+    {
+        if (gameIsFinished || goalHappened)
+        {
+            return;
+        }
+            
+        if (round == 0)
+        {
+            //Primer turno
+            if (amIPlayerOne)
+            {
+                round = 1;
+            }
+            else
+            {
+                round = 2;
+            }
+            roundTurnManagerOnline();
+        }
+        else if(round == 1)
+        {
+            playerController.canShoot = true;
+            round = 2;
+        }
+        else if(round == 2)
+        {
+            playerController.canShoot = false;
+            round = 1;
+        }
+    }
 
-		timeLeft = 15;
+    //*****************************************************************************
+    // What happens after a shoot is performed?
+    //*****************************************************************************
+    public IEnumerator managePostShoot(string _shootBy, int unitIndex, Vector3 outPower)
+    { 
+        //get who is did the shoot
+        //if we had a goal after the shoot was done and just before the round change, leave the process to other controllers.
+
+        timeLeft = 15;
 		timerCountTurn.text = timeLeft.ToString ();
 
 		float t = 0;
@@ -384,6 +430,10 @@ public class GlobalGameManager : MonoBehaviour {
 				round = 1;
 				break;
 			}	
+            if (gameMode == 2)
+            {
+                SoccerRealTimeMultiplayerListener.Instance.SendShoot(unitIndex, outPower);
+            }
 			roundTurnManager(); //cycle again between players
 		}
 	}
@@ -425,8 +475,8 @@ public class GlobalGameManager : MonoBehaviour {
 		}
 
 		//wait a few seconds to show the effects , and physics cooldown
-		playSfx(goalSfx[Random.Range(0, goalSfx.Length)]);
-		GetComponent<AudioSource>().PlayOneShot(goalHappenedSfx[Random.Range(0, goalHappenedSfx.Length)], 1);
+		playSfx(goalSfx[UnityEngine.Random.Range(0, goalSfx.Length)]);
+		GetComponent<AudioSource>().PlayOneShot(goalHappenedSfx[UnityEngine.Random.Range(0, goalHappenedSfx.Length)], 1);
 		yield return new WaitForSeconds(1);
 
 		//bring the ball back to it's initial position
@@ -446,7 +496,7 @@ public class GlobalGameManager : MonoBehaviour {
 			StartCoroutine(playerAIController.GetComponent<PlayerAI>().changeFormation(PlayerAI.player2Team, PlayerPrefs.GetInt("Player2Formation"), 0.6f, -1));
 		} else {	//if this is player-1 vs AI match:
 			//get a new random formation everytime
-			StartCoroutine(opponentAIController.GetComponent<OpponentAI>().changeFormation(Random.Range(0, FormationManager.formations), 0.6f));
+			StartCoroutine(opponentAIController.GetComponent<OpponentAI>().changeFormation(UnityEngine.Random.Range(0, FormationManager.formations), 0.6f));
 		}
 
 		yield return new WaitForSeconds(3);
@@ -582,8 +632,8 @@ public class GlobalGameManager : MonoBehaviour {
 	IEnumerator playCrowdChants (){
 		if(canPlayCrowdChants) {
 			canPlayCrowdChants = false;
-			GetComponent<AudioSource>().PlayOneShot(crowdChants[Random.Range(0, crowdChants.Length)], 1);
-			yield return new WaitForSeconds(Random.Range(15, 35));
+			GetComponent<AudioSource>().PlayOneShot(crowdChants[UnityEngine.Random.Range(0, crowdChants.Length)], 1);
+			yield return new WaitForSeconds(UnityEngine.Random.Range(15, 35));
 			canPlayCrowdChants = true;
 		}
 	}

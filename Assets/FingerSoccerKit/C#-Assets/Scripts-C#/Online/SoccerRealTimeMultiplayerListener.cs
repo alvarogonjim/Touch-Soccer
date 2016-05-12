@@ -15,13 +15,13 @@ public class SoccerRealTimeMultiplayerListener : RealTimeMultiplayerListener
     public enum State
     {
         WAIT,
-        DECIDE_PLAYER_ONE,
         MY_TURN
     }
     private IFormatter formatter = new BinaryFormatter();
     private static SoccerRealTimeMultiplayerListener instance;
     private OnlineAI ai;
-    private State CurrentState = State.WAIT;
+    private State currentState = State.WAIT;
+    private bool playerOneDecided = false;
 
     private SoccerRealTimeMultiplayerListener() {}
 
@@ -39,15 +39,14 @@ public class SoccerRealTimeMultiplayerListener : RealTimeMultiplayerListener
 
     public OnlineAI AI
     {
-        get
-        {
-            return ai;
-        }
+        get{return ai;}
+        set{ai = value;}
+    }
 
-        set
-        {
-            ai = value;
-        }
+    public State CurrentState
+    {
+        get{return currentState;}
+        set{currentState = value;}
     }
 
     public void OnRoomSetupProgress(float progress)
@@ -61,6 +60,7 @@ public class SoccerRealTimeMultiplayerListener : RealTimeMultiplayerListener
         if (success)
         {
             DecideWhoIsPlayerOne();
+            Application.LoadLevel("Game-c#");
 
             //Application.LoadLevel("Game-c#");
         }
@@ -95,16 +95,28 @@ public class SoccerRealTimeMultiplayerListener : RealTimeMultiplayerListener
     {
         Debug.Log("OnRealTimeMessageReceived");
         OnlineMessage message = deserializeMessage(data);
-        switch(CurrentState)
+        if (!playerOneDecided)
         {
-            case State.DECIDE_PLAYER_ONE:
-                Debug.LogFormat("OnRealTimeMessageReceived - decide p1 - %s, %s", PlayGamesPlatform.Instance.RealTime.GetSelf().ParticipantId, message.participantIdPlayerOne);
-                GlobalGameManager.amIPlayerOne = PlayGamesPlatform.Instance.RealTime.GetSelf().ParticipantId.Equals(message.participantIdPlayerOne);
-                break;
-            default:
-                Debug.Log("OnRealTimeMessageReceived - WTF!!");
-                break;
+            Debug.LogFormat("OnRealTimeMessageReceived - decide p1 - %s, %s", PlayGamesPlatform.Instance.RealTime.GetSelf().ParticipantId, message.participantIdPlayerOne);
+            GlobalGameManager.amIPlayerOne = PlayGamesPlatform.Instance.RealTime.GetSelf().ParticipantId.Equals(message.participantIdPlayerOne);
+            CurrentState = GlobalGameManager.amIPlayerOne ? State.MY_TURN : State.WAIT;
         }
+        else
+        {
+            ReceiveShoot(message.unitIndex, message.force);
+        }
+        //switch (CurrentState)
+        //{
+        //    case State.WAIT:
+                
+        //        break;
+        //    case State.MY_TURN:
+        //        Debug.Log("OnRealTimeMessageReceived - mensaje en mi turno? WTF!!");
+        //        break;
+        //    default:
+        //        Debug.Log("OnRealTimeMessageReceived - WTF!!");
+        //        break;
+        //}
     }
 
     private byte[] serializeMessage(OnlineMessage message)
@@ -146,11 +158,9 @@ public class SoccerRealTimeMultiplayerListener : RealTimeMultiplayerListener
                 OnlineMessage message = new OnlineMessage();
                 message.participantIdPlayerOne = PlayGamesPlatform.Instance.RealTime.GetSelf().ParticipantId;
                 PlayGamesPlatform.Instance.RealTime.SendMessageToAll(true, serializeMessage(message));
+                playerOneDecided = true;
+                CurrentState = State.MY_TURN;
             }
-        }
-        else
-        {
-            CurrentState = State.DECIDE_PLAYER_ONE;
         }
     }
 
@@ -167,4 +177,18 @@ public class SoccerRealTimeMultiplayerListener : RealTimeMultiplayerListener
         return firstParticipantId.Equals(PlayGamesPlatform.Instance.RealTime.GetSelf().ParticipantId);
     }
 
+    internal void SendShoot(int unitIndex, Vector3 outPower)
+    {
+        OnlineMessage message = new OnlineMessage();
+        message.unitIndex = unitIndex;
+        message.force = outPower;
+        PlayGamesPlatform.Instance.RealTime.SendMessageToAll(true, serializeMessage(message));
+        CurrentState = State.WAIT;
+    }
+
+    internal void ReceiveShoot(int unitIndex, Vector3 outPower)
+    {
+        ai.Shoot(unitIndex, outPower);
+        CurrentState = State.MY_TURN;
+    }
 }

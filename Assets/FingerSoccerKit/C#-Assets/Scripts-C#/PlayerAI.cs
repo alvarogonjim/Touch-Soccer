@@ -44,8 +44,8 @@ public class PlayerAI : MonoBehaviour {
 		}
 		
 		//if this is a 2-player local game
-        //TODO-REE online, coger de prefs?
-		if(GlobalGameManager.gameMode == 1) {
+        //TODO-REE online, formacion segun amIPlayerOne
+		if(GlobalGameManager.gameMode == 1 || GlobalGameManager.gameMode == 2) {
 			//cache all player_2 units
 			player2Team = GameObject.FindGameObjectsWithTag("Player_2");
 			int j = 1;
@@ -68,7 +68,7 @@ public class PlayerAI : MonoBehaviour {
 	void Start (){
 		StartCoroutine(changeFormation(playerTeam, playerFormation, 1, 1));
 		//For two-player mode,
-		if(GlobalGameManager.gameMode == 1) 
+		if(GlobalGameManager.gameMode == 1 || GlobalGameManager.gameMode == 2) 
 			StartCoroutine(changeFormation(player2Team, player2Formation, 1, -1));
 			
 		canChangeFormation = false;
