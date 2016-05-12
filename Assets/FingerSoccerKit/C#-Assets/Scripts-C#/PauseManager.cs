@@ -11,7 +11,7 @@ public class PauseManager : MonoBehaviour {
 	internal bool isPaused;
 	private float savedTimeScale;
 	public GameObject pausePlane;
-	public GameObject banner;
+	//public GameObject banner;
 
 	enum Page {
 		PLAY, PAUSE
@@ -24,7 +24,7 @@ public class PauseManager : MonoBehaviour {
 	void Awake (){		
 		//soundEnabled = true;
 		isPaused = false;
-		banner.SetActive (false);
+	//	banner.SetActive (false);
 		Time.timeScale = 1.0f;
 		Time.fixedDeltaTime = 0.005f;
 		
@@ -116,7 +116,7 @@ public class PauseManager : MonoBehaviour {
 	}
 
 	public void PauseGame (){
-		banner.SetActive (true);
+		//banner.SetActive (true);
 		print("Game in Paused...");
 		isPaused = true;
 		savedTimeScale = Time.timeScale;
@@ -128,7 +128,7 @@ public class PauseManager : MonoBehaviour {
 	}
 
 	public void UnPauseGame (){
-		banner.SetActive (false);
+		//banner.SetActive (false);
 		print("Unpause");
 	    isPaused = false;
 	    Time.timeScale = savedTimeScale;

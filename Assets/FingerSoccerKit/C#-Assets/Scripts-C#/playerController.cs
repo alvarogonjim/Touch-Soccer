@@ -25,7 +25,9 @@ public class playerController : MonoBehaviour {
     private GameObject gameController;	//Reference to main game controller
 	private float currentDistance;		//real distance of our touch/mouse position from initial drag position
 	private float safeDistance; 			//A safe distance value which is always between min and max to avoid supershoots
-    
+	public GameObject effectBomb;
+
+
 	private float pwr;					//shoot power
 
 	//this vector holds shooting direction
@@ -42,7 +44,7 @@ public class playerController : MonoBehaviour {
     public static int contadorPowerUpElimina = 1;
     public static int contadorPowerUpBarrera = 1;
 
-    ActivarBarrera activarBarrera;
+   
     //*****************************************************************************
     // Init
     //*****************************************************************************
@@ -93,7 +95,8 @@ public class playerController : MonoBehaviour {
         foreach (GameObject chapa in chapas)
           {
             if(contadorPowerUpTamano == 0)
-                chapa.transform.localScale = new Vector3(2.5f, 0.5f, 2.5f);         
+                chapa.transform.localScale = new Vector3(2.5f, 0.5f, 2.5f);  
+				//AQUI SONIDO AGRANDAR
              }
 	  
         }
@@ -384,7 +387,7 @@ public class playerController : MonoBehaviour {
                     enemigo.GetComponent<MeshCollider>().enabled = false;
                     enemigo.GetComponent<Renderer>().enabled = false;
                     enemigo.GetComponent<playerController>().enabled = false;
-                    
+					//effectBomb.SetActive (true);
                     //rend.material.color = Color.clear;
 
 
@@ -395,13 +398,12 @@ public class playerController : MonoBehaviour {
             }
         }
 
-       if(GlobalGameManager.powerUpBarrera == true && GlobalGameManager.soloUnaVezBarrera > 0)
+		if(GlobalGameManager.powerUpBarrera == true && GlobalGameManager.soloUnaVezBarrera > 0 && GlobalGameManager.playersTurn ==true)
         {
-            //activarBarrera.activarBoolBarrera();
+            
             GlobalGameManager.soloUnaVezBarrera = 0;
             contadorPowerUpBarrera++;
-            GlobalGameManager.iPowerUpBarrera = GlobalGameManager.soloUnaVezBarrera - 1;
-
+			GlobalGameManager.iPowerUpBarrera = GlobalGameManager.iPowerUpBarrera - 1;
 
         }
 
