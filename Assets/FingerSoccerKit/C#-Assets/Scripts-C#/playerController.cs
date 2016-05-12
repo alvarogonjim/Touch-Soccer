@@ -359,6 +359,10 @@ public class playerController : MonoBehaviour {
 
     void OnMouseDown()
     {
+
+
+        //METODO PARA RAFA
+
         if (GlobalGameManager.powerUpTamano == true && GlobalGameManager.soloUnaVezTamano > 0)
         {
            
