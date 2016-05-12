@@ -18,6 +18,7 @@ public class menuTienda : MonoBehaviour
 	public  GameObject[] totalChapas;
 	public GameObject[] totalAuras;
 	public GameObject[] totalFormaciones;
+	public GameObject[] totalCampos;
 	private static GameObject[] chapas;
 	public static int  precioItem;
 	public static int dinero = 500;
@@ -83,15 +84,29 @@ public class menuTienda : MonoBehaviour
                 ActiveButton.GetComponent<Button>().interactable = true;
             }
         }
+		for (int l = 0; l < totalCampos.Length; l++) {
+			string indexCampos = totalCampos [l].GetComponent<ShopItemProperties> ().itemIndex.ToString ();
+			string useButtonCampos = totalCampos [l].GetComponent<ShopItemProperties> ().useButton;
+			string shopItemCampos = "Campos-" + indexCampos;
+			Debug.Log (shopItemCampos);
+			if (PlayerPrefs.GetInt (shopItemCampos) == 1) {
+				//Encontramos el boton y lo desactivamos
+				GameObject BuyButton = GameObject.Find(indexCampos.ToString());
+				BuyButton.SetActive (false);
+				//Encontramos el boton de usar y lo activamos
+				GameObject ActiveButton = GameObject.Find(useButtonCampos);
+				ActiveButton.GetComponent<Button> ().interactable = true;
+			}
+		}
 
     }
 	void Start()
 	{
-		GameObject.Find("Chapas").SetActive(false);
-		GameObject.Find("Auras").SetActive(false);
-		GameObject.Find("Formaciones").SetActive(false);
+		//GameObject.Find("Equipaciones").SetActive(false);
+//		GameObject.Find("Auras").SetActive(false);
+//		GameObject.Find("Formaciones").SetActive(false);
 		GameObject.Find("PanelChapas").SetActive(false);
-		GameObject.Find("Personalizadas").SetActive(false);
+//		GameObject.Find("Personalizadas").SetActive(false);
 	//	banner.SetActive (true);
 	}
 	// Update is called once per frame
@@ -192,6 +207,36 @@ public class menuTienda : MonoBehaviour
         Debug.Log(index);
         PlayerPrefs.SetInt("Formaciones", index);
     }
+
+	public void comprarCampo(int index){
+		precioItem = totalCampos[index].GetComponent<ShopItemProperties>().itemPrice;
+		nombreBoton = totalCampos[index].GetComponent<ShopItemProperties>().useButton;
+
+		if (dinero <= precioItem) {
+			//Decrementamos el dinero
+			dinero = dinero - precioItem;
+			PlayerPrefs.SetInt ("PlayerMoney", dinero);
+
+			//Guardamos el objeto
+			PlayerPrefs.SetInt("Campo-" + index.ToString(),1);
+
+			//Encontramos el boton y lo desactivamos
+			GameObject BuyButton = GameObject.Find(index.ToString());
+			BuyButton.SetActive (false);
+			//Encontramos el boton de usar y lo activamos
+			GameObject ActiveButton = GameObject.Find(nombreBoton);
+			ActiveButton.GetComponent<Button>().interactable = true;
+		}
+	}
+	public void setIndexCampos(int index)
+	{
+		//Debug
+		Debug.Log(index);
+		PlayerPrefs.SetInt("Campos", index);
+	}
+
+
+
 
 }
 

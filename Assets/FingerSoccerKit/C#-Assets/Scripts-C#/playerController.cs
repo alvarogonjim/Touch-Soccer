@@ -22,6 +22,7 @@ public class playerController : MonoBehaviour {
 	private GameObject enemigo;
 	public string opponent;
     private GameObject chapa;
+	private static GameObject campo;
     private GameObject gameController;	//Reference to main game controller
 	private float currentDistance;		//real distance of our touch/mouse position from initial drag position
 	private float safeDistance; 			//A safe distance value which is always between min and max to avoid supershoots
@@ -56,7 +57,7 @@ public class playerController : MonoBehaviour {
 		arrowPlane = GameObject.FindGameObjectWithTag("helperArrow");		
 		gameController = GameObject.FindGameObjectWithTag("GameController");
         chapas  = GameObject.FindGameObjectsWithTag("Player");
-
+		campo = GameObject.Find ("Background");
 		enemigos = GameObject.FindGameObjectsWithTag ("Opponent");
 
         
@@ -291,13 +292,19 @@ public class playerController : MonoBehaviour {
     public static void cambiarSkin()
     {
         int index = PlayerPrefs.GetInt("Skin");
-        Texture2D mat = Resources.Load(index.ToString(), typeof(Texture2D)) as Texture2D;
+        Texture2D mat = Resources.Load("Chapas/" + index.ToString(), typeof(Texture2D)) as Texture2D;
 
         foreach (GameObject chapa in chapas)
         {
             chapa.GetComponent<Renderer>().material.SetTexture("_MainTex", mat);
         }
     }
+
+	public static void cambiarCampo(){
+		int index = PlayerPrefs.GetInt ("Campos");
+		Texture2D mat = Resources.Load ("Campos/" + index.ToString (), typeof(Texture2D)) as Texture2D;
+		campo.GetComponent<Renderer> ().material.SetTexture ("_MainTex", mat);
+	}
 
     public static void cambiarAura()
     {
