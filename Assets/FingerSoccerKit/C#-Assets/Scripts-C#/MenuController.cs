@@ -17,12 +17,12 @@ public class MenuController : MonoBehaviour
 
 	private float buttonAnimationSpeed = 9;		//speed on animation effect when tapped on button
 	private bool  canTap = true;				//flag to prevent double tap
-	public AudioClip tapSfx;							//tap sound for buttons click
+//	public AudioClip tapSfx;							//tap sound for buttons click
 
 	//Reference to GameObjects
-	public GameObject playerWins;					//UI 3d text object
-	public GameObject playerMoney;                  //UI 3d text object
-                                                    //*****************************************************************************
+	//public GameObject playerWins;					//UI 3d text object
+	//public GameObject playerMoney;                  //UI 3d text object
+	//public GameObject banner;                                               //*****************************************************************************
                                                     // Init. Updates the 3d texts with saved values fetched from playerprefs.
                                                     //*****************************************************************************
 
@@ -36,8 +36,8 @@ public class MenuController : MonoBehaviour
 		Time.fixedDeltaTime = 0.005f;
 
         int playerGames = PlayerPrefs.GetInt("PlayerGames");
-        playerWins.GetComponent<TextMesh>().text = "Wins:  " + PlayerPrefs.GetInt("PlayerWins");
-		playerMoney.GetComponent<TextMesh>().text = "Coins: " + PlayerPrefs.GetInt("PlayerMoney");
+     //   playerWins.GetComponent<TextMesh>().text = "Wins:  " + PlayerPrefs.GetInt("PlayerWins");
+		//playerMoney.GetComponent<TextMesh>().text = "Coins: " + PlayerPrefs.GetInt("PlayerMoney");
         if (playerGames == 20)
         {
             Debug.Log(getPlayerLiga());
@@ -52,7 +52,7 @@ public class MenuController : MonoBehaviour
     void Start()
     {
         ((PlayGamesPlatform)Social.Active).Authenticate((bool success) => { }, true);
-
+		//banner.SetActive (true);
     }
 
     void Update (){	
@@ -86,14 +86,14 @@ public class MenuController : MonoBehaviour
 			
 				//Game Modes
 				case "gameMode_1":
-					playSfx(tapSfx);							//play touch sound
+				//	playSfx(tapSfx);							//play touch sound
 					PlayerPrefs.SetInt("GameMode", 0);			//set game mode to fetch later in "Game" scene
 					StartCoroutine(animateButton(objectHit));	//touch animation effect
 					yield return new WaitForSeconds(1.0f);		//Wait for the animation to end
 					Application.LoadLevel("Config-c#");			//Load the next scene
 					break;
 				case "gameMode_2":
-					playSfx(tapSfx);
+					//playSfx(tapSfx);
 					PlayerPrefs.SetInt("GameMode", 1);
 					StartCoroutine(animateButton(objectHit));
 					yield return new WaitForSeconds(1.0f);
@@ -102,19 +102,19 @@ public class MenuController : MonoBehaviour
 						
 				//Option buttons	
 				case "Btn-01":
-					playSfx(tapSfx);
+					//playSfx(tapSfx);
 					StartCoroutine(animateButton(objectHit));
 					yield return new WaitForSeconds(1.0f);
 					Application.LoadLevel("Shop-c#");
 					break;
 				case "Btn-02":
-					playSfx(tapSfx);
+				//	playSfx(tapSfx);
 					StartCoroutine(animateButton(objectHit));
 					yield return new WaitForSeconds(1.0f);
 					Application.LoadLevel("BuyCoinPack-c#");
 					break;
 				case "Btn-03":
-					playSfx(tapSfx);
+				//	playSfx(tapSfx);
 					StartCoroutine(animateButton(objectHit));
 					yield return new WaitForSeconds(1.0f);
 					Application.Quit();
