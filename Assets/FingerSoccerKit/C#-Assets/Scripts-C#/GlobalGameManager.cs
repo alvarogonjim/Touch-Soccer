@@ -33,6 +33,9 @@ public class GlobalGameManager : MonoBehaviour
 	*/
     public static int gameMode;
 
+    //Online
+    public static bool amIPlayerOne;
+
     //Odd rounds are player (Player-1) turn and Even rounds are AI (Player-2)'s
     public static int round;
 
@@ -167,6 +170,10 @@ public class GlobalGameManager : MonoBehaviour
         else
             gameMode = 0; // Deafault Mode (Player-1 vs AI)
 
+        PlayerPrefs.DeleteKey("GameMode");
+
+        round = gameMode == 2 ? 0 : 1; //Si es online, round empieza en 0
+
         playerAIController = GameObject.FindGameObjectWithTag("playerAI");
         opponentAIController = GameObject.FindGameObjectWithTag("opponentAI");
         ball = GameObject.FindGameObjectWithTag("ball");
@@ -206,7 +213,18 @@ public class GlobalGameManager : MonoBehaviour
                 //deactive opponent's AI
                 opponentAIController.SetActive(false);
                 break;
+            case 2:
+                //find and deactive all AI Opponent units. This is online
+                cpuTeam = GameObject.FindGameObjectsWithTag("Opponent");
+                foreach (GameObject unit in cpuTeam)
+                {
+                    unit.SetActive(false);
+                }
+                //deactive opponent's AI
+                opponentAIController.SetActive(false);
+                break;
         }
+    
     }
 
     IEnumerator Start()
@@ -224,6 +242,11 @@ public class GlobalGameManager : MonoBehaviour
     //*****************************************************************************
     void Update()
     {
+        if (gameMode == 2)
+        {
+            UpdateOnlineMode();
+            return;
+        }
         //check game finish status every frame
         if (!gameIsFinished)
         {
@@ -271,13 +294,37 @@ public class GlobalGameManager : MonoBehaviour
 
     }
 
+    void UpdateOnlineMode()
+    {
+        
+        //check game finish status every frame
+        if (!gameIsFinished)
+        {
+            manageGameStatus();
+        }
+
+        //every now and then, play some crowd chants
+        StartCoroutine(playCrowdChants());
+
+        if (flagGoal == true)
+        {
+            StartCoroutine("GoalOcurred");
+            //flagGoal = false;
+        }
+    }
+
     //*****************************************************************************
     // This function gives turn to players in the game.
     //*****************************************************************************
     public static string whosTurn;
     void roundTurnManager()
     {
-
+        if (gameMode == 2)
+        {
+            //Modo online tenemos método aparte
+            roundTurnManagerOnline();
+            return;
+        }
         if (gameIsFinished || goalHappened)
             return;
 
@@ -366,10 +413,42 @@ public class GlobalGameManager : MonoBehaviour
             playerController.canShoot = true;
     }
 
+    void roundTurnManagerOnline()
+    {
+        if (gameIsFinished || goalHappened)
+        {
+            return;
+        }
+
+        if (round == 0)
+        {
+            //Primer turno
+            if (amIPlayerOne)
+            {
+                round = 1;
+            }
+            else
+            {
+                round = 2;
+            }
+            roundTurnManagerOnline();
+        }
+        else if (round == 1)
+        {
+            playerController.canShoot = true;
+            round = 2;
+        }
+        else if (round == 2)
+        {
+            playerController.canShoot = false;
+            round = 1;
+        }
+    }
+
     //*****************************************************************************
     // What happens after a shoot is performed?
     //*****************************************************************************
-    public IEnumerator managePostShoot(string _shootBy)
+    public IEnumerator managePostShoot(string _shootBy, int unitIndex, Vector3 outPower)
     {
         //get who is did the shoot
         //if we had a goal after the shoot was done and just before the round change, leave the process to other controllers.
@@ -403,6 +482,11 @@ public class GlobalGameManager : MonoBehaviour
                 case "Opponent":
                     round = 1;
                     break;
+            }
+            //TODO-REE Online 
+            if (gameMode == 2)
+            {
+                SoccerRealTimeMultiplayerListener.Instance.SendShoot(unitIndex, outPower);
             }
             roundTurnManager(); //cycle again between players
         }

@@ -253,6 +253,7 @@ public class MenuController : MonoBehaviour
         {
             PlayGamesPlatform.Instance.RealTime.CreateQuickGame(1, 1, 0, SoccerRealTimeMultiplayerListener.Instance);
             PlayGamesPlatform.Instance.RealTime.ShowWaitingRoomUI();
+            PlayerPrefs.SetInt("GameMode", 2);
         }
         else
         {
