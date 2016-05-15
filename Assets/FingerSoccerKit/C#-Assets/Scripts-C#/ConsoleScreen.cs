@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class ConsoleScreen : MonoBehaviour {
 
 	public Text escribeLineas;
-	public static string myLog;
+	public static string myLog = "";
 	private string output ="";
 	private string stack ="";
 	// Update is called once per frame
@@ -19,11 +19,14 @@ public class ConsoleScreen : MonoBehaviour {
 		myLog += "\n" + output;
 	}
 
+    public static void Log(string msg)
+    {
+        myLog += "\n" + msg;
+    }
+
 	void Update () {
-		UnityEngine.Application.RegisterLogCallback (HandleLogCallback);
+        //Application.RegisterLogCallback(HandleLogCallback);
 		escribeLineas.text = myLog;
-
-
 	}
 
 	public void showConsole(){

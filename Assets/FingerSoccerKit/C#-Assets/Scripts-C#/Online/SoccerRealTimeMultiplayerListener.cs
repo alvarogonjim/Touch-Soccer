@@ -60,7 +60,9 @@ public class SoccerRealTimeMultiplayerListener : RealTimeMultiplayerListener
         if (success)
         {
             DecideWhoIsPlayerOne();
+            ConsoleScreen.Log("Decided");
             Application.LoadLevel("Game-c#");
+            ConsoleScreen.Log("Loaded");
 
             //Application.LoadLevel("Game-c#");
         }
@@ -93,11 +95,11 @@ public class SoccerRealTimeMultiplayerListener : RealTimeMultiplayerListener
 
     public void OnRealTimeMessageReceived(bool isReliable, string senderId, byte[] data)
     {
-        Debug.Log("OnRealTimeMessageReceived");
+        ConsoleScreen.Log("OnRealTimeMessageReceived");
         OnlineMessage message = deserializeMessage(data);
         if (!playerOneDecided)
         {
-            Debug.LogFormat("OnRealTimeMessageReceived - decide p1 - %s, %s", PlayGamesPlatform.Instance.RealTime.GetSelf().ParticipantId, message.participantIdPlayerOne);
+            ConsoleScreen.Log("OnRealTimeMessageReceived - decide p1");
             GlobalGameManager.amIPlayerOne = PlayGamesPlatform.Instance.RealTime.GetSelf().ParticipantId.Equals(message.participantIdPlayerOne);
             CurrentState = GlobalGameManager.amIPlayerOne ? State.MY_TURN : State.WAIT;
         }
@@ -149,12 +151,14 @@ public class SoccerRealTimeMultiplayerListener : RealTimeMultiplayerListener
     private void DecideWhoIsPlayerOne()
     {
         bool iDecide = doIDecideWhoIsPlayerOne();
+        ConsoleScreen.Log("i decide");
         if (iDecide)
         {
             GlobalGameManager.amIPlayerOne = UnityEngine.Random.value <= 0.5;
             Debug.LogFormat("DecideWhoIsPlayerOne - decide p1 - %s", GlobalGameManager.amIPlayerOne);
             if (GlobalGameManager.amIPlayerOne)
             {
+                ConsoleScreen.Log("i am");
                 OnlineMessage message = new OnlineMessage();
                 message.participantIdPlayerOne = PlayGamesPlatform.Instance.RealTime.GetSelf().ParticipantId;
                 PlayGamesPlatform.Instance.RealTime.SendMessageToAll(true, serializeMessage(message));
