@@ -32,13 +32,9 @@ public class GlobalGameManager : MonoBehaviour
 	1 = 2 player against each other on the same platform/device
 	*/
     public static int gameMode;
-
-<<<<<<< HEAD
     //Online
     public static bool amIPlayerOne;
 
-=======
->>>>>>> rama2
     //Odd rounds are player (Player-1) turn and Even rounds are AI (Player-2)'s
     public static int round;
 
@@ -173,13 +169,11 @@ public class GlobalGameManager : MonoBehaviour
         else
             gameMode = 0; // Deafault Mode (Player-1 vs AI)
 
-<<<<<<< HEAD
+
         PlayerPrefs.DeleteKey("GameMode");
 
         round = gameMode == 2 ? 0 : 1; //Si es online, round empieza en 0
-
-=======
->>>>>>> rama2
+        
         playerAIController = GameObject.FindGameObjectWithTag("playerAI");
         opponentAIController = GameObject.FindGameObjectWithTag("opponentAI");
         ball = GameObject.FindGameObjectWithTag("ball");
@@ -219,7 +213,7 @@ public class GlobalGameManager : MonoBehaviour
                 //deactive opponent's AI
                 opponentAIController.SetActive(false);
                 break;
-<<<<<<< HEAD
+
             case 2:
                 //find and deactive all AI Opponent units. This is online
                 cpuTeam = GameObject.FindGameObjectsWithTag("Opponent");
@@ -232,10 +226,9 @@ public class GlobalGameManager : MonoBehaviour
                 break;
         }
     
-=======
+
         }
->>>>>>> rama2
-    }
+    
 
     IEnumerator Start()
     {
@@ -252,14 +245,11 @@ public class GlobalGameManager : MonoBehaviour
     //*****************************************************************************
     void Update()
     {
-<<<<<<< HEAD
-        if (gameMode == 2)
+      if (gameMode == 2)
         {
             UpdateOnlineMode();
             return;
         }
-=======
->>>>>>> rama2
         //check game finish status every frame
         if (!gameIsFinished)
         {
@@ -307,7 +297,6 @@ public class GlobalGameManager : MonoBehaviour
 
     }
 
-<<<<<<< HEAD
     void UpdateOnlineMode()
     {
         
@@ -327,24 +316,21 @@ public class GlobalGameManager : MonoBehaviour
         }
     }
 
-=======
->>>>>>> rama2
     //*****************************************************************************
     // This function gives turn to players in the game.
     //*****************************************************************************
     public static string whosTurn;
     void roundTurnManager()
     {
-<<<<<<< HEAD
+
         if (gameMode == 2)
         {
             //Modo online tenemos método aparte
             roundTurnManagerOnline();
             return;
         }
-=======
 
->>>>>>> rama2
+
         if (gameIsFinished || goalHappened)
             return;
 
@@ -433,7 +419,6 @@ public class GlobalGameManager : MonoBehaviour
             playerController.canShoot = true;
     }
 
-<<<<<<< HEAD
     void roundTurnManagerOnline()
     {
         if (gameIsFinished || goalHappened)
@@ -470,12 +455,6 @@ public class GlobalGameManager : MonoBehaviour
     // What happens after a shoot is performed?
     //*****************************************************************************
     public IEnumerator managePostShoot(string _shootBy, int unitIndex, Vector3 outPower)
-=======
-    //*****************************************************************************
-    // What happens after a shoot is performed?
-    //*****************************************************************************
-    public IEnumerator managePostShoot(string _shootBy)
->>>>>>> rama2
     {
         //get who is did the shoot
         //if we had a goal after the shoot was done and just before the round change, leave the process to other controllers.
@@ -510,14 +489,13 @@ public class GlobalGameManager : MonoBehaviour
                     round = 1;
                     break;
             }
-<<<<<<< HEAD
+
             //TODO-REE Online 
             if (gameMode == 2)
             {
                 SoccerRealTimeMultiplayerListener.Instance.SendShoot(unitIndex, outPower);
             }
-=======
->>>>>>> rama2
+
             roundTurnManager(); //cycle again between players
         }
     }
