@@ -1,17 +1,11 @@
 fileFormatVersion: 2
-guid: 498135818f7624ee7b3d8f2029434d10
-timeCreated: 1463073198
-licenseType: Free
+guid: 5747d1d89d832c943a2b41843cf4b8da
 TextureImporter:
   fileIDToRecycleName: {}
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
-<<<<<<< HEAD
     enableMipMap: 0
-=======
-    enableMipMap: 1
->>>>>>> rama2
     linearTexture: 0
     correctGamma: 0
     fadeOut: 0
@@ -31,18 +25,13 @@ TextureImporter:
   cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
   textureFormat: -1
-  maxTextureSize: 2048
+  maxTextureSize: 1024
   textureSettings:
     filterMode: -1
     aniso: -1
     mipBias: -1
-<<<<<<< HEAD
     wrapMode: 1
   nPOTScale: 0
-=======
-    wrapMode: -1
-  nPOTScale: 1
->>>>>>> rama2
   lightmap: 0
   rGBM: 0
   compressionQuality: 50
@@ -54,7 +43,6 @@ TextureImporter:
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
-<<<<<<< HEAD
   alphaIsTransparency: 1
   textureType: 8
   buildTargetSettings:
@@ -63,11 +51,6 @@ TextureImporter:
     textureFormat: -3
     compressionQuality: 50
     allowsAlphaSplitting: 0
-=======
-  alphaIsTransparency: 0
-  textureType: -1
-  buildTargetSettings: []
->>>>>>> rama2
   spriteSheet:
     sprites: []
     outline: []
