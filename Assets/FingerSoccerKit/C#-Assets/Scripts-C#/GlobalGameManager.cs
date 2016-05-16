@@ -456,6 +456,7 @@ public class GlobalGameManager : MonoBehaviour
     //*****************************************************************************
     public IEnumerator managePostShoot(string _shootBy, int unitIndex, Vector3 outPower)
     {
+		ConsoleScreen.Log ("shoot " + outPower);
         //get who is did the shoot
         //if we had a goal after the shoot was done and just before the round change, leave the process to other controllers.
 
