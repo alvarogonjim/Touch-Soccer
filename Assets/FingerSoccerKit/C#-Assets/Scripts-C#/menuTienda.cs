@@ -105,11 +105,11 @@ public class menuTienda : MonoBehaviour
     }
     void Start()
     {
-        GameObject.Find("Chapas").SetActive(false);
-        GameObject.Find("Auras").SetActive(false);
-        GameObject.Find("Formaciones").SetActive(false);
         GameObject.Find("PanelChapas").SetActive(false);
-        GameObject.Find("Personalizadas").SetActive(false);
+        GameObject.Find("PanelCredits").SetActive(false);
+        GameObject.Find("PanelFormaciones").SetActive(false);
+        GameObject.Find("PanelCampos").SetActive(false);
+        GameObject.Find("PanelMoney").SetActive(false);
         //	banner.SetActive (true);
     }
     // Update is called once per frame
