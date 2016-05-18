@@ -97,6 +97,13 @@ public class GlobalGameManager : MonoBehaviour
     public string nombreAni;
     public static bool flagGoal;
 
+	//Animation finishgame
+	public Animation AnimFinish;
+	public GameObject ObjectToAnimateFinish;
+	public string nombreAniFinish;
+	public static bool flagFinish = false;
+
+
     //PowerUps
     public static bool llamadoPowerUpTamano = false;
     public static bool powerUpTamano;
@@ -150,7 +157,7 @@ public class GlobalGameManager : MonoBehaviour
         switch (PlayerPrefs.GetInt("GameTime"))
         {
             case 0:
-                gameTimer = 180;
+                gameTimer = 10;
                 break;
             case 1:
                 gameTimer = 300;
@@ -256,6 +263,7 @@ public class GlobalGameManager : MonoBehaviour
             manageGameStatus();
         }
 
+
         //every now and then, play some crowd chants
         StartCoroutine(playCrowdChants());
 
@@ -291,6 +299,11 @@ public class GlobalGameManager : MonoBehaviour
             StartCoroutine("GoalOcurred");
             //flagGoal = false;
         }
+
+		if (flagFinish == true) {
+			StartCoroutine("partidoFinaliza");
+		}
+
         //If you ever needed debug inforamtions:
         //print("GameRound: " + round + " & turn is for: " + whosTurn + " and GoalHappened is: " + goalHappened);
 
@@ -314,6 +327,9 @@ public class GlobalGameManager : MonoBehaviour
             StartCoroutine("GoalOcurred");
             //flagGoal = false;
         }
+		if (flagFinish == true) {
+			StartCoroutine("partidoFinaliza");
+		}
     }
 
     //*****************************************************************************
@@ -569,6 +585,7 @@ public class GlobalGameManager : MonoBehaviour
         if (playerGoals > goalLimit || opponentGoals > goalLimit)
         {
             gameIsFinished = true;
+			flagFinish = true;
             manageGameFinishState();
             yield break;
         }
@@ -596,6 +613,7 @@ public class GlobalGameManager : MonoBehaviour
         if (seconds == 0 && minutes == 0)
         {
             gameIsFinished = true;
+			flagFinish = true;
             manageGameFinishState();
         }
 
@@ -634,42 +652,17 @@ public class GlobalGameManager : MonoBehaviour
         {
             if (playerGoals > goalLimit || playerGoals > opponentGoals)
             {
+				
                 print("Player 1 is the winner!!");
 
                 //set the result texture
                 statusTextureObject.GetComponent<Text>().text = statusModes[0];
 
                 int playerWins = PlayerPrefs.GetInt("PlayerWins");
+				playerWins = playerWins + 1;
+				PlayerPrefs.SetInt ("PlayerWins", playerWins);
                 int playerMoney = PlayerPrefs.GetInt("PlayerMoney");
                 int playerGames = PlayerPrefs.GetInt("PlayerGames");
-
-
-
-                if (playerGames < 20)
-                {
-                    //Si aun no ha jugado los 20 partidos, le sumamos 1
-                    PlayerPrefs.SetInt("PlayerGames", ++playerGames);
-                }
-                else
-                {
-                    //Si ha jugado los 20 partidos vuelve a estar el contador a 0
-                    PlayerPrefs.SetInt("PlayerGames", 0);
-                }
-
-                score = playerWins;
-                PlayerPrefs.SetInt("PlayerWins", ++playerWins);         //add to wins counter
-                PlayerPrefs.SetInt("PlayerMoney", playerMoney + 100);   //handful of coins as the prize!
-
-                if (playerWins >= 1)
-                {
-                    Social.ReportProgress("CgkIqKW33aMMEAIQBA", 100.0f, (bool success) => {
-                    });
-
-                }
-                Social.ReportScore(score, "CgkIqKW33aMMEAIQBQ", (bool success) => {
-
-                });
-
 
             }
             else if (opponentGoals > goalLimit || opponentGoals > playerGoals)
@@ -704,7 +697,8 @@ public class GlobalGameManager : MonoBehaviour
                 statusTextureObject.GetComponent<Text>().text = statusModes[3];
             }
         }
-        NextLevelButton("Shop-c#");
+       // NextLevelButton("Shop-c#");
+
 
     }
     //*****************************************************************************
@@ -876,6 +870,14 @@ public class GlobalGameManager : MonoBehaviour
         }
         estaSubida = false;
     }
+
+	IEnumerator partidoFinaliza(){
+		if (flagFinish == true) {
+			AnimFinish.CrossFade (nombreAniFinish);
+			yield return new WaitForSeconds (AnimFinish [nombreAniFinish].length);
+		}
+		flagFinish = false;
+	}
 
 }
 
