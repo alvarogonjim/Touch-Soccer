@@ -119,6 +119,7 @@ public class GlobalGameManager : MonoBehaviour
     public static bool powerUpBarrera;
     public static int iPowerUpBarrera = 2;
     public static int soloUnaVezBarrera;
+	public static int contadorTurnoBarrera = 2;
 
     public string nombreAnimacion;
     public GameObject ObjectToAnimateBarrera;
@@ -150,6 +151,7 @@ public class GlobalGameManager : MonoBehaviour
         canPlayCrowdChants = true;
         estaSubida = false;
 
+
         //hide gameStatusPlane
         gameStatusPlane.SetActive(false);
 
@@ -157,7 +159,7 @@ public class GlobalGameManager : MonoBehaviour
         switch (PlayerPrefs.GetInt("GameTime"))
         {
             case 0:
-                gameTimer = 10;
+                gameTimer = 180;
                 break;
             case 1:
                 gameTimer = 300;
@@ -304,6 +306,10 @@ public class GlobalGameManager : MonoBehaviour
 			StartCoroutine("partidoFinaliza");
 		}
 
+		if (contadorTurnoBarrera == 0) {
+			barrera.SetActive (false);
+		}
+
         //If you ever needed debug inforamtions:
         //print("GameRound: " + round + " & turn is for: " + whosTurn + " and GoalHappened is: " + goalHappened);
 
@@ -355,6 +361,9 @@ public class GlobalGameManager : MonoBehaviour
         carry = round % 2;
         if (carry == 1)
         {
+			if (llamadoPowerUpBarrera == true) {
+				contadorTurnoBarrera--;
+			}
             playersTurn = true;
             opponentsTurn = false;
             playerController.canShoot = true;
@@ -394,6 +403,9 @@ public class GlobalGameManager : MonoBehaviour
 
         else
         {
+			if (llamadoPowerUpBarrera == true) {
+				contadorTurnoBarrera--;
+			}
             playersTurn = false;
             opponentsTurn = true;
             //barrera.SetActive (false);
@@ -867,6 +879,7 @@ public class GlobalGameManager : MonoBehaviour
             animBarrera.CrossFade(nombreAnimacion);
             sonidoBarrera.Play();
             yield return new WaitForSeconds(animBarrera[nombreAnimacion].length);
+
         }
         estaSubida = false;
     }
