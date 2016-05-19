@@ -873,10 +873,11 @@ public class GlobalGameManager : MonoBehaviour
 
 	IEnumerator partidoFinaliza(){
 		if (flagFinish == true) {
+			flagFinish = false;
 			AnimFinish.CrossFade (nombreAniFinish);
 			yield return new WaitForSeconds (AnimFinish [nombreAniFinish].length);
 		}
-		flagFinish = false;
+		//flagFinish = false;
 	}
 
 }
