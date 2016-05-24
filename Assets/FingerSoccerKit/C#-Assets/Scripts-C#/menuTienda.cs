@@ -29,7 +29,7 @@ public class menuTienda : MonoBehaviour
     // Use this for initialization
     void Awake()
     {
-
+		StartCoroutine ("ocultarPaneles");
         //Cargamos las chapas
         chapas = playerController.chapas;
         //Cargamos el dinero
@@ -88,9 +88,10 @@ public class menuTienda : MonoBehaviour
         for (int l = 0; l < totalCampos.Length; l++)
         {
             string indexCampos = totalCampos[l].GetComponent<ShopItemProperties>().itemIndex.ToString();
-            string useButtonCampo = totalFormaciones[l].GetComponent<ShopItemProperties>().useButton;
+            string useButtonCampo = totalCampos[l].GetComponent<ShopItemProperties>().useButton;
             string shopItemCampo = "Campo-" + indexCampos;
             Debug.Log(shopItemCampo);
+			Debug.Log (indexCampos);
             if (PlayerPrefs.GetInt(shopItemCampo) == 1)
             {
                 //Encontramos el boton y lo desactivamos
@@ -103,13 +104,9 @@ public class menuTienda : MonoBehaviour
         }
 
     }
-    void Start()
+   void Start()
     {
-        GameObject.Find("PanelChapas").SetActive(false);
-        GameObject.Find("PanelCredits").SetActive(false);
-        GameObject.Find("PanelFormaciones").SetActive(false);
-        GameObject.Find("PanelCampos").SetActive(false);
-        GameObject.Find("PanelMoney").SetActive(false);
+     
         //	banner.SetActive (true);
     }
     // Update is called once per frame
@@ -239,6 +236,15 @@ public class menuTienda : MonoBehaviour
         Debug.Log(index);
         PlayerPrefs.SetInt("Campos", index);
     }
+
+	IEnumerator ocultarPaneles(){
+		GameObject.Find("PanelChapas").SetActive(false);
+		GameObject.Find("PanelCredits").SetActive(false);
+		GameObject.Find("PanelFormaciones").SetActive(false);
+		GameObject.Find("PanelCampos").SetActive(false);
+		GameObject.Find("PanelMoney").SetActive(false);
+		yield return new WaitForSeconds (2);
+	}
 }
 
 
