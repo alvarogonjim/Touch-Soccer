@@ -29,87 +29,13 @@ public class menuTienda : MonoBehaviour
     // Use this for initialization
     void Awake()
     {
-
-        //Cargamos las chapas
-        chapas = playerController.chapas;
-        //Cargamos el dinero
-        dinero = PlayerPrefs.GetInt("PlayerMoney");
-        //Cargamos las chapas compradas
-
-        for (int i = 0; i < totalChapas.Length; i++)
-        {
-            string index = totalChapas[i].GetComponent<ShopItemProperties>().itemIndex.ToString();
-            string useButton = totalChapas[i].GetComponent<ShopItemProperties>().useButton;
-            string shopItem = "Chapa-" + index;
-            Debug.Log(shopItem);
-
-            if (PlayerPrefs.GetInt(shopItem) == 1)
-            {
-                GameObject BuyButton = GameObject.Find(index.ToString());
-                //Encontramos el boton y lo 
-                BuyButton.SetActive(false);
-                //Encontramos el boton de usar y lo activamos
-                GameObject ActiveButton = GameObject.Find(useButton);
-                ActiveButton.GetComponent<Button>().interactable = true;
-            }
-        }
-        for (int j = 0; j < totalAuras.Length; j++)
-        {
-            string indexAura = totalAuras[j].GetComponent<ShopItemProperties>().itemIndex.ToString();
-            string useButtonAura = totalAuras[j].GetComponent<ShopItemProperties>().useButton;
-            string shopItemAura = "Aura-" + indexAura;
-            Debug.Log(shopItemAura);
-            if (PlayerPrefs.GetInt(shopItemAura) == 1)
-            {
-                //Encontramos el boton y lo desactivamos
-                GameObject BuyButton = GameObject.Find(indexAura.ToString());
-                BuyButton.SetActive(false);
-                //Encontramos el boton de usar y lo activamos
-                GameObject ActiveButton = GameObject.Find(useButtonAura);
-                ActiveButton.GetComponent<Button>().interactable = true;
-            }
-        }
-        for (int k = 0; k < totalFormaciones.Length; k++)
-        {
-            string indexFormacion = totalFormaciones[k].GetComponent<ShopItemProperties>().itemIndex.ToString();
-            string useButtonFormacion = totalFormaciones[k].GetComponent<ShopItemProperties>().useButton;
-            string shopItemFormacion = "Formacion-" + indexFormacion;
-            Debug.Log(shopItemFormacion);
-            if (PlayerPrefs.GetInt(shopItemFormacion) == 1)
-            {
-                //Encontramos el boton y lo desactivamos
-                GameObject BuyButton = GameObject.Find(indexFormacion.ToString());
-                BuyButton.SetActive(false);
-                //Encontramos el boton de usar y lo activamos
-                GameObject ActiveButton = GameObject.Find(useButtonFormacion);
-                ActiveButton.GetComponent<Button>().interactable = true;
-            }
-        }
-        for (int l = 0; l < totalCampos.Length; l++)
-        {
-            string indexCampos = totalCampos[l].GetComponent<ShopItemProperties>().itemIndex.ToString();
-            string useButtonCampo = totalFormaciones[l].GetComponent<ShopItemProperties>().useButton;
-            string shopItemCampo = "Campo-" + indexCampos;
-            Debug.Log(shopItemCampo);
-            if (PlayerPrefs.GetInt(shopItemCampo) == 1)
-            {
-                //Encontramos el boton y lo desactivamos
-                GameObject BuyButton = GameObject.Find(indexCampos.ToString());
-                BuyButton.SetActive(false);
-                //Encontramos el boton de usar y lo activamos
-                GameObject ActiveButton = GameObject.Find(useButtonCampo);
-                ActiveButton.GetComponent<Button>().interactable = true;
-            }
-        }
+		
+       
 
     }
     void Start()
     {
-        GameObject.Find("PanelChapas").SetActive(false);
-        GameObject.Find("PanelCredits").SetActive(false);
-        GameObject.Find("PanelFormaciones").SetActive(false);
-        GameObject.Find("PanelCampos").SetActive(false);
-        GameObject.Find("PanelMoney").SetActive(false);
+        StartCoroutine("ocultarPaneles");
         //	banner.SetActive (true);
     }
     // Update is called once per frame
@@ -239,6 +165,89 @@ public class menuTienda : MonoBehaviour
         Debug.Log(index);
         PlayerPrefs.SetInt("Campos", index);
     }
+
+	IEnumerator ocultarPaneles(){
+
+        //Cargamos las chapas
+        chapas = playerController.chapas;
+        //Cargamos el dinero
+        dinero = PlayerPrefs.GetInt("PlayerMoney");
+        //Cargamos las chapas compradas
+
+        for (int i = 0; i < totalChapas.Length; i++)
+        {
+            string index = totalChapas[i].GetComponent<ShopItemProperties>().itemIndex.ToString();
+            string useButton = totalChapas[i].GetComponent<ShopItemProperties>().useButton;
+            string shopItem = "Chapa-" + index;
+            Debug.Log(shopItem);
+
+            if (PlayerPrefs.GetInt(shopItem) == 1)
+            {
+                GameObject BuyButton = GameObject.Find(index.ToString());
+                //Encontramos el boton y lo 
+                BuyButton.SetActive(false);
+                //Encontramos el boton de usar y lo activamos
+                GameObject ActiveButton = GameObject.Find(useButton);
+                ActiveButton.GetComponent<Button>().interactable = true;
+            }
+        }
+        for (int j = 0; j < totalAuras.Length; j++)
+        {
+            string indexAura = totalAuras[j].GetComponent<ShopItemProperties>().itemIndex.ToString();
+            string useButtonAura = totalAuras[j].GetComponent<ShopItemProperties>().useButton;
+            string shopItemAura = "Aura-" + indexAura;
+            Debug.Log(shopItemAura);
+            if (PlayerPrefs.GetInt(shopItemAura) == 1)
+            {
+                //Encontramos el boton y lo desactivamos
+                GameObject BuyButton = GameObject.Find(indexAura.ToString());
+                BuyButton.SetActive(false);
+                //Encontramos el boton de usar y lo activamos
+                GameObject ActiveButton = GameObject.Find(useButtonAura);
+                ActiveButton.GetComponent<Button>().interactable = true;
+            }
+        }
+        for (int k = 0; k < totalFormaciones.Length; k++)
+        {
+            string indexFormacion = totalFormaciones[k].GetComponent<ShopItemProperties>().itemIndex.ToString();
+            string useButtonFormacion = totalFormaciones[k].GetComponent<ShopItemProperties>().useButton;
+            string shopItemFormacion = "Formacion-" + indexFormacion;
+            Debug.Log(shopItemFormacion);
+            if (PlayerPrefs.GetInt(shopItemFormacion) == 1)
+            {
+                //Encontramos el boton y lo desactivamos
+                GameObject BuyButton = GameObject.Find(indexFormacion.ToString());
+                BuyButton.SetActive(false);
+                //Encontramos el boton de usar y lo activamos
+                GameObject ActiveButton = GameObject.Find(useButtonFormacion);
+                ActiveButton.GetComponent<Button>().interactable = true;
+            }
+        }
+        for (int l = 0; l < totalCampos.Length; l++)
+        {
+            string indexCampos = totalCampos[l].GetComponent<ShopItemProperties>().itemIndex.ToString();
+            string useButtonCampo = totalCampos[l].GetComponent<ShopItemProperties>().useButton;
+            string shopItemCampo = "Campo-" + indexCampos;
+            Debug.Log(shopItemCampo);
+            Debug.Log(indexCampos);
+            if (PlayerPrefs.GetInt(shopItemCampo) == 1)
+            {
+                //Encontramos el boton y lo desactivamos
+                GameObject BuyButton = GameObject.Find(indexCampos.ToString());
+                BuyButton.SetActive(false);
+                //Encontramos el boton de usar y lo activamos
+                GameObject ActiveButton = GameObject.Find(useButtonCampo);
+                ActiveButton.GetComponent<Button>().interactable = true;
+            }
+        }
+        yield return new WaitForSeconds(5);
+        GameObject.Find("PanelChapas").SetActive(false);
+		GameObject.Find("PanelCredits").SetActive(false);
+		GameObject.Find("PanelFormaciones").SetActive(false);
+		GameObject.Find("PanelCampos").SetActive(false);
+		GameObject.Find("PanelMoney").SetActive(false);
+		yield return new WaitForSeconds (2);
+	}
 }
 
 
