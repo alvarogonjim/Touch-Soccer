@@ -10,6 +10,7 @@ public class ShopItemProperties : MonoBehaviour {
 
 	public int itemIndex;
 	public int itemPrice;
+    public int itemCredit;
     public string useButton;
 	void Start (){
 
