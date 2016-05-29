@@ -150,7 +150,7 @@ public class GlobalGameManager : MonoBehaviour
         minutes = 0;
         canPlayCrowdChants = true;
         estaSubida = false;
-
+        cambiarCampo();
 
         //hide gameStatusPlane
         gameStatusPlane.SetActive(false);
@@ -892,6 +892,15 @@ public class GlobalGameManager : MonoBehaviour
 		}
 		//flagFinish = false;
 	}
+    public void cambiarCampo()
+    {
 
+        int index = PlayerPrefs.GetInt("Campos");
+        Texture2D mat = Resources.Load("Campos/"+index.ToString(), typeof(Texture2D)) as Texture2D;
+
+        GameObject campo=GameObject.Find("Background");
+        campo.GetComponent<Renderer>().material.SetTexture("_MainTex", mat);
+
+    }
 }
 
