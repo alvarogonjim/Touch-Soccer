@@ -292,7 +292,7 @@ public class menuTienda : MonoBehaviour
             }
         }
         GameObject.Find("PanelChapas").SetActive(false);
-         for (int j = 0; j < totalAuras.Length; j++)
+       /*  for (int j = 0; j < totalAuras.Length; j++)
           {
             GameObject[] botonesCompraAuras = GameObject.FindGameObjectsWithTag("botonCompraAura");
         
@@ -312,7 +312,7 @@ public class menuTienda : MonoBehaviour
                 }
             }
           }
-          
+         */ 
         for (int k = 0; k < totalFormaciones.Length; k++)
         {
             string indexFormacion = totalFormaciones[k].GetComponent<ShopItemProperties>().itemIndex.ToString();
@@ -334,7 +334,7 @@ public class menuTienda : MonoBehaviour
 
         for (int l = 0; l < totalCampos.Length; l++)
         {
-            
+           GameObject[] botones= GameObject.FindGameObjectsWithTag("botonComprarCampo");
             string indexCampos = totalCampos[l].GetComponent<ShopItemProperties>().itemIndex.ToString();
             string useButtonCampo = totalCampos[l].GetComponent<ShopItemProperties>().useButton;
             string shopItemCampo = "Campo-" + indexCampos;
@@ -342,7 +342,7 @@ public class menuTienda : MonoBehaviour
             if (PlayerPrefs.GetInt(shopItemCampo) == 1)
             {
                 //Encontramos el boton y lo desactivamos
-                GameObject BuyButton = GameObject.Find(indexCampos.ToString());
+                GameObject BuyButton = botones[l];
                 BuyButton.SetActive(false);
                 //Encontramos el boton de usar y lo activamos
                 GameObject ActiveButton = GameObject.Find(useButtonCampo);
