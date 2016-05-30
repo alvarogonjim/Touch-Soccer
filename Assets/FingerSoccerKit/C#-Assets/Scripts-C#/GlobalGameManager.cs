@@ -129,7 +129,6 @@ public class GlobalGameManager : MonoBehaviour
 
 
     public AudioSource sonidoBarrera;
-    public AudioSource sonidoTamano;
 
     GameObject myButton;
     private string liga;
@@ -804,8 +803,7 @@ public class GlobalGameManager : MonoBehaviour
                 soloUnaVezTamano = 1;
                 //Ponemos el llamado de tama�o a true
                 llamadoPowerUpTamano = true;
-                sonidoTamano.Play();
-
+               
             }
             //En caso contrario falso
             else

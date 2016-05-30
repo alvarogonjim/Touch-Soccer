@@ -43,6 +43,7 @@ public class playerController : MonoBehaviour {
     public static int contadorPowerUpTamano=1;
     public static int contadorPowerUpElimina = 1;
     public static int contadorPowerUpBarrera = 1;
+	public AudioSource sonidoTamano;
 
    
     //*****************************************************************************
@@ -96,7 +97,7 @@ public class playerController : MonoBehaviour {
           {
             if(contadorPowerUpTamano == 0)
                 chapa.transform.localScale = new Vector3(2.5f, 0.5f, 2.5f);  
-				//AQUI SONIDO AGRANDAR
+
              }
 	  
         }
@@ -367,6 +368,7 @@ public class playerController : MonoBehaviour {
         {
            
             transform.localScale = new Vector3(5.5f, 0.5f, 5.5f);
+			sonidoTamano.Play();
             GlobalGameManager.soloUnaVezTamano = 0;
             contadorPowerUpTamano++;
             GlobalGameManager.iPowerUpTamano = GlobalGameManager.iPowerUpTamano - 1;
