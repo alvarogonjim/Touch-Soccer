@@ -22,7 +22,7 @@ public class menuTienda : MonoBehaviour
     private static GameObject[] chapas;
     public int precioItem;
     public int precioCreditos;
-    public static int dinero = 500;
+    public int dinero=50000;
     public static string nombreBoton;
     public static int creditos;
     private float NewPrecioAgrandar;
@@ -40,11 +40,10 @@ public class menuTienda : MonoBehaviour
         int dinero = PlayerPrefs.GetInt("PlayerMoney");
         int creditos = PlayerPrefs.GetInt("PlayerCredits");
         GameObject.Find("DisponibleAgrandar").GetComponent<Text>().text = PlayerPrefs.GetInt("Agrandar").ToString();
-        GameObject.Find("DisponibleEliminar").GetComponent<Text>().text = PlayerPrefs.GetInt("Eliminar").ToString();
-        GameObject.Find("DisponibleBarrera").GetComponent<Text>().text = PlayerPrefs.GetInt("Barrera").ToString();
-        dinero = 1000000;
+       //GameObject.Find("DisponibleEliminar").GetComponent<Text>().text = PlayerPrefs.GetInt("Eliminar").ToString();
+       //GameObject.Find("DisponibleBarrera").GetComponent<Text>().text = PlayerPrefs.GetInt("Barrera").ToString();
         GameObject.Find("Dinero").GetComponent<Text>().text = dinero.ToString();
-
+        Debug.Log(dinero);
 
     }
     void Start()
@@ -409,18 +408,25 @@ public class menuTienda : MonoBehaviour
 
     public void comprarHabilidad(string nombreHabilidad)
     {
-
+        Debug.Log("ESTAMOS EN LA HABILIDAD");
         if (nombreHabilidad.Equals("Agrandar"))
         {
-            if (dinero >= NewPrecioAgrandar)
+            Debug.Log("AGRANDAR");
+            Debug.Log(NewPrecioAgrandar);
+            
+            Debug.Log(dinero);
+            if (dinero >= (int)NewPrecioAgrandar)
             {
-
+                Debug.Log("Entra");
                 //Decrementamos el dinero 
                 dinero = dinero - (int)NewPrecioAgrandar;
                 PlayerPrefs.SetInt("PlayerMoney", dinero);
+                GameObject.Find("Dinero").GetComponent<Text>().text = dinero.ToString();
                 int Agrandar = PlayerPrefs.GetInt("Agrandar");
                 Agrandar = Agrandar + (int)newValueAgrandar;
                 PlayerPrefs.SetInt("Agrandar", Agrandar);
+                GameObject.Find("DisponibleAgrandar").GetComponent<Text>().text = PlayerPrefs.GetInt("Agrandar").ToString();
+                Debug.Log("compro");
             }
         }
         if (nombreHabilidad.Equals("Eliminar"))
@@ -431,8 +437,12 @@ public class menuTienda : MonoBehaviour
                 dinero = dinero - (int)NewPrecioEliminar;
                 PlayerPrefs.SetInt("PlayerMoney", dinero);
                 int Eliminar = PlayerPrefs.GetInt("Eliminar");
+                GameObject.Find("Dinero").GetComponent<Text>().text = dinero.ToString();
                 Eliminar = Eliminar + (int)newValueEliminar;
                 PlayerPrefs.SetInt("Eliminar", Eliminar);
+                GameObject.Find("DisponibleEliminar").GetComponent<Text>().text = PlayerPrefs.GetInt("Eliminar").ToString();
+
+
             }
         }
         if (nombreHabilidad.Equals("Barrera"))
@@ -442,9 +452,11 @@ public class menuTienda : MonoBehaviour
                 //Decrementamos el dinero 
                 dinero = dinero - (int)NewPrecioBarrera;
                 PlayerPrefs.SetInt("PlayerMoney", dinero);
+                GameObject.Find("Dinero").GetComponent<Text>().text = dinero.ToString();
                 int Barrera = PlayerPrefs.GetInt("Barrera");
                 Barrera = Barrera + (int)newValueBarrera;
                 PlayerPrefs.SetInt("Barrera", Barrera);
+                GameObject.Find("DisponibleBarrera").GetComponent<Text>().text = PlayerPrefs.GetInt("Barrera").ToString();
 
             }
         }
