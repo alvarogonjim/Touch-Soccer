@@ -804,6 +804,7 @@ public class GlobalGameManager : MonoBehaviour
                 Debug.Log(powerUpTamano.ToString());
                 //Decrementamos la habilidad
                 iPowerUpTamano--;
+                GameObject.Find("DisponibleAgrandar").GetComponent<Text>().text = iPowerUpTamano.ToString();
                 //La habilidad la tiene
                 powerUpTamano = true;
 
@@ -832,6 +833,7 @@ public class GlobalGameManager : MonoBehaviour
                 Debug.Log(powerUpElimina.ToString());
                 //Decrementamos la habilidad
                 iPowerUpElimina--;
+                GameObject.Find("DisponibleEliminar").GetComponent<Text>().text = iPowerUpElimina.ToString();
                 //La habilidad la tiene
                 powerUpElimina = true;
 
@@ -861,6 +863,7 @@ public class GlobalGameManager : MonoBehaviour
                 Debug.Log(powerUpBarrera.ToString());
                 //Decrementamos la habilidad
                 iPowerUpBarrera--;
+                GameObject.Find("DisponibleBarrera").GetComponent<Text>().text = iPowerUpBarrera.ToString();
                 //La habilidad la tiene
                 powerUpBarrera = true;
 
