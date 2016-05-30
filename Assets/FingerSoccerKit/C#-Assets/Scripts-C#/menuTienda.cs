@@ -37,19 +37,19 @@ public class menuTienda : MonoBehaviour
     void Awake()
     {
 
-        int dinero = PlayerPrefs.GetInt("PlayerMoney");
-        int creditos = PlayerPrefs.GetInt("PlayerCredits");
-        GameObject.Find("DisponibleAgrandar").GetComponent<Text>().text = PlayerPrefs.GetInt("Agrandar").ToString();
-       //GameObject.Find("DisponibleEliminar").GetComponent<Text>().text = PlayerPrefs.GetInt("Eliminar").ToString();
-       //GameObject.Find("DisponibleBarrera").GetComponent<Text>().text = PlayerPrefs.GetInt("Barrera").ToString();
-        GameObject.Find("Dinero").GetComponent<Text>().text = dinero.ToString();
-        Debug.Log(dinero);
+      
 
     }
     void Start()
     {
-       
-		StartCoroutine("ocultarPaneles");
+        int dinero = PlayerPrefs.GetInt("PlayerMoney");
+        int creditos = PlayerPrefs.GetInt("PlayerCredits");
+        GameObject.Find("DisponibleAgrandar").GetComponent<Text>().text = PlayerPrefs.GetInt("Agrandar").ToString();
+        GameObject.Find("DisponibleEliminar").GetComponent<Text>().text = PlayerPrefs.GetInt("Eliminar").ToString();
+        GameObject.Find("DisponibleBarrera").GetComponent<Text>().text = PlayerPrefs.GetInt("Barrera").ToString();
+        GameObject.Find("Dinero").GetComponent<Text>().text = dinero.ToString();
+        Debug.Log(dinero);
+        StartCoroutine("ocultarPaneles");
 
         //	banner.SetActive (true);
     }
@@ -311,7 +311,7 @@ public class menuTienda : MonoBehaviour
         
               string useButtonAura = totalAuras[j].GetComponent<ShopItemProperties>().useButton;
               string shopItemAura = "Aura-" + j;
-              Debug.Log(shopItemAura);
+             
             if (PlayerPrefs.GetInt(shopItemAura) == 1)
             {
                 GameObject BuyButton = GameObject.Find(j.ToString());
@@ -319,7 +319,7 @@ public class menuTienda : MonoBehaviour
                 //Encontramos el boton de usar y lo activamos
                 GameObject ActiveButton = GameObject.Find(useButtonAura);
                 ActiveButton.GetComponent<Button>().interactable = true;
-
+                Debug.Log(shopItemAura);
             }
           }
         GameObject.Find("PanelAuras").SetActive(false); 
@@ -365,6 +365,7 @@ public class menuTienda : MonoBehaviour
         
         GameObject.Find("PanelCredits").SetActive(false);
 		GameObject.Find("PanelMoney").SetActive(false);
+        GameObject.Find("PanelCampos").SetActive(false);
         GameObject.Find("PanelHabilidades").SetActive(false);
 		yield return new WaitForSeconds (3);
 }

@@ -107,17 +107,17 @@ public class GlobalGameManager : MonoBehaviour
     //PowerUps
     public static bool llamadoPowerUpTamano = false;
     public static bool powerUpTamano;
-    public static int iPowerUpTamano = 2;
+    public static int iPowerUpTamano;
     public static int soloUnaVezTamano;
 
     public static bool llamadoPowerUpElimina = false;
     public static bool powerUpElimina;
-    public static int iPowerUpElimina = 2;
+    public static int iPowerUpElimina;
     public static int soloUnaVezElimina;
 
     public static bool llamadoPowerUpBarrera = false;
     public static bool powerUpBarrera;
-    public static int iPowerUpBarrera = 2;
+    public static int iPowerUpBarrera;
     public static int soloUnaVezBarrera;
 	public static int contadorTurnoBarrera = 2;
 
@@ -151,7 +151,15 @@ public class GlobalGameManager : MonoBehaviour
         estaSubida = false;
         cambiarCampo();
 
-        //hide gameStatusPlane
+        iPowerUpTamano=PlayerPrefs.GetInt("Agrandar");
+        iPowerUpElimina=PlayerPrefs.GetInt("Eliminar");
+        iPowerUpBarrera=PlayerPrefs.GetInt("Barrera");
+
+        GameObject.Find("DisponibleAgrandar").GetComponent<Text>().text = iPowerUpTamano.ToString();
+        GameObject.Find("DisponibleEliminar").GetComponent<Text>().text = iPowerUpElimina.ToString();
+        GameObject.Find("DisponibleBarrera").GetComponent<Text>().text = iPowerUpBarrera.ToString();
+
+  //hide gameStatusPlane
         gameStatusPlane.SetActive(false);
 
         //Translate gameTimer index to actual seconds
