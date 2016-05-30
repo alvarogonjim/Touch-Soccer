@@ -35,19 +35,19 @@ public class menuTienda : MonoBehaviour
     void Awake()
     {
 
-        int dinero = PlayerPrefs.GetInt("PlayerMoney");
-        int creditos = PlayerPrefs.GetInt("PlayerCredits");
-        GameObject.Find("DisponibleAgrandar").GetComponent<Text>().text = PlayerPrefs.GetInt("Agrandar").ToString();
-        GameObject.Find("DisponibleEliminar").GetComponent<Text>().text = PlayerPrefs.GetInt("Eliminar").ToString();
-        GameObject.Find("DisponibleBarrera").GetComponent<Text>().text = PlayerPrefs.GetInt("Barrera").ToString();
-
 
     }
     void Start()
     {
        
 		StartCoroutine("ocultarPaneles");
-
+		int dinero = PlayerPrefs.GetInt("PlayerMoney");
+		int creditos = PlayerPrefs.GetInt("PlayerCredits");
+		GameObject.Find("DisponibleAgrandar").GetComponent<Text>().text = PlayerPrefs.GetInt("Agrandar").ToString();
+		GameObject.Find("DisponibleEliminar").GetComponent<Text>().text = PlayerPrefs.GetInt("Eliminar").ToString();
+		GameObject.Find("DisponibleBarrera").GetComponent<Text>().text = PlayerPrefs.GetInt("Barrera").ToString();
+		dinero = 10000;
+		GameObject.Find("Dinero").GetComponent<Text> ().text = dinero.ToString();
         //	banner.SetActive (true);
     }
     // Update is called once per frame
