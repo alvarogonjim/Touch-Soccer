@@ -22,7 +22,7 @@ public class menuTienda : MonoBehaviour
     private static GameObject[] chapas;
     public int precioItem;
     public int precioCreditos;
-    public int dinero=50000;
+    private int dinero=10000;
     public static string nombreBoton;
     public static int creditos;
     private float NewPrecioAgrandar;
@@ -37,12 +37,14 @@ public class menuTienda : MonoBehaviour
     void Awake()
     {
 
-        int dinero = PlayerPrefs.GetInt("PlayerMoney");
+		dinero = 100000;
+		PlayerPrefs.SetInt ("PlayerMoney", dinero);
         int creditos = PlayerPrefs.GetInt("PlayerCredits");
         GameObject.Find("DisponibleAgrandar").GetComponent<Text>().text = PlayerPrefs.GetInt("Agrandar").ToString();
-       //GameObject.Find("DisponibleEliminar").GetComponent<Text>().text = PlayerPrefs.GetInt("Eliminar").ToString();
-       //GameObject.Find("DisponibleBarrera").GetComponent<Text>().text = PlayerPrefs.GetInt("Barrera").ToString();
+      	GameObject.Find("DisponibleEliminar").GetComponent<Text>().text = PlayerPrefs.GetInt("Eliminar").ToString();
+       	GameObject.Find("DisponibleBarrera").GetComponent<Text>().text = PlayerPrefs.GetInt("Barrera").ToString();
         GameObject.Find("Dinero").GetComponent<Text>().text = dinero.ToString();
+
         Debug.Log(dinero);
 
     }
