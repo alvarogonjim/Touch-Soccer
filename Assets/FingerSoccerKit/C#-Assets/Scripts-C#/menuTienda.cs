@@ -25,9 +25,11 @@ public class menuTienda : MonoBehaviour
     public static int dinero = 500;
     public static string nombreBoton;
     public static int creditos;
-    private float NewPrecio;
+    private float NewPrecioAgrandar;
     private float newValueAgrandar;
+    private float NewPrecioEliminar;
     private float newValueEliminar;
+    private float NewPrecioBarrera;
     private float newValueBarrera;
     //public GameObject banner;
 
@@ -40,6 +42,8 @@ public class menuTienda : MonoBehaviour
         GameObject.Find("DisponibleAgrandar").GetComponent<Text>().text = PlayerPrefs.GetInt("Agrandar").ToString();
         GameObject.Find("DisponibleEliminar").GetComponent<Text>().text = PlayerPrefs.GetInt("Eliminar").ToString();
         GameObject.Find("DisponibleBarrera").GetComponent<Text>().text = PlayerPrefs.GetInt("Barrera").ToString();
+        dinero = 1000000;
+        GameObject.Find("Dinero").GetComponent<Text>().text = dinero.ToString();
 
 
     }
@@ -370,9 +374,9 @@ public class menuTienda : MonoBehaviour
     {
         
         GameObject TextoPrecio = GameObject.Find("TextoPrecioAgrandar");
-        float.TryParse(TextoPrecio.GetComponent<Text>().text, out NewPrecio);
-        NewPrecio = 1000 * newValue1;
-        TextoPrecio.GetComponent<Text>().text = NewPrecio.ToString();
+        float.TryParse(TextoPrecio.GetComponent<Text>().text, out NewPrecioAgrandar);
+        NewPrecioAgrandar = 1000 * newValue1;
+        TextoPrecio.GetComponent<Text>().text = NewPrecioAgrandar.ToString();
         GameObject ValorSlider = GameObject.Find("ValorSliderAgrandar");
         ValorSlider.GetComponent<Text>().text = newValue1.ToString();
         newValueAgrandar = newValue1;
@@ -382,9 +386,9 @@ public class menuTienda : MonoBehaviour
     {
 
         GameObject TextoPrecio = GameObject.Find("TextoPrecioEliminar");
-        float.TryParse(TextoPrecio.GetComponent<Text>().text, out NewPrecio);
-        NewPrecio = 1000 * newValue1;
-        TextoPrecio.GetComponent<Text>().text = NewPrecio.ToString();
+        float.TryParse(TextoPrecio.GetComponent<Text>().text, out NewPrecioEliminar);
+        NewPrecioEliminar = 1000 * newValue1;
+        TextoPrecio.GetComponent<Text>().text = NewPrecioEliminar.ToString();
         GameObject ValorSlider = GameObject.Find("ValorSliderEliminar");
         ValorSlider.GetComponent<Text>().text = newValue1.ToString();
         newValueEliminar = newValue1;
@@ -394,9 +398,9 @@ public class menuTienda : MonoBehaviour
     {
 
         GameObject TextoPrecio = GameObject.Find("TextoPrecioBarrera");
-        float.TryParse(TextoPrecio.GetComponent<Text>().text, out NewPrecio);
-        NewPrecio = 1000 * newValue1;
-        TextoPrecio.GetComponent<Text>().text = NewPrecio.ToString();
+        float.TryParse(TextoPrecio.GetComponent<Text>().text, out NewPrecioBarrera);
+        NewPrecioBarrera = 1000 * newValue1;
+        TextoPrecio.GetComponent<Text>().text = NewPrecioBarrera.ToString();
         GameObject ValorSlider = GameObject.Find("ValorSliderBarrera");
         ValorSlider.GetComponent<Text>().text = newValue1.ToString();
         newValueBarrera = newValue1;
@@ -408,11 +412,11 @@ public class menuTienda : MonoBehaviour
 
         if (nombreHabilidad.Equals("Agrandar"))
         {
-            if (dinero >= NewPrecio)
+            if (dinero >= NewPrecioAgrandar)
             {
 
                 //Decrementamos el dinero 
-                dinero = dinero - (int)NewPrecio;
+                dinero = dinero - (int)NewPrecioAgrandar;
                 PlayerPrefs.SetInt("PlayerMoney", dinero);
                 int Agrandar = PlayerPrefs.GetInt("Agrandar");
                 Agrandar = Agrandar + (int)newValueAgrandar;
@@ -421,10 +425,10 @@ public class menuTienda : MonoBehaviour
         }
         if (nombreHabilidad.Equals("Eliminar"))
         {
-            if (dinero >= NewPrecio)
+            if (dinero >= NewPrecioEliminar)
             {
                 //Decrementamos el dinero 
-                dinero = dinero - (int)NewPrecio;
+                dinero = dinero - (int)NewPrecioEliminar;
                 PlayerPrefs.SetInt("PlayerMoney", dinero);
                 int Eliminar = PlayerPrefs.GetInt("Eliminar");
                 Eliminar = Eliminar + (int)newValueEliminar;
@@ -433,10 +437,10 @@ public class menuTienda : MonoBehaviour
         }
         if (nombreHabilidad.Equals("Barrera"))
         {
-            if (dinero >= NewPrecio)
+            if (dinero >= NewPrecioBarrera)
             {
                 //Decrementamos el dinero 
-                dinero = dinero - (int)NewPrecio;
+                dinero = dinero - (int)NewPrecioBarrera;
                 PlayerPrefs.SetInt("PlayerMoney", dinero);
                 int Barrera = PlayerPrefs.GetInt("Barrera");
                 Barrera = Barrera + (int)newValueBarrera;
