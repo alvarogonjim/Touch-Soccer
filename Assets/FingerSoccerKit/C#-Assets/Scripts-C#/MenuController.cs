@@ -5,6 +5,7 @@ using UnityEngine.SocialPlatforms;
 using System.Collections;
 using GooglePlayGames.BasicApi.Multiplayer;
 using System;
+using UnityEngine.UI;
 
 public class MenuController : MonoBehaviour
 {
@@ -16,16 +17,17 @@ public class MenuController : MonoBehaviour
 	///*************************************************************************///
 
 	private float buttonAnimationSpeed = 9;		//speed on animation effect when tapped on button
-	private bool  canTap = true;				//flag to prevent double tap
-//	public AudioClip tapSfx;							//tap sound for buttons click
+	private bool  canTap = true;                //flag to prevent double tap
+                                                //	public AudioClip tapSfx;							//tap sound for buttons click
 
-	//Reference to GameObjects
-//	public GameObject playerWins;					//UI 3d text object
-//	public GameObject playerMoney;                  //UI 3d text object
-//	public GameObject banner;                                               //*****************************************************************************
-                                                    // Init. Updates the 3d texts with saved values fetched from playerprefs.
-                                                    //*****************************************************************************
-
+    //Reference to GameObjects
+    //	public GameObject playerWins;					//UI 3d text object
+    //	public GameObject playerMoney;                  //UI 3d text object
+    //	public GameObject banner;                                               //*****************************************************************************
+    // Init. Updates the 3d texts with saved values fetched from playerprefs.
+    //*****************************************************************************
+    private string name;
+    private Texture2D imagen;
         
 
     void Awake() {
@@ -52,12 +54,17 @@ public class MenuController : MonoBehaviour
     void Start()
     {
         ((PlayGamesPlatform)Social.Active).Authenticate((bool success) => { }, true);
-		//banner.SetActive (true);
+        //banner.SetActive (true);
+        if (Social.localUser.authenticated)
+        {
+            name = Social.localUser.userName;
+            imagen = Social.localUser.image;
+            GameObject.Find("NombreJugador").GetComponent<Text>().text = name;
+           // GameObject.Find("ImagenJugador").GetComponent<Texture2D>() = 
+        }
     }
 
     void Update (){	
-
-
 
 		if(canTap) {
 			StartCoroutine(tapManager());
@@ -260,5 +267,6 @@ public class MenuController : MonoBehaviour
             Social.localUser.Authenticate((bool success) => { });
         }
     }
-
+    //Conseguir los datos del usuario
+    
 }
