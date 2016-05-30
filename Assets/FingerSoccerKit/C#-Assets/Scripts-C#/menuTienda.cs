@@ -25,7 +25,10 @@ public class menuTienda : MonoBehaviour
     public static int dinero = 500;
     public static string nombreBoton;
     public static int creditos;
-
+    private float NewPrecio;
+    private float newValueAgrandar;
+    private float newValueEliminar;
+    private float newValueBarrera;
     //public GameObject banner;
 
     // Use this for initialization
@@ -34,6 +37,9 @@ public class menuTienda : MonoBehaviour
 
         int dinero = PlayerPrefs.GetInt("PlayerMoney");
         int creditos = PlayerPrefs.GetInt("PlayerCredits");
+        GameObject.Find("DisponibleAgrandar").GetComponent<Text>().text = PlayerPrefs.GetInt("Agrandar").ToString();
+        GameObject.Find("DisponibleEliminar").GetComponent<Text>().text = PlayerPrefs.GetInt("Eliminar").ToString();
+        GameObject.Find("DisponibleBarrera").GetComponent<Text>().text = PlayerPrefs.GetInt("Barrera").ToString();
 
 
     }
@@ -360,26 +366,88 @@ public class menuTienda : MonoBehaviour
 		yield return new WaitForSeconds (3);
 }
 
-    public void Slider_Changed1(float newValue)
+    public void Slider_Changed1(float newValue1)
     {
-        float NewPrecio;
+        
         GameObject TextoPrecio = GameObject.Find("TextoPrecioAgrandar");
         float.TryParse(TextoPrecio.GetComponent<Text>().text, out NewPrecio);
-        NewPrecio = 1000 * newValue;
+        NewPrecio = 1000 * newValue1;
         TextoPrecio.GetComponent<Text>().text = NewPrecio.ToString();
         GameObject ValorSlider = GameObject.Find("ValorSliderAgrandar");
-        ValorSlider.GetComponent<Text>().text = newValue.ToString();
-        if (dinero >= NewPrecio)
+        ValorSlider.GetComponent<Text>().text = newValue1.ToString();
+        newValueAgrandar = newValue1;
+    }
+
+    public void Slider_Changed2(float newValue1)
+    {
+
+        GameObject TextoPrecio = GameObject.Find("TextoPrecioEliminar");
+        float.TryParse(TextoPrecio.GetComponent<Text>().text, out NewPrecio);
+        NewPrecio = 1000 * newValue1;
+        TextoPrecio.GetComponent<Text>().text = NewPrecio.ToString();
+        GameObject ValorSlider = GameObject.Find("ValorSliderEliminar");
+        ValorSlider.GetComponent<Text>().text = newValue1.ToString();
+        newValueEliminar = newValue1;
+    }
+
+    public void Slider_Changed3(float newValue1)
+    {
+
+        GameObject TextoPrecio = GameObject.Find("TextoPrecioBarrera");
+        float.TryParse(TextoPrecio.GetComponent<Text>().text, out NewPrecio);
+        NewPrecio = 1000 * newValue1;
+        TextoPrecio.GetComponent<Text>().text = NewPrecio.ToString();
+        GameObject ValorSlider = GameObject.Find("ValorSliderBarrera");
+        ValorSlider.GetComponent<Text>().text = newValue1.ToString();
+        newValueBarrera = newValue1;
+    }
+
+
+    public void comprarHabilidad(string nombreHabilidad)
+    {
+
+        if (nombreHabilidad.Equals("Agrandar"))
         {
+            if (dinero >= NewPrecio)
+            {
 
-            //Decrementamos el dinero 
-            dinero = dinero - (int)NewPrecio;
-            PlayerPrefs.SetInt("PlayerMoney", dinero);
-            GlobalGameManager.iPowerUpTamano = GlobalGameManager.iPowerUpTamano + (int)newValue;
+                //Decrementamos el dinero 
+                dinero = dinero - (int)NewPrecio;
+                PlayerPrefs.SetInt("PlayerMoney", dinero);
+                int Agrandar = PlayerPrefs.GetInt("Agrandar");
+                Agrandar = Agrandar + (int)newValueAgrandar;
+                PlayerPrefs.SetInt("Agrandar", Agrandar);
+            }
+        }
+        if (nombreHabilidad.Equals("Eliminar"))
+        {
+            if (dinero >= NewPrecio)
+            {
+                //Decrementamos el dinero 
+                dinero = dinero - (int)NewPrecio;
+                PlayerPrefs.SetInt("PlayerMoney", dinero);
+                int Eliminar = PlayerPrefs.GetInt("Eliminar");
+                Eliminar = Eliminar + (int)newValueEliminar;
+                PlayerPrefs.SetInt("Eliminar", Eliminar);
+            }
+        }
+        if (nombreHabilidad.Equals("Barrera"))
+        {
+            if (dinero >= NewPrecio)
+            {
+                //Decrementamos el dinero 
+                dinero = dinero - (int)NewPrecio;
+                PlayerPrefs.SetInt("PlayerMoney", dinero);
+                int Barrera = PlayerPrefs.GetInt("Barrera");
+                Barrera = Barrera + (int)newValueBarrera;
+                PlayerPrefs.SetInt("Barrera", Barrera);
 
+            }
         }
 
+
     }
+
 
 }
 
