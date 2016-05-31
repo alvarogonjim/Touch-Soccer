@@ -6,6 +6,7 @@ using System.Collections;
 using GooglePlayGames.BasicApi.Multiplayer;
 using System;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 
 public class MenuController : MonoBehaviour
 {
@@ -28,7 +29,9 @@ public class MenuController : MonoBehaviour
     //*****************************************************************************
     private string name;
     private Texture2D imagen;
-        
+    
+	public AudioSource audioMute;
+	public static bool toggle = false;
 
     void Awake() {
 
@@ -55,6 +58,7 @@ public class MenuController : MonoBehaviour
     {
         ((PlayGamesPlatform)Social.Active).Authenticate((bool success) => { }, true);
         //banner.SetActive (true);
+		audioMute = GetComponent<AudioSource>();
         if (Social.localUser.authenticated)
         {
             name = Social.localUser.userName;
@@ -269,4 +273,13 @@ public class MenuController : MonoBehaviour
     }
     //Conseguir los datos del usuario
     
+	public void muteAudio(){
+		if (toggle == false) {
+			AudioListener.volume = 0.0f;
+			toggle = true;
+		} else {
+			AudioListener.volume = 1.0f;
+			toggle = false;
+		}
+	}
 }
