@@ -75,6 +75,7 @@ public class GlobalGameManager : MonoBehaviour
     public AudioClip[] goalSfx;
     public AudioClip[] goalHappenedSfx;
     public AudioClip[] crowdChants;
+	public AudioClip finalPartido;
     private bool canPlayCrowdChants;
 
     //Public references
@@ -114,6 +115,12 @@ public class GlobalGameManager : MonoBehaviour
     public static bool powerUpElimina;
     public static int iPowerUpElimina;
     public static int soloUnaVezElimina;
+
+	//volumen del sonido al final del partido
+	private float volumen =0.6f;
+	private float reducir = 0.0f;
+	public static bool ok = false;
+	public int segundos = 1;
 
     public static bool llamadoPowerUpBarrera = false;
     public static bool powerUpBarrera;
@@ -320,7 +327,14 @@ public class GlobalGameManager : MonoBehaviour
         //If you ever needed debug inforamtions:
         //print("GameRound: " + round + " & turn is for: " + whosTurn + " and GoalHappened is: " + goalHappened);
 
-
+		if (ok) {
+			reducir += Time.deltaTime / segundos;
+			volumen = Mathf.Lerp (0.5f, 1.0f, reducir);
+		} else {
+			volumen = 1.0f;
+			reducir = 0f;
+		}
+		GetComponent<AudioSource>().volume = volumen;
     }
 
     void UpdateOnlineMode()
@@ -628,6 +642,11 @@ public class GlobalGameManager : MonoBehaviour
     {
         seconds = Mathf.CeilToInt(gameTimer - Time.timeSinceLevelLoad) % 60;
         minutes = Mathf.CeilToInt(gameTimer - Time.timeSinceLevelLoad) / 60;
+
+		if (seconds == 50 && minutes == 2) {
+			ok = true;
+			playSfx (finalPartido);
+		}
 
         if (seconds == 0 && minutes == 0)
         {
