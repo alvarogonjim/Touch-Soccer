@@ -45,7 +45,7 @@ public class PlayerAI : MonoBehaviour {
 		
 		//if this is a 2-player local game
         //TODO-REE online, formacion segun amIPlayerOne
-		if(GlobalGameManager.gameMode == 1 || GlobalGameManager.gameMode == 2) {
+		if(GlobalGameManager.gameMode == 2 || GlobalGameManager.gameMode == 2) {
 			//cache all player_2 units
 			player2Team = GameObject.FindGameObjectsWithTag("Player_2");
 			int j = 1;
