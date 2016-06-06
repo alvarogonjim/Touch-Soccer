@@ -79,6 +79,14 @@ public class menuTienda : MonoBehaviour
             //Encontramos el boton y lo desactivamos
             GameObject BuyButton = GameObject.Find("Chapa"+index);
             BuyButton.SetActive(false);
+
+
+            if (GameObject.Find("ChapaCredito" + index) == true)
+            {
+                GameObject BuyButton2 = GameObject.Find("ChapaCredito" + index);
+                BuyButton2.SetActive(false);
+            }
+
             //Encontramos el boton de usar y lo activamos
             GameObject ActiveButton = GameObject.Find(nombreBoton);
             ActiveButton.GetComponent<Button>().interactable = true;
@@ -102,6 +110,14 @@ public class menuTienda : MonoBehaviour
             //Encontramos el boton y lo desactivamos
             GameObject BuyButton = GameObject.Find("Chapa" + index);
             BuyButton.SetActive(false);
+
+
+            if (GameObject.Find("ChapaCredito" + index) == true)
+            {
+                GameObject BuyButton2 = GameObject.Find("ChapaCredito" + index);
+                BuyButton2.SetActive(false);
+            }
+
             //Encontramos el boton de usar y lo activamos
             GameObject ActiveButton = GameObject.Find(nombreBoton);
             ActiveButton.GetComponent<Button>().interactable = true;
@@ -127,6 +143,14 @@ public class menuTienda : MonoBehaviour
             //Encontramos el boton y lo desactivamos
             GameObject BuyButton = GameObject.Find("Aura"+index);
             BuyButton.SetActive(false);
+
+
+            if (GameObject.Find("AuraCredito" + index) == true)
+            {
+                GameObject BuyButton2 = GameObject.Find("AuraCredito" + index);
+                BuyButton2.SetActive(false);
+            }
+
             //Encontramos el boton de usar y lo activamos
             GameObject ActiveButton = GameObject.Find(nombreBoton);
             ActiveButton.GetComponent<Button>().interactable = true;
@@ -150,6 +174,13 @@ public class menuTienda : MonoBehaviour
             //Encontramos el boton y lo desactivamos
             GameObject BuyButton = GameObject.Find("Aura" + index);
             BuyButton.SetActive(false);
+
+            if (GameObject.Find("AuraCredito" + index) == true)
+            {
+                GameObject BuyButton2 = GameObject.Find("AuraCredito" + index);
+                BuyButton2.SetActive(false);
+            }
+
             //Encontramos el boton de usar y lo activamos
             GameObject ActiveButton = GameObject.Find(nombreBoton);
             ActiveButton.GetComponent<Button>().interactable = true;
@@ -188,6 +219,15 @@ public class menuTienda : MonoBehaviour
             //Encontramos el boton y lo desactivamos
             GameObject BuyButton = GameObject.Find("Formacion"+index);
             BuyButton.SetActive(false);
+
+            //Encontramos el boton de comprar creditos y lo desactivamos
+
+            if (GameObject.Find("FormacionCredito" + index) == true)
+            {
+                GameObject BuyButton2 = GameObject.Find("FormacionCredito" + index);
+                BuyButton2.SetActive(false); 
+            }
+
             //Encontramos el boton de usar y lo activamos
             GameObject ActiveButton = GameObject.Find(nombreBoton);
             ActiveButton.GetComponent<Button>().interactable = true;
@@ -212,6 +252,13 @@ public class menuTienda : MonoBehaviour
             //Encontramos el boton y lo desactivamos
             GameObject BuyButton = GameObject.Find("Formacion" + index);
             BuyButton.SetActive(false);
+
+            if (GameObject.Find("FormacionCredito" + index) == true)
+            {
+                GameObject BuyButton2 = GameObject.Find("FormacionCredito" + index);
+                BuyButton2.SetActive(false);
+            }
+
             //Encontramos el boton de usar y lo activamos
             GameObject ActiveButton = GameObject.Find(nombreBoton);
             ActiveButton.GetComponent<Button>().interactable = true;
@@ -243,6 +290,15 @@ public class menuTienda : MonoBehaviour
             //Encontramos el boton y lo desactivamos
             GameObject BuyButton = GameObject.Find("Campo"+index);
             BuyButton.SetActive(false);
+
+
+            if (GameObject.Find("CampoCredito" + index) == true)
+            {
+                GameObject BuyButton2 = GameObject.Find("CampoCredito" + index);
+                BuyButton2.SetActive(false);
+            }
+
+
             //Encontramos el boton de usar y lo activamos
             GameObject ActiveButton = GameObject.Find(nombreBoton);
             ActiveButton.GetComponent<Button>().interactable = true;
@@ -266,6 +322,14 @@ public class menuTienda : MonoBehaviour
             //Encontramos el boton y lo desactivamos
             GameObject BuyButton = GameObject.Find("Campo" + index);
             BuyButton.SetActive(false);
+
+            if (GameObject.Find("CampoCredito" + index) == true)
+            {
+                GameObject BuyButton2 = GameObject.Find("CampoCredito" + index);
+                BuyButton2.SetActive(false);
+            }
+
+
             //Encontramos el boton de usar y lo activamos
             GameObject ActiveButton = GameObject.Find(nombreBoton);
             ActiveButton.GetComponent<Button>().interactable = true;
@@ -293,7 +357,7 @@ public class menuTienda : MonoBehaviour
             string useButton = totalChapas[i].GetComponent<ShopItemProperties>().useButton;
             string shopItem = "Chapa-" + i;
             Debug.Log(shopItem);
-            GameObject[] chapas = GameObject.FindGameObjectsWithTag("PanelChapas");
+      
             
             if (PlayerPrefs.GetInt(shopItem) == 1)
             {
@@ -301,6 +365,14 @@ public class menuTienda : MonoBehaviour
                 GameObject BuyButton = GameObject.Find("Chapa" + i);
                 //Encontramos el boton y lo 
                 BuyButton.SetActive(false);
+
+
+                if (GameObject.Find("ChapaCredito" + i) == true)
+                {
+                    GameObject BuyButton2 = GameObject.Find("ChapaCredito" + i);
+                    BuyButton2.SetActive(false);
+                }
+
                 //Encontramos el boton de usar y lo activamos
                 GameObject ActiveButton = GameObject.Find(useButton);
                 ActiveButton.GetComponent<Button>().interactable = true;
@@ -318,6 +390,13 @@ public class menuTienda : MonoBehaviour
             {
                 GameObject BuyButton = GameObject.Find("Aura" + j);
                 BuyButton.SetActive(false);
+
+                if (GameObject.Find("AuraCredito" + j) == true)
+                {
+                    GameObject BuyButton2 = GameObject.Find("AuraCredito" + j);
+                    BuyButton2.SetActive(false);
+                }
+
                 //Encontramos el boton de usar y lo activamos
                 GameObject ActiveButton = GameObject.Find(useButtonAura);
                 ActiveButton.GetComponent<Button>().interactable = true;
@@ -339,6 +418,15 @@ public class menuTienda : MonoBehaviour
                 //Encontramos el boton y lo desactivamos
                 GameObject BuyButton = GameObject.Find("Formacion" + k);
                 BuyButton.SetActive(false);
+
+                if (GameObject.Find("FormacionCredito" + k) == true)
+                {
+                    GameObject BuyButton2 = GameObject.Find("FormacionCredito" + k);
+                    BuyButton2.SetActive(false);
+                }
+
+
+
                 //Encontramos el boton de usar y lo activamos
                 GameObject ActiveButton = GameObject.Find(useButtonFormacion);
                 ActiveButton.GetComponent<Button>().interactable = true;
@@ -357,6 +445,14 @@ public class menuTienda : MonoBehaviour
                 //Encontramos el boton y lo desactivamos
                 GameObject BuyButton = GameObject.Find("Campo" + l);
                 BuyButton.SetActive(false);
+
+                if (GameObject.Find("CampoCredito" + l) == true)
+                {
+                    GameObject BuyButton2 = GameObject.Find("CampoCredito" + l);
+                    BuyButton2.SetActive(false);
+                }
+
+
                 //Encontramos el boton de usar y lo activamos
                 GameObject ActiveButton = GameObject.Find(useButtonCampo);
                 ActiveButton.GetComponent<Button>().interactable = true;
