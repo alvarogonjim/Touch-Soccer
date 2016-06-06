@@ -293,7 +293,6 @@ public class menuTienda : MonoBehaviour
             string useButton = totalChapas[i].GetComponent<ShopItemProperties>().useButton;
             string shopItem = "Chapa-" + i;
             Debug.Log(shopItem);
-            GameObject[] chapas = GameObject.FindGameObjectsWithTag("PanelChapas");
             
             if (PlayerPrefs.GetInt(shopItem) == 1)
             {
