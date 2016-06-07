@@ -20,7 +20,7 @@ public static class LanguageDictionary {
 			//Set keys and values of the stringList, the key being the word
 			//in default language, and the value the corresponding translation
 			stringList.Add ("YES", "YES");
-			stringList.Add ("Nombre Jugador" , "Player Name"); 
+			//stringList.Add ("Nombre Jugador" , "Player Name"); 
 			stringList.Add ("RETOS", "CHALLENGES");
 			stringList.Add ("Consigue 5 victorias", "Obtain 5 wins");
 			stringList.Add ("Victorias:\nDerrotas:\nGoles:\nPorcentaje de victorias:", "Wins:\nDefeats:\nGoals:\nWinning percentage:");
@@ -105,6 +105,90 @@ public static class LanguageDictionary {
 
 
 
+		}
+	
+		if (lang == SystemLanguage.French) {
+
+			//stringList.Add ("Nombre Jugador" , "Player Name"); 
+			stringList.Add ("RETOS", "DÉFIS");
+			stringList.Add ("Consigue 5 victorias", "Obtenez 5 victoires");
+			stringList.Add ("Victorias:\nDerrotas:\nGoles:\nPorcentaje de victorias:", "Victoires:\nPertes:\nObjectifs:\nPourcentage de victoires:");
+			stringList.Add ("GRATIS" , "GRATUIT");
+			stringList.Add ("Comprar" , "Acheter");
+			stringList.Add ("Tienda" , "Boutique");
+			stringList.Add ("Partida Rapida", "Quickplay");
+			stringList.Add ("Creditos\nGratis", "Gratuit\nCredits");
+			stringList.Add ("Monedas\nGratis", "Gratuit\nPièces");
+			stringList.Add ("Habilidades", "Compétences");
+			stringList.Add ("Agrandar", "Agrandir");
+			stringList.Add ("Duplica el tamaño de la chapa durante dos turnos", "Deux fois la taille de la feuille pendant deux quarts");
+			stringList.Add ("Reventar", "Éclat");
+			stringList.Add ("Destruye una chapa del oponente", "Détruisez un adversaire de la feuille");
+			stringList.Add ("Disponible:", "Disponible:");
+			stringList.Add ("Barrera", "Barrière");
+			stringList.Add ("Activa un escudo defensivo en la porteria durante dos turnos", "Active un bouclier défensif dans le but pendant deux quarts");
+			stringList.Add ("Turno Extra", "Troisième Extra");
+			stringList.Add ("Tienes un turno extra", "Vous avez un décalage supplémentaire");
+			stringList.Add ("Equipaciones", "Equipes");
+			stringList.Add ("Personalizadas", "Custom");
+			stringList.Add ("Auras", "Auras");
+			stringList.Add ("Chocolate Blanco", "Chocolat blanc");
+			stringList.Add ("Chocolate", "Chocolat");
+			stringList.Add ("Trebol", "Trèfle");
+			stringList.Add ("Corazon", "Coeur");
+			stringList.Add ("Demonio", "Demon");
+			stringList.Add ("Ocho", "Huit");
+			stringList.Add ("Paz", "Paix");
+			stringList.Add ("Yin Yang", "Yin Yang");
+			stringList.Add ("Emoticon", "Émoticône");
+			stringList.Add ("Catrina", "Catrina");
+			stringList.Add ("Furioso", "Furieux");
+			stringList.Add ("Eye", "œil");
+			stringList.Add ("Atomo", "Atome");
+			stringList.Add ("Boton", "Bouton");
+			stringList.Add ("Radioactivo", "Radioactif");
+			stringList.Add ("Huevo", "œuf");
+			stringList.Add ("Pizza", "Pizza");
+			stringList.Add ("Donut", "Beignet");
+			stringList.Add ("Pirata", "Pirate");
+			stringList.Add ("Usar", "Utiliser");
+			stringList.Add ("Alemania", "Allemagne");
+			stringList.Add ("España", "Espagne");
+			stringList.Add ("Inglaterra", "England");
+			stringList.Add ("Portugal", "Portugal");
+			stringList.Add ("Belgica", "Belgique");
+			stringList.Add ("Italia", "Italie");
+			stringList.Add ("Rusia", "Russie");
+			stringList.Add ("Suiza", "Suisse");
+			stringList.Add ("Austria", "Autriche");
+			stringList.Add ("Croacia", "Croatie");
+			stringList.Add ("Ucrania", "Ukraine");
+			stringList.Add ("Republica Checa", "République Tchèque");
+			stringList.Add ("Suecia", "Suède");
+			stringList.Add ("Polonia", "Pologne");
+			stringList.Add ("Rumania", "Roumanie");
+			stringList.Add ("Eslovaquia", "Slovaquie");
+			stringList.Add ("Hungria", "Hongrie");
+			stringList.Add ("Turquia", "Turquie");
+			stringList.Add ("Irlanda", "Irlande");
+			stringList.Add ("Islandia", "Islande");
+			stringList.Add ("Gales", "Pays de Galles");
+			stringList.Add ("Albania", "Albanie");
+			stringList.Add ("Irlanda del Norte", "Irlande du Nord");
+			stringList.Add ("Francia", "France");
+			stringList.Add ("Aura Roja", "Rouge Aura");
+			stringList.Add ("Aura Azul", "Bleue Aura");
+			stringList.Add ("Aura Verde", "Vert Aura");
+			stringList.Add ("Aura Amarilla", "Jaune Aura");
+			stringList.Add ("Aura Rosa", "Rose Aura");
+			stringList.Add ("Nevado", "Neigeux");
+			stringList.Add ("Calle", "Rue");
+			stringList.Add ("Savanna", "Savane");
+			stringList.Add ("Basico", "De Base");
+			stringList.Add ("Campos", "Terrains");
+			stringList.Add ("Formaciones", "Formations");
+			stringList.Add ("Monedas", "Pièces");
+			stringList.Add ("Creditos", "Crédits");
 		}
 
 		//Now, let's add translations for Spanish
