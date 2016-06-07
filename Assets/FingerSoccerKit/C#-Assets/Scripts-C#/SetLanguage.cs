@@ -12,4 +12,15 @@ public class SetLanguage : MonoBehaviour {
 		Debug.Log ("Language set: " + Application.systemLanguage);
 	}
 
+	public void SetEnglish(){
+		LanguageDictionary.SetLanguage (SystemLanguage.English);
+	}
+
+	public void SetFrench(){
+		LanguageDictionary.SetLanguage (SystemLanguage.French);
+	}
+
+	public void SetSpanish(){
+		LanguageDictionary.SetLanguage (SystemLanguage.Spanish);
+	}
 }

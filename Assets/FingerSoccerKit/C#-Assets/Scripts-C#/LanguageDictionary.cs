@@ -100,9 +100,10 @@ public static class LanguageDictionary {
 			stringList.Add ("Formaciones", "Formations");
 			stringList.Add ("Monedas", "Coins");
 			stringList.Add ("Creditos", "Credits");
-
-
-
+			stringList.Add ("Perfil", "Profile");
+			stringList.Add ("Chapas", "Teams");
+			stringList.Add ("Partida Online", "Online Match");
+			stringList.Add ("Equipos", "Teams");
 
 
 		}
@@ -189,6 +190,10 @@ public static class LanguageDictionary {
 			stringList.Add ("Formaciones", "Formations");
 			stringList.Add ("Monedas", "Pièces");
 			stringList.Add ("Creditos", "Crédits");
+			stringList.Add ("Perfil", "Profil");
+			stringList.Add ("Chapas", "Équipes");
+			stringList.Add ("Partida Online", "Jeu En Ligne");
+			stringList.Add ("Equipos", "Équipes");
 		}
 
 		//Now, let's add translations for Spanish
