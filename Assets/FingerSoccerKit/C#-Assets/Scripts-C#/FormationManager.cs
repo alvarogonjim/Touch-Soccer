@@ -43,41 +43,41 @@ public class FormationManager : MonoBehaviour {
 			
 				if(_UnitIndex == 0) output = new Vector3(-18.6f, 1.25f + yFixer, fixedZ);
 				if(_UnitIndex == 1) output = new Vector3(-14.03f, 4.04f + yFixer, fixedZ);
-				if(_UnitIndex == 2) output = new Vector3(-9.34f, -6.28f + yFixer, fixedZ);
+				if(_UnitIndex == 2) output = new Vector3(-9.34f, 6.28f + yFixer, fixedZ);
 				if(_UnitIndex == 3) output = new Vector3(-14.03f, -1.75f + yFixer, fixedZ);
 				if(_UnitIndex == 4) output = new Vector3(-9.34f, -4.58f + yFixer, fixedZ);
 				break;
 			
 		case 1:
 			
-				if(_UnitIndex == 0) output = new Vector3(-14, 0 + yFixer, fixedZ);
-				if(_UnitIndex == 1) output = new Vector3(-15.32f, 4.3f + yFixer, fixedZ);
-				if(_UnitIndex == 2) output = new Vector3(-5.17f, 1.29f + yFixer, fixedZ);
-				if(_UnitIndex == 3) output = new Vector3(-15.32f, -1.49f + yFixer, fixedZ);
-				if(_UnitIndex == 4) output = new Vector3(-10.3f, 1.22f + yFixer, fixedZ);
+				if(_UnitIndex == 0) output = new Vector3(-19.51f, 0.97f + yFixer, fixedZ);
+				if(_UnitIndex == 1) output = new Vector3(-5.19f, 1.2f + yFixer, fixedZ);
+				if(_UnitIndex == 2) output = new Vector3(-15.07f, -2.72f + yFixer, fixedZ);
+				if(_UnitIndex == 3) output = new Vector3(-15.01f, 5.24f + yFixer, fixedZ);
+				if(_UnitIndex == 4) output = new Vector3(-10.29f, 1.13f + yFixer, fixedZ);
 				break;
 			
 		case 2:
 			
-				if(_UnitIndex == 0) output = new Vector3(-3, 6.69f + yFixer, fixedZ);
-				if(_UnitIndex == 1) output = new Vector3(-3, 8.35f + yFixer, fixedZ);
-				if(_UnitIndex == 2) output = new Vector3(-3, 4.8f + yFixer, fixedZ);
-				if(_UnitIndex == 3) output = new Vector3(-3, 1.06f + yFixer, fixedZ);
-				if(_UnitIndex == 4) output = new Vector3(-3, -2.74f + yFixer, fixedZ);
+				if(_UnitIndex == 0) output = new Vector3(-3, 1.4f + yFixer, fixedZ);
+				if(_UnitIndex == 1) output = new Vector3(-3, 9 + yFixer, fixedZ);
+				if(_UnitIndex == 2) output = new Vector3(-3, 6.08f + yFixer, fixedZ);
+				if(_UnitIndex == 3) output = new Vector3(-3, -3.07f + yFixer, fixedZ);
+				if(_UnitIndex == 4) output = new Vector3(-3, -7.31f + yFixer, fixedZ);
 				break;
 			
 		case 3:
-				if(_UnitIndex == 0) output = new Vector3(-5.46f, 6.69f + yFixer, fixedZ);
-				if(_UnitIndex == 1) output = new Vector3(-5.46f, 8.35f + yFixer, fixedZ);
-				if(_UnitIndex == 2) output = new Vector3(-9.62f, 4.8f + yFixer, fixedZ);
-				if(_UnitIndex == 3) output = new Vector3(-5.51f, 1.06f + yFixer, fixedZ);
-				if(_UnitIndex == 4) output = new Vector3(-9.62f, -2.74f + yFixer, fixedZ);
+				if(_UnitIndex == 0) output = new Vector3(-5.46f, -6 + yFixer, fixedZ);
+				if(_UnitIndex == 1) output = new Vector3(-5.46f, 9.37f + yFixer, fixedZ);
+				if(_UnitIndex == 2) output = new Vector3(-9.62f, 5.39f + yFixer, fixedZ);
+				if(_UnitIndex == 3) output = new Vector3(-5.51f, 1.33f + yFixer, fixedZ);
+				if(_UnitIndex == 4) output = new Vector3(-9.62f, -2.26f + yFixer, fixedZ);
 				break;
 			
 		case 4:
-				if(_UnitIndex == 0) output = new Vector3(-16.03f, 0.86f + yFixer, fixedZ);
+				if(_UnitIndex == 0) output = new Vector3(-4.76f, 1.18f + yFixer, fixedZ);
 				if(_UnitIndex == 1) output = new Vector3(-11.88f, 1.01f + yFixer, fixedZ);
-				if(_UnitIndex == 2) output = new Vector3(-20.15f, 1.06f + yFixer, fixedZ);
+				if(_UnitIndex == 2) output = new Vector3(-20.15f, 1.17f + yFixer, fixedZ);
 				if(_UnitIndex == 3) output = new Vector3(-11.88f, -4.04f + yFixer, fixedZ);
 				if(_UnitIndex == 4) output = new Vector3(-11.68f, 6.62f + yFixer, fixedZ);
 				break;
