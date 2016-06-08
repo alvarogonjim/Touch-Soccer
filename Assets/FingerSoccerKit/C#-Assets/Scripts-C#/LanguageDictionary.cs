@@ -19,6 +19,7 @@ public static class LanguageDictionary {
 		if (lang == SystemLanguage.English || lang == SystemLanguage.Unknown || lang == null) {
 			//Set keys and values of the stringList, the key being the word
 			//in default language, and the value the corresponding translation
+
 			stringList.Add ("YES", "YES");
 			//stringList.Add ("Nombre Jugador" , "Player Name"); 
 			stringList.Add ("RETOS", "CHALLENGES");
@@ -104,6 +105,11 @@ public static class LanguageDictionary {
 			stringList.Add ("Chapas", "Teams");
 			stringList.Add ("Partida Online", "Online Match");
 			stringList.Add ("Equipos", "Teams");
+			stringList.Add ("Idioma", "Language");
+			stringList.Add ("Ganancias:", "Earnings:");
+			stringList.Add ("Recompensa:", "Reward:");
+			stringList.Add ("Estadisticas:", "Statistics:");
+			stringList.Add ("División:", "Division:");
 
 
 		}
@@ -194,6 +200,12 @@ public static class LanguageDictionary {
 			stringList.Add ("Chapas", "Équipes");
 			stringList.Add ("Partida Online", "Jeu En Ligne");
 			stringList.Add ("Equipos", "Équipes");
+			stringList.Add ("Idioma", "Langue");
+			stringList.Add ("Ganancias:", "Gains:");
+			stringList.Add ("Recompensa:", "Récompense:");
+			stringList.Add ("Estadisticas:", "Statistiques:");
+			stringList.Add ("División:", "Division:");
+
 		}
 
 		//Now, let's add translations for Spanish
