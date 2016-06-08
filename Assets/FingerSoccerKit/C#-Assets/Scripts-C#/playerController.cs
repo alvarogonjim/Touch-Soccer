@@ -437,10 +437,6 @@ public class playerController : MonoBehaviour {
             GlobalGameManager.iPowerUpTamano = GlobalGameManager.iPowerUpTamano - 1;
     
     }
-
-
-        
-
 		if(GlobalGameManager.powerUpBarrera == true && GlobalGameManager.soloUnaVezBarrera > 0 && GlobalGameManager.playersTurn ==true)
         {
             
