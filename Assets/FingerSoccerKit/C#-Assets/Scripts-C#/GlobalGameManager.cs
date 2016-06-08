@@ -948,5 +948,6 @@ public class GlobalGameManager : MonoBehaviour
         campo.GetComponent<Renderer>().material.SetTexture("_MainTex", mat);
 
     }
+
 }
 

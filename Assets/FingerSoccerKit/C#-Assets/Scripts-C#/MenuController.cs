@@ -268,8 +268,8 @@ public class MenuController : MonoBehaviour
 			            Social.localUser.Authenticate((bool success) => { });
 			        }
 		    }
-	    //Conseguir los datos del usuario
-	    
+
+            
 	    public void muteAudio(){
 		        if (toggle == false) {
 			            AudioListener.volume = 0.0f;
@@ -280,3 +280,4 @@ public class MenuController : MonoBehaviour
 			        }
 		    }
 } 
+

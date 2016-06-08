@@ -431,12 +431,13 @@ public class playerController : MonoBehaviour {
         {
             Vector3 final = new Vector3(5.5f, 0.5f, 5.5f);
             transform.localScale = final;
+            
             sonidoTamano.Play();
             GlobalGameManager.soloUnaVezTamano = 0;
             contadorPowerUpTamano++;
             GlobalGameManager.iPowerUpTamano = GlobalGameManager.iPowerUpTamano - 1;
     
-    }
+         }
 		if(GlobalGameManager.powerUpBarrera == true && GlobalGameManager.soloUnaVezBarrera > 0 && GlobalGameManager.playersTurn ==true)
         {
             
