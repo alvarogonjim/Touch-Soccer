@@ -694,21 +694,21 @@ public class GlobalGameManager : MonoBehaviour
                 print("Player 1 is the winner!!");
 
                 //ENVIAMOS EL DATO A GOOGLE
-                PlayGamesPlatform.Instance.Events.IncrementEvent("CgkIqKW33aMMEAIQBg", 1);
+               // PlayGamesPlatform.Instance.Events.IncrementEvent("CgkIqKW33aMMEAIQBg", 1);
 
                 //set the result texture
                 statusTextureObject.GetComponent<Text>().text = statusModes[0];
 
-                int playerWins = PlayerPrefs.GetInt("PlayerWins");
-				playerWins = playerWins + 1;
-				PlayerPrefs.SetInt ("PlayerWins", playerWins);
                 int playerMoney = PlayerPrefs.GetInt("PlayerMoney");
-                int playerGames = PlayerPrefs.GetInt("PlayerGames");
+                playerMoney = playerMoney + 200;
+                PlayerPrefs.SetInt("PlayerMoney", playerMoney);
+
+
 
             }
             else if (opponentGoals > goalLimit || opponentGoals > playerGoals)
             {
-                PlayGamesPlatform.Instance.Events.IncrementEvent("CgkIqKW33aMMEAIQBw", 1);
+                //PlayGamesPlatform.Instance.Events.IncrementEvent("CgkIqKW33aMMEAIQBw", 1);
 
 
                 print("CPU is the winner!!");
@@ -718,7 +718,7 @@ public class GlobalGameManager : MonoBehaviour
             else if (opponentGoals == playerGoals)
             {
 
-                PlayGamesPlatform.Instance.Events.IncrementEvent("CgkIqKW33aMMEAIQCg", 1);
+                //PlayGamesPlatform.Instance.Events.IncrementEvent("CgkIqKW33aMMEAIQCg", 1);
                 print("(Single Player) We have a Draw!");
                 statusTextureObject.GetComponent<Text>().text = statusModes[4];
             }
@@ -727,21 +727,22 @@ public class GlobalGameManager : MonoBehaviour
         {
             if (playerGoals > opponentGoals)
             {
-                PlayGamesPlatform.Instance.Events.IncrementEvent("CgkIqKW33aMMEAIQBg", 1);
+                //PlayGamesPlatform.Instance.Events.IncrementEvent("CgkIqKW33aMMEAIQBg", 1);
                 print("Player 1 is the winner!!");
                 statusTextureObject.GetComponent<Text>().text = statusModes[2];
 
             }
             else if (playerGoals == opponentGoals)
             {
-                PlayGamesPlatform.Instance.Events.IncrementEvent("CgkIqKW33aMMEAIQCg", 1);
+                //PlayGamesPlatform.Instance.Events.IncrementEvent("CgkIqKW33aMMEAIQCg", 1);
                 print("(Two-Player) We have a Draw!");
+
                 statusTextureObject.GetComponent<Text>().text = statusModes[4];
             }
             else if (playerGoals < opponentGoals)
             {
 
-                PlayGamesPlatform.Instance.Events.IncrementEvent("CgkIqKW33aMMEAIQBw", 1);
+                //PlayGamesPlatform.Instance.Events.IncrementEvent("CgkIqKW33aMMEAIQBw", 1);
                 print("Player 2 is the winner!!");
                 statusTextureObject.GetComponent<Text>().text = statusModes[3];
             }
@@ -830,7 +831,7 @@ public class GlobalGameManager : MonoBehaviour
             //Si no vemos si tiene la habilidad disponible (mas de 0)
             if (iPowerUpTamano > 0)
             {
-                PlayGamesPlatform.Instance.Events.IncrementEvent("CgkIqKW33aMMEAIQCw", 1);
+                //PlayGamesPlatform.Instance.Events.IncrementEvent("CgkIqKW33aMMEAIQCw", 1);
                 Debug.Log(powerUpTamano.ToString());
                 //Decrementamos la habilidad
                 iPowerUpTamano--;
@@ -861,7 +862,7 @@ public class GlobalGameManager : MonoBehaviour
             if (iPowerUpElimina > 0)
             {
 
-                PlayGamesPlatform.Instance.Events.IncrementEvent("CgkIqKW33aMMEAIQDA", 1);
+                //PlayGamesPlatform.Instance.Events.IncrementEvent("CgkIqKW33aMMEAIQDA", 1);
 
                 Debug.Log(powerUpElimina.ToString());
                 //Decrementamos la habilidad
@@ -894,7 +895,7 @@ public class GlobalGameManager : MonoBehaviour
             {
                 estaSubida = true;
                 StartCoroutine("subeBarrera");
-                PlayGamesPlatform.Instance.Events.IncrementEvent("CgkIqKW33aMMEAIQDQ", 1);
+                //PlayGamesPlatform.Instance.Events.IncrementEvent("CgkIqKW33aMMEAIQDQ", 1);
 
                 Debug.Log(powerUpBarrera.ToString());
                 //Decrementamos la habilidad

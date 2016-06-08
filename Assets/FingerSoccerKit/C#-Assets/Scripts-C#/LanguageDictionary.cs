@@ -227,7 +227,7 @@ public static class LanguageDictionary {
 			stringList.Add ("Comprar" , "Comprar");
 			stringList.Add ("Tienda" , "Loja");
 			stringList.Add ("Partida Rapida", "Jogo Rápido");
-			stringList.Add ("Creditos\nGratis", "Créditos\Gratis");
+			//stringList.Add ("Creditos\nGratis", "Créditos\Gratis");
 			stringList.Add ("Monedas\nGratis", "Moedas\nde Livre");
 			stringList.Add ("Habilidades", "Habilidades");
 			stringList.Add ("Agrandar", "Ampliar");
