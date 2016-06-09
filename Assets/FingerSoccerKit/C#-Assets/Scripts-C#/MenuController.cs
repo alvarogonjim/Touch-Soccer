@@ -7,6 +7,7 @@ using GooglePlayGames.BasicApi.Multiplayer;
 using System;
 using UnityEngine.UI;
 using UnityEngine.Audio;
+using System.IO;
 
 public class MenuController : MonoBehaviour
 {
@@ -64,9 +65,10 @@ public class MenuController : MonoBehaviour
 			        {
 			            name = Social.localUser.userName;
 			            imagen = Social.localUser.image;
-			            GameObject.Find("NombreJugador").GetComponent<Text>().text = name;
-			           // GameObject.Find("ImagenJugador").GetComponent<Texture2D>() = 
-			        }
+            Sprite sprite = Sprite.Create(imagen, new Rect(0, 0, 211.1f, 211.1f), new Vector2(0.5f, 0.0f), 1.0f);
+            GameObject.Find("NombreJugador").GetComponent<Text>().text = name;
+            GameObject.Find("ImagenJugador").GetComponent<Image>().sprite = sprite;
+                }
 		    }
 
 	    void Update (){    
