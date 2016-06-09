@@ -384,6 +384,7 @@ public class playerController : MonoBehaviour {
             if (Physics.Raycast(ray, out hit, 100))
             {
                 opponent = hit.transform.gameObject.name;
+				Debug.Log(opponent);
 				if (opponent.Equals("Opponent-Player-1") || opponent.Equals("Opponent-Player-2") || opponent.Equals("Opponent-Player-3")
 					|| opponent.Equals("Opponent-Player-4") || opponent.Equals("Opponent-Player-5"))
                 {
@@ -399,7 +400,7 @@ public class playerController : MonoBehaviour {
 
                     GlobalGameManager.soloUnaVezElimina = 0;
                     contadorPowerUpElimina++;
-                    GlobalGameManager.iPowerUpElimina = GlobalGameManager.iPowerUpElimina - 1;
+                    GlobalGameManager.iPowerUpElimina = GlobalGameManager.iPowerUpElimina - 1;	
                 }
             }
         }

@@ -39,6 +39,7 @@ public class OnlineAI : MonoBehaviour {
 
     public void Shoot(int unitIndex, Vector3 force)
     {
+		if (GlobalGameManager.gameMode == 2){
         var shooter = myTeam[unitIndex];
         shooter.GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);
 
@@ -47,4 +48,5 @@ public class OnlineAI : MonoBehaviour {
         StartCoroutine(gameController.GetComponent<GlobalGameManager>().managePostShoot("Opponent", unitIndex, force));
     }
 
+}
 }
