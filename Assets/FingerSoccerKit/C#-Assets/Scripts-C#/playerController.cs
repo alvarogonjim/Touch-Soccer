@@ -45,7 +45,9 @@ public class playerController : MonoBehaviour {
     public static int contadorPowerUpBarrera = 1;
 	public AudioSource sonidoTamano;
 
-   
+
+    private string nombreEnemigo;
+
     //*****************************************************************************
     // Init
     //*****************************************************************************
@@ -83,9 +85,70 @@ public class playerController : MonoBehaviour {
 
 	void Update (){
 
+        if (GlobalGameManager.powerUpElimina == true && GlobalGameManager.soloUnaVezElimina > 0)
+        {
 
-		//Active the selection circles around Player units when they have the turn.
-		if(GlobalGameManager.playersTurn && gameObject.tag == "Player" && !GlobalGameManager.goalHappened)
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                opponent = hit.transform.gameObject.name;
+ 
+
+                if (opponent.Equals("Opponent-Player-1") || opponent.Equals("Opponent-Player-2") || opponent.Equals("Opponent-Player-3")
+                    || opponent.Equals("Opponent-Player-4") || opponent.Equals("Opponent-Player-5"))
+                {
+
+                    nombreEnemigo = opponent;
+                    enemigo = GameObject.Find(opponent);
+                    enemigo.GetComponent<MeshRenderer>().enabled = false;
+                    enemigo.GetComponent<MeshCollider>().enabled = false;
+                    
+                     enemigo.GetComponent<OpponentUnitController>().enabled = false;
+                    
+                    //  enemigo.GetComponent<playerController>().enabled = false;
+                    //effectBomb.SetActive (true);
+                    
+                    GlobalGameManager.powerUpElimina = false;
+                    GlobalGameManager.soloUnaVezElimina = 0;
+                    contadorPowerUpElimina++;
+                    GlobalGameManager.iPowerUpElimina = GlobalGameManager.iPowerUpElimina - 1;
+
+
+                }
+                else if(opponent.Equals("Player2Unit-1") || opponent.Equals("Player2Unit-2") || opponent.Equals("Player2Unit-3")
+                    || opponent.Equals("Player2Unit-4") || opponent.Equals("Player2Unit-5"))
+                {
+
+                    nombreEnemigo = opponent;
+                    enemigo = GameObject.Find(opponent);
+                    enemigo.GetComponent<MeshRenderer>().enabled = false;
+                    enemigo.GetComponent<MeshCollider>().enabled = false;
+                    enemigo.GetComponent<OpponentUnitController>().enabled = false;
+                    enemigo.GetComponent<playerController>().enabled = false;
+                    //effectBomb.SetActive (true);
+
+                    GlobalGameManager.powerUpElimina = false;
+                    GlobalGameManager.soloUnaVezElimina = 0;
+                    contadorPowerUpElimina++;
+                    GlobalGameManager.iPowerUpElimina = GlobalGameManager.iPowerUpElimina - 1;
+
+
+
+
+                }
+
+            }
+
+        }
+        if (nombreEnemigo != null)
+        {
+            enemigo = GameObject.Find(nombreEnemigo);
+            enemigo.GetComponent<MeshCollider>().enabled = false;
+        }
+            //Active the selection circles around Player units when they have the turn.
+        if (GlobalGameManager.playersTurn && gameObject.tag == "Player" && !GlobalGameManager.goalHappened)
 			selectionCircle.GetComponent<Renderer>().enabled = true;
 		else if(GlobalGameManager.opponentsTurn && gameObject.tag == "Player_2" && !GlobalGameManager.goalHappened)
 			selectionCircle.GetComponent<Renderer>().enabled = true;			
@@ -101,6 +164,8 @@ public class playerController : MonoBehaviour {
              }
 	  
         }
+
+
 	
 
 	//***************************************************************************//
@@ -362,49 +427,17 @@ public class playerController : MonoBehaviour {
     {
 
 
-        //METODO PARA RAFA
-
         if (GlobalGameManager.powerUpTamano == true && GlobalGameManager.soloUnaVezTamano > 0)
         {
-           
-            transform.localScale = new Vector3(5.5f, 0.5f, 5.5f);
-			sonidoTamano.Play();
+            Vector3 final = new Vector3(5.5f, 0.5f, 5.5f);
+            transform.localScale = final;
+            
+            sonidoTamano.Play();
             GlobalGameManager.soloUnaVezTamano = 0;
             contadorPowerUpTamano++;
             GlobalGameManager.iPowerUpTamano = GlobalGameManager.iPowerUpTamano - 1;
     
-    }
-
-
-        if (Input.GetMouseButtonDown(0) && GlobalGameManager.powerUpElimina == true && GlobalGameManager.soloUnaVezElimina > 0)
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, 100))
-            {
-                opponent = hit.transform.gameObject.name;
-				Debug.Log(opponent);
-				if (opponent.Equals("Opponent-Player-1") || opponent.Equals("Opponent-Player-2") || opponent.Equals("Opponent-Player-3")
-					|| opponent.Equals("Opponent-Player-4") || opponent.Equals("Opponent-Player-5"))
-                {
-
-                    enemigo = GameObject.Find(opponent);
-                    enemigo.GetComponent<MeshRenderer>().enabled = false;
-                    enemigo.GetComponent<MeshCollider>().enabled = false;
-                    enemigo.GetComponent<Renderer>().enabled = false;
-                    enemigo.GetComponent<playerController>().enabled = false;
-					//effectBomb.SetActive (true);
-                    //rend.material.color = Color.clear;
-
-
-                    GlobalGameManager.soloUnaVezElimina = 0;
-                    contadorPowerUpElimina++;
-                    GlobalGameManager.iPowerUpElimina = GlobalGameManager.iPowerUpElimina - 1;	
-                }
-            }
-        }
-
+         }
 		if(GlobalGameManager.powerUpBarrera == true && GlobalGameManager.soloUnaVezBarrera > 0 && GlobalGameManager.playersTurn ==true)
         {
             

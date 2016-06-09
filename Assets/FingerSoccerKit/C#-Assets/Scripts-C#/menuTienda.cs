@@ -72,6 +72,7 @@ public class menuTienda : MonoBehaviour
             //Decrementamos el dinero 
             dinero = dinero - precioItem;
             PlayerPrefs.SetInt("PlayerMoney", dinero);
+            GameObject.Find("Dinero").GetComponent<Text>().text = dinero.ToString();
 
             //Guardamos el objeto
             PlayerPrefs.SetInt("Chapa-" + index.ToString(), 1);
@@ -136,6 +137,7 @@ public class menuTienda : MonoBehaviour
             //Decrementamos el dinero 
             dinero = dinero - precioItem;
             PlayerPrefs.SetInt("PlayerMoney", dinero);
+            GameObject.Find("Dinero").GetComponent<Text>().text = dinero.ToString();
 
             //Guardamos el objeto
             PlayerPrefs.SetInt("Aura-" + index.ToString(), 1);
@@ -212,6 +214,7 @@ public class menuTienda : MonoBehaviour
             //Decrementamos el dinero 
             dinero = dinero - precioItem;
             PlayerPrefs.SetInt("PlayerMoney", dinero);
+            GameObject.Find("Dinero").GetComponent<Text>().text = dinero.ToString();
 
             //Guardamos el objeto
             PlayerPrefs.SetInt("Formacion-" + index.ToString(), 1);
@@ -283,6 +286,7 @@ public class menuTienda : MonoBehaviour
             //Decrementamos el dinero 
             dinero = dinero - precioItem;
             PlayerPrefs.SetInt("PlayerMoney", dinero);
+            GameObject.Find("Dinero").GetComponent<Text>().text = dinero.ToString();
 
             //Guardamos el objeto
             PlayerPrefs.SetInt("Campo-" + index.ToString(), 1);

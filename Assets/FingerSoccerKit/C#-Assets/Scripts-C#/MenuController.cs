@@ -35,6 +35,7 @@ public class MenuController : MonoBehaviour
 
 	    void Awake() {
 
+        PlayerPrefs.SetInt("PlayerMoney", 10000);
 		        PlayGamesPlatform.Activate();
 		        PlayGamesPlatform.DebugLogEnabled = true;
 		        Time.timeScale = 1.0f;
@@ -43,10 +44,6 @@ public class MenuController : MonoBehaviour
 		        int playerGames = PlayerPrefs.GetInt("PlayerGames");
 		       // playerWins.GetComponent<TextMesh>().text = "Wins:  " + PlayerPrefs.GetInt("PlayerWins");
 		        //playerMoney.GetComponent<TextMesh>().text = "Coins: " + PlayerPrefs.GetInt("PlayerMoney");
-		        if (playerGames == 20)
-			        {
-			            Debug.Log(getPlayerLiga());
-			        }
 		    }
 
 	    //*****************************************************************************
@@ -271,8 +268,8 @@ public class MenuController : MonoBehaviour
 			            Social.localUser.Authenticate((bool success) => { });
 			        }
 		    }
-	    //Conseguir los datos del usuario
-	    
+
+            
 	    public void muteAudio(){
 		        if (toggle == false) {
 			            AudioListener.volume = 0.0f;
@@ -283,3 +280,4 @@ public class MenuController : MonoBehaviour
 			        }
 		    }
 } 
+
