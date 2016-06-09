@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Purchasing;
+using UnityEngine.UI;
 
 // Placing the Purchaser class in the CompleteProject namespace allows it to interact with ScoreManager, 
 // one of the existing Survival Shooter scripts.
@@ -34,9 +35,23 @@ using UnityEngine.Purchasing;
 		private static string kProductNameGooglePlaySubscription =  "com.unity3d.subscription.original"; 
 
         //PRODUCTOS GOOGLE
+		private static string nombreProductoCoin1 = "productoCoin6200";
+		public static string productoCoin1Google = "coin_6200";
 
-		private static string nombreProducto = "nombreProductoCreditos";
-        public static string prodcutoCreditosGoogle = "producto_de_prueba_01";
+		private static string nombreProductoCoin2 = "productoCoin12500";
+		public static string productoCoin2Google = "coin_12500";
+
+		private static string nombreProductoCoin3 = "productoCoin32500";
+		public static string productoCoin3Google = "coin_32500";
+
+		private static string nombreProductoCoin4 = "productoCoin70000";
+		public static string productoCoin4Google = "coin_70000";	
+		
+		private static string nombreProductoCoin5 = "productoCoin160000";
+		public static string productoCoin5Google = "coin_160000";
+
+		private static string nombreProductoCoin6 = "productoCoin500000";
+		public static string productoCoin6Google = "coin_500000";
 
     void Start()
 		{
@@ -71,7 +86,14 @@ using UnityEngine.Purchasing;
 			// one uses the general kProductIDSubscription handle inside the game - the store-specific IDs 
 			// must only be referenced here. 
 			builder.AddProduct(kProductIDSubscription, ProductType.Subscription, new IDs(){{ kProductNameAppleSubscription, AppleAppStore.Name },{ kProductNameGooglePlaySubscription, GooglePlay.Name },});
-			builder.AddProduct (nombreProducto, ProductType.Consumable, new IDs() { { prodcutoCreditosGoogle, GooglePlay.Name }, });
+			//My own google products --FRAN
+			builder.AddProduct (nombreProductoCoin1, ProductType.Consumable, new IDs() { { productoCoin1Google, GooglePlay.Name }, });
+			builder.AddProduct (nombreProductoCoin2, ProductType.Consumable, new IDs() { { productoCoin2Google, GooglePlay.Name }, });
+			builder.AddProduct (nombreProductoCoin3, ProductType.Consumable, new IDs() { { productoCoin3Google, GooglePlay.Name }, });
+			builder.AddProduct (nombreProductoCoin4, ProductType.Consumable, new IDs() { { productoCoin4Google, GooglePlay.Name }, });
+			builder.AddProduct (nombreProductoCoin5, ProductType.Consumable, new IDs() { { productoCoin5Google, GooglePlay.Name }, });
+			builder.AddProduct (nombreProductoCoin6, ProductType.Consumable, new IDs() { { productoCoin6Google, GooglePlay.Name }, });
+
 			// Kick off the remainder of the set-up with an asynchrounous call, passing the configuration 
 			// and this class' instance. Expect a response either in OnInitialized or OnInitializeFailed.
 			UnityPurchasing.Initialize(this, builder);
@@ -91,12 +113,36 @@ using UnityEngine.Purchasing;
 			// through ProcessPurchase or OnPurchaseFailed asynchronously.
 		BuyProductID(kProductIDConsumable);
 		}
-
 		
-        public void BuyNuevoProducto()
-    {
-        BuyProductID(nombreProducto);
-    }
+		public void BuyCoin6200(){
+
+		BuyProductID (nombreProductoCoin1);
+		}
+
+		public void BuyCoin12500(){
+
+			BuyProductID (nombreProductoCoin2);
+		}
+		
+		public void BuyCoin32500(){
+
+			BuyProductID (nombreProductoCoin3);
+		}
+
+		public void BuyCoin70000(){
+
+			BuyProductID (nombreProductoCoin4);
+		}
+
+		public void BuyCoin160000(){
+
+			BuyProductID (nombreProductoCoin5);
+		}
+
+		public void BuyCoin500000(){
+
+			BuyProductID (nombreProductoCoin6);
+		}
 
 
 		public void BuyNonConsumable()
@@ -214,17 +260,60 @@ using UnityEngine.Purchasing;
 		public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs args) 
 		{
 			// A consumable product has been purchased by this user.
-			if (String.Equals(args.purchasedProduct.definition.id, kProductIDConsumable, StringComparison.Ordinal))
-			{
-				Debug.Log(string.Format("ProcessPurchase: PASS. Product: '{0}'", args.purchasedProduct.definition.id));// The consumable item has been successfully purchased, add 100 coins to the player's in-game score.
-				//ScoreManager.score += 100;
-			}
+		if (String.Equals (args.purchasedProduct.definition.id, kProductIDConsumable, StringComparison.Ordinal)) {
+			Debug.Log (string.Format ("ProcessPurchase: PASS. Product: '{0}'", args.purchasedProduct.definition.id));// The consumable item has been successfully purchased, add 100 coins to the player's in-game score.
+			//ScoreManager.score += 100;
+		} else if (String.Equals (args.purchasedProduct.definition.id, nombreProductoCoin1, StringComparison.Ordinal)) {
+			
+			int monedas=PlayerPrefs.GetInt("PlayerMoney") + 6200;
+			PlayerPrefs.SetInt ("PlayerMoney",monedas);
+			GameObject.Find ("Dinero").GetComponent<Text> ().text = monedas.ToString(); 
 
-            else if (String.Equals(args.purchasedProduct.definition.id, nombreProducto, StringComparison.Ordinal))
-            {
+			Debug.Log ("LAS 6200 MONEDAS FUERON COMPRADAS");
 
-            Debug.Log("Mi nuevo Producto fue comprado");
-            }
+
+		} else if (String.Equals (args.purchasedProduct.definition.id, nombreProductoCoin2, StringComparison.Ordinal)) {
+
+			int monedas=PlayerPrefs.GetInt("PlayerMoney") + 12500;
+			PlayerPrefs.SetInt ("PlayerMoney",monedas);
+			GameObject.Find ("Dinero").GetComponent<Text> ().text = monedas.ToString(); 
+
+			Debug.Log ("LAS 12500 MONEDAS FUERON COMPRADAS");
+
+
+		} else if (String.Equals (args.purchasedProduct.definition.id, nombreProductoCoin3, StringComparison.Ordinal)) {
+
+			int monedas=PlayerPrefs.GetInt("PlayerMoney") + 32500;
+			PlayerPrefs.SetInt ("PlayerMoney",monedas);
+			GameObject.Find ("Dinero").GetComponent<Text> ().text = monedas.ToString(); 
+
+			Debug.Log ("LAS 32500 MONEDAS FUERON COMPRADAS");
+		
+		} else if (String.Equals (args.purchasedProduct.definition.id, nombreProductoCoin4, StringComparison.Ordinal)) {
+
+			int monedas=PlayerPrefs.GetInt("PlayerMoney") + 70000;
+			PlayerPrefs.SetInt ("PlayerMoney",monedas);
+			GameObject.Find ("Dinero").GetComponent<Text> ().text = monedas.ToString(); 
+
+			Debug.Log ("LAS 70000 MONEDAS FUERON COMPRADAS");
+
+		} else if (String.Equals (args.purchasedProduct.definition.id, nombreProductoCoin5, StringComparison.Ordinal)) {
+
+			int monedas=PlayerPrefs.GetInt("PlayerMoney") + 160000;
+			PlayerPrefs.SetInt ("PlayerMoney",monedas);
+			GameObject.Find ("Dinero").GetComponent<Text> ().text = monedas.ToString(); 
+
+			Debug.Log ("LAS 160000 MONEDAS FUERON COMPRADAS");
+
+		}else if (String.Equals (args.purchasedProduct.definition.id, nombreProductoCoin6, StringComparison.Ordinal)) {
+
+			int monedas=PlayerPrefs.GetInt("PlayerMoney") + 500000;
+			PlayerPrefs.SetInt ("PlayerMoney",monedas);
+			GameObject.Find ("Dinero").GetComponent<Text> ().text = monedas.ToString(); 
+
+			Debug.Log ("LAS 500000 MONEDAS FUERON COMPRADAS");
+
+		}
         // Or ... a non-consumable product has been purchased by this user.
         else if (String.Equals(args.purchasedProduct.definition.id, kProductIDNonConsumable, StringComparison.Ordinal))
 			{

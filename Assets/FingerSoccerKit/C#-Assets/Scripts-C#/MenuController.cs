@@ -32,15 +32,19 @@ public class MenuController : MonoBehaviour
 	    
 	    public AudioSource audioMute;
 	    public static bool toggle = false;
-
+		
 	    void Awake() {
-
-        PlayerPrefs.SetInt("PlayerMoney", 10000);
+				//PlayerPrefs.DeleteKey ("PlayerMoney");
+				int dinero = PlayerPrefs.GetInt ("PlayerMoney");
 		        PlayGamesPlatform.Activate();
 		        PlayGamesPlatform.DebugLogEnabled = true;
 		        Time.timeScale = 1.0f;
 		        Time.fixedDeltaTime = 0.005f;
+		GameObject.Find ("Dinero").GetComponent<Text> ().text = dinero.ToString();
+						
 
+				Debug.Log (dinero);
+				
 		        int playerGames = PlayerPrefs.GetInt("PlayerGames");
 		       // playerWins.GetComponent<TextMesh>().text = "Wins:  " + PlayerPrefs.GetInt("PlayerWins");
 		        //playerMoney.GetComponent<TextMesh>().text = "Coins: " + PlayerPrefs.GetInt("PlayerMoney");
