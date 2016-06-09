@@ -93,6 +93,11 @@ using UnityEngine.Purchasing;
 		}
 
 		
+        public void BuyNuevoProducto()
+    {
+        BuyProductID(nombreProducto);
+    }
+
 
 		public void BuyNonConsumable()
 		{
@@ -214,8 +219,14 @@ using UnityEngine.Purchasing;
 				Debug.Log(string.Format("ProcessPurchase: PASS. Product: '{0}'", args.purchasedProduct.definition.id));// The consumable item has been successfully purchased, add 100 coins to the player's in-game score.
 				//ScoreManager.score += 100;
 			}
-			// Or ... a non-consumable product has been purchased by this user.
-			else if (String.Equals(args.purchasedProduct.definition.id, kProductIDNonConsumable, StringComparison.Ordinal))
+
+            else if (String.Equals(args.purchasedProduct.definition.id, nombreProducto, StringComparison.Ordinal))
+            {
+
+            Debug.Log("Mi nuevo Producto fue comprado");
+            }
+        // Or ... a non-consumable product has been purchased by this user.
+        else if (String.Equals(args.purchasedProduct.definition.id, kProductIDNonConsumable, StringComparison.Ordinal))
 			{
 				Debug.Log(string.Format("ProcessPurchase: PASS. Product: '{0}'", args.purchasedProduct.definition.id));// TODO: The non-consumable item has been successfully purchased, grant this item to the player.
 			}
