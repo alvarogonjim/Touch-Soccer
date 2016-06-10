@@ -7,6 +7,7 @@ using GooglePlayGames.BasicApi.Multiplayer;
 using System;
 using UnityEngine.UI;
 using UnityEngine.Audio;
+using System.IO;
 
 public class MenuController : MonoBehaviour
 {
@@ -32,15 +33,19 @@ public class MenuController : MonoBehaviour
 	    
 	    public AudioSource audioMute;
 	    public static bool toggle = false;
-
+		
 	    void Awake() {
-
-        PlayerPrefs.SetInt("PlayerMoney", 10000);
+				//PlayerPrefs.DeleteKey ("PlayerMoney");
+				int dinero = PlayerPrefs.GetInt ("PlayerMoney");
 		        PlayGamesPlatform.Activate();
 		        PlayGamesPlatform.DebugLogEnabled = true;
 		        Time.timeScale = 1.0f;
 		        Time.fixedDeltaTime = 0.005f;
+		GameObject.Find ("Dinero").GetComponent<Text> ().text = dinero.ToString();
+						
 
+				Debug.Log (dinero);
+				
 		        int playerGames = PlayerPrefs.GetInt("PlayerGames");
 		       // playerWins.GetComponent<TextMesh>().text = "Wins:  " + PlayerPrefs.GetInt("PlayerWins");
 		        //playerMoney.GetComponent<TextMesh>().text = "Coins: " + PlayerPrefs.GetInt("PlayerMoney");
@@ -60,9 +65,10 @@ public class MenuController : MonoBehaviour
 			        {
 			            name = Social.localUser.userName;
 			            imagen = Social.localUser.image;
-			            GameObject.Find("NombreJugador").GetComponent<Text>().text = name;
-			           // GameObject.Find("ImagenJugador").GetComponent<Texture2D>() = 
-			        }
+            Sprite sprite = Sprite.Create(imagen, new Rect(0, 0, 211.1f, 211.1f), new Vector2(0.5f, 0.0f), 1.0f);
+            GameObject.Find("NombreJugador").GetComponent<Text>().text = name;
+            GameObject.Find("ImagenJugador").GetComponent<Image>().sprite = sprite;
+                }
 		    }
 
 	    void Update (){    
