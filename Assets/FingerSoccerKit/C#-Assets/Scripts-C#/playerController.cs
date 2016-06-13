@@ -25,7 +25,7 @@ public class playerController : MonoBehaviour {
     private GameObject gameController;	//Reference to main game controller
 	private float currentDistance;		//real distance of our touch/mouse position from initial drag position
 	private float safeDistance; 			//A safe distance value which is always between min and max to avoid supershoots
-	public GameObject effectBomb;
+	EffectBomb eB;
 
 
 	private float pwr;					//shoot power
@@ -44,6 +44,8 @@ public class playerController : MonoBehaviour {
     public static int contadorPowerUpElimina = 1;
     public static int contadorPowerUpBarrera = 1;
 	public AudioSource sonidoTamano;
+	public AudioSource sonidoElimina;
+	//public GameObject effectBomb;
 
 
     private string nombreEnemigo;
@@ -59,11 +61,7 @@ public class playerController : MonoBehaviour {
 		arrowPlane = GameObject.FindGameObjectWithTag("helperArrow");		
 		gameController = GameObject.FindGameObjectWithTag("GameController");
         chapas  = GameObject.FindGameObjectsWithTag("Player");
-
 		enemigos = GameObject.FindGameObjectsWithTag ("Opponent");
-
-        
-       
 
         //Init Variables
         pwr = 0.1f;
@@ -73,6 +71,7 @@ public class playerController : MonoBehaviour {
 		canShoot = true;
 		shootTime = timeAllowedToShoot;
 		arrowPlane.GetComponent<Renderer>().enabled = false; //hide arrowPlane
+
 	}
 
     void Start()
@@ -104,12 +103,11 @@ public class playerController : MonoBehaviour {
                     enemigo = GameObject.Find(opponent);
                     enemigo.GetComponent<MeshRenderer>().enabled = false;
                     enemigo.GetComponent<MeshCollider>().enabled = false;
-                    
-                     enemigo.GetComponent<OpponentUnitController>().enabled = false;
-                    
-                    //  enemigo.GetComponent<playerController>().enabled = false;
-                    //effectBomb.SetActive (true);
-                    
+                    enemigo.GetComponent<OpponentUnitController>().enabled = false;
+					sonidoElimina.Play ();
+					GameObject.Find ("Bomb").transform.position = new Vector3(enemigo.transform.position.x,enemigo.transform.position.y + 4.0f,enemigo.transform.position.z );
+					enemigo.GetComponent<EffectBomb> ().explota ();
+				
                     GlobalGameManager.powerUpElimina = false;
                     GlobalGameManager.soloUnaVezElimina = 0;
                     contadorPowerUpElimina++;
@@ -127,7 +125,8 @@ public class playerController : MonoBehaviour {
                     enemigo.GetComponent<MeshCollider>().enabled = false;
                     enemigo.GetComponent<OpponentUnitController>().enabled = false;
                     enemigo.GetComponent<playerController>().enabled = false;
-                    //effectBomb.SetActive (true);
+					sonidoElimina.Play ();
+					enemigo.GetComponent<EffectBomb> ().explota ();
 
                     GlobalGameManager.powerUpElimina = false;
                     GlobalGameManager.soloUnaVezElimina = 0;
