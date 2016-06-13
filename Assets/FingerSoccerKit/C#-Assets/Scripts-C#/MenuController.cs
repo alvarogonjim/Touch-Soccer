@@ -63,17 +63,28 @@ public class MenuController : MonoBehaviour
 		        audioMute = GetComponent<AudioSource>();
 		        if (Social.localUser.authenticated)
 			        {
-			            name = Social.localUser.userName;
-			            imagen = Social.localUser.image;
-            Sprite sprite = Sprite.Create(imagen, new Rect(0, 0, 211.1f, 211.1f), new Vector2(0.5f, 0.0f), 1.0f);
+            name = Social.localUser.userName;
             GameObject.Find("NombreJugador").GetComponent<Text>().text = name;
+            imagen = Social.localUser.image;
+            Rect rect = new Rect(0, 0, imagen.width, imagen.height);
+            Sprite sprite = Sprite.Create(imagen,rect,new Vector2(0.5f, 0.5f));
             GameObject.Find("ImagenJugador").GetComponent<Image>().sprite = sprite;
                 }
 		    }
 
-	    void Update (){    
+	    void Update (){
 
-		        if(canTap) {
+        if (Social.localUser.authenticated)
+        {
+            name = Social.localUser.userName;
+            GameObject.Find("NombreJugador").GetComponent<Text>().text = name;
+            imagen = Social.localUser.image;
+            Rect rect = new Rect(0, 0, imagen.width, imagen.height);
+            Sprite sprite = Sprite.Create(imagen, rect, new Vector2(0.5f, 0.5f));
+            GameObject.Find("ImagenJugador").GetComponent<Image>().sprite = sprite;
+        }
+
+        if (canTap) {
 			            StartCoroutine(tapManager());
 			        }
 		    }
