@@ -76,6 +76,7 @@ public class GlobalGameManager : MonoBehaviour
     public AudioClip[] goalHappenedSfx;
     public AudioClip[] crowdChants;
 	public AudioClip finalPartido;
+
     private bool canPlayCrowdChants;
 
     //Public references
@@ -133,6 +134,7 @@ public class GlobalGameManager : MonoBehaviour
     public Animation animBarrera;
     public static bool estaSubida;
     public GameObject barrera;
+
 
 
     public AudioSource sonidoBarrera;
@@ -593,7 +595,7 @@ public class GlobalGameManager : MonoBehaviour
         ball.GetComponent<TrailRenderer>().enabled = false;
         ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
         ball.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-        ball.transform.position = new Vector3(0, -0.81f, -0.7f);
+        ball.transform.position = new Vector3(-0.12f, 1.33f, -0.5f);
         yield return new WaitForSeconds(1);
         ball.GetComponent<TrailRenderer>().enabled = true;
 
