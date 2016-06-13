@@ -82,6 +82,7 @@ public class MenuController : MonoBehaviour
             Rect rect = new Rect(0, 0, imagen.width, imagen.height);
             Sprite sprite = Sprite.Create(imagen, rect, new Vector2(0.5f, 0.5f));
             GameObject.Find("ImagenJugador").GetComponent<Image>().sprite = sprite;
+			GameObject.Find("ImagenJugadorPerfil").GetComponent<Image>().sprite = sprite;
         }
 
         if (canTap) {
