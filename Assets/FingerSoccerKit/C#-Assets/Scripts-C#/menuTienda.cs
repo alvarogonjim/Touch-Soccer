@@ -475,7 +475,7 @@ public class menuTienda : MonoBehaviour
         
         GameObject TextoPrecio = GameObject.Find("TextoPrecioAgrandar");
         float.TryParse(TextoPrecio.GetComponent<Text>().text, out NewPrecioAgrandar);
-        NewPrecioAgrandar = 1000 * newValue1;
+        NewPrecioAgrandar = 850 * newValue1;
         TextoPrecio.GetComponent<Text>().text = NewPrecioAgrandar.ToString();
         GameObject ValorSlider = GameObject.Find("ValorSliderAgrandar");
         ValorSlider.GetComponent<Text>().text = newValue1.ToString();
@@ -499,7 +499,7 @@ public class menuTienda : MonoBehaviour
 
         GameObject TextoPrecio = GameObject.Find("TextoPrecioBarrera");
         float.TryParse(TextoPrecio.GetComponent<Text>().text, out NewPrecioBarrera);
-        NewPrecioBarrera = 1000 * newValue1;
+        NewPrecioBarrera = 1250 * newValue1;
         TextoPrecio.GetComponent<Text>().text = NewPrecioBarrera.ToString();
         GameObject ValorSlider = GameObject.Find("ValorSliderBarrera");
         ValorSlider.GetComponent<Text>().text = newValue1.ToString();

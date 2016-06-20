@@ -8,6 +8,7 @@ using System;
 using UnityEngine.UI;
 using UnityEngine.Audio;
 using System.IO;
+using System.Collections.Generic;
 
 public class MenuController : MonoBehaviour
 {
@@ -56,7 +57,10 @@ public class MenuController : MonoBehaviour
 	    //*****************************************************************************
 
 
-	    void Start()
+	    /// <summary>
+        /// 
+        /// </summary>
+        void Start()
 	    {
 		        ((PlayGamesPlatform)Social.Active).Authenticate((bool success) => { }, true);
 		        //banner.SetActive (true);
@@ -69,7 +73,32 @@ public class MenuController : MonoBehaviour
             Rect rect = new Rect(0, 0, imagen.width, imagen.height);
             Sprite sprite = Sprite.Create(imagen,rect,new Vector2(0.5f, 0.5f));
             GameObject.Find("ImagenJugador").GetComponent<Image>().sprite = sprite;
-                }
+
+
+            //Necesitamos el ID del Leaderboard y probar que funciona correctamente.
+         /*   PlayGamesPlatform.Instance.LoadScores(
+                   //ID,
+                   LeaderboardStart.TopScores,
+                   10,
+                   LeaderboardCollection.Public,
+                   LeaderboardTimeSpan.Daily,
+                   (LeaderboardScoreData data) =>
+                   {
+
+                       for (int i = 0; i < 10; i++)
+                       {
+
+                            IScore score = data.PlayerScore;
+                           string id = data.PlayerScore.userID;
+                           IUserProfile user =  FindUsers(Social.LoadUsers(), id);
+                           string name = user.userName;
+                           string image = user.image;
+                           
+                       }
+                   });
+                   
+            */
+        }      
 		    }
 
 	    void Update (){
@@ -297,5 +326,49 @@ public class MenuController : MonoBehaviour
 			            toggle = false;
 			        }
 		    }
+
+
+    internal void LoadUsersAndDisplay(ILeaderboard lb)
+    {
+        // get the user ids
+        List<string> userIds = new List<string>();
+
+        foreach (IScore score in lb.scores)
+        {
+            userIds.Add(score.userID);
+        }
+        // load the profiles and display (or in this case, log)
+        Social.LoadUsers(userIds.ToArray(), (users) =>
+        {
+            string status = "Leaderboard loading: " + lb.title + " count = " +
+                lb.scores.Length;
+            foreach (IScore score in lb.scores)
+            {
+                IUserProfile user = FindUsers(users, score.userID);
+                status += "\n" + score.formattedValue + " by " +
+                    (string)(
+                        (user != null) ? user.userName : "**unk_" + score.userID + "**");
+            }
+            Debug.Log(status);
+        });
+    }
+
+
+
+
+
+    private static IUserProfile FindUsers(IUserProfile[] users,string id)
+    {
+        IUserProfile res = null;
+        foreach(IUserProfile user in users)
+        {
+            if (user.id.Equals(id))
+            {
+                res = user;
+            }
+        }
+
+        return res;
+    }
 } 
 
