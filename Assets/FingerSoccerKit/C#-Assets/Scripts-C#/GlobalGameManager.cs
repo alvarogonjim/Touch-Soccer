@@ -172,7 +172,7 @@ public class GlobalGameManager : MonoBehaviour
         iPowerUpBarrera=PlayerPrefs.GetInt("Barrera");
 
         GameObject.Find("DisponibleAgrandar").GetComponent<Text>().text = iPowerUpTamano.ToString();
-        GameObject.Find("DisponibleEliminar").GetComponent<Text>().text = iPowerUpElimina.ToString();
+//        GameObject.Find("DisponibleEliminar").GetComponent<Text>().text = iPowerUpElimina.ToString();
         GameObject.Find("DisponibleBarrera").GetComponent<Text>().text = iPowerUpBarrera.ToString();
 
   //hide gameStatusPlane

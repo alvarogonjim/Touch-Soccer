@@ -42,7 +42,7 @@ public class MenuController : MonoBehaviour
 		        PlayGamesPlatform.DebugLogEnabled = true;
 		        Time.timeScale = 1.0f;
 		        Time.fixedDeltaTime = 0.005f;
-		GameObject.Find ("Dinero").GetComponent<Text> ().text = dinero.ToString();
+//		GameObject.Find ("Dinero").GetComponent<Text> ().text = dinero.ToString();
 						
 
 				Debug.Log (dinero);
