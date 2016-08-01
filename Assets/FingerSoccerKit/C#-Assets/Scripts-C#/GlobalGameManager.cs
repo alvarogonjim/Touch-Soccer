@@ -139,6 +139,10 @@ public class GlobalGameManager : MonoBehaviour
 
     public AudioSource sonidoBarrera;
 
+	public GameObject GoldIcon;
+	public GameObject Rewards;
+	public GameObject ParticleWin;
+
     GameObject myButton;
     private string liga;
     //*****************************************************************************
@@ -730,6 +734,7 @@ public class GlobalGameManager : MonoBehaviour
 
                 int playerMoney = PlayerPrefs.GetInt("PlayerMoney");
                 playerMoney = playerMoney + 200;
+				Rewards.GetComponent<Text> ().text = "+ 200";
                 PlayerPrefs.SetInt("PlayerMoney", playerMoney);
 
 
@@ -741,6 +746,9 @@ public class GlobalGameManager : MonoBehaviour
 
 
                 print("CPU is the winner!!");
+				GoldIcon.SetActive(false);
+				ParticleWin.SetActive(false);
+				Rewards.GetComponent<Text> ().text = " ";
                 statusTextureObject.GetComponent<Text>().text = statusModes[1];
 
             }
@@ -749,6 +757,9 @@ public class GlobalGameManager : MonoBehaviour
 
                 //PlayGamesPlatform.Instance.Events.IncrementEvent("CgkIqKW33aMMEAIQCg", 1);
                 print("(Single Player) We have a Draw!");
+				GoldIcon.SetActive(false);
+				ParticleWin.SetActive(false);
+				Rewards.GetComponent<Text> ().text = " ";
                 statusTextureObject.GetComponent<Text>().text = statusModes[4];
             }
         }

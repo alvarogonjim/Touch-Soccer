@@ -27,10 +27,12 @@ public class menuTienda : MonoBehaviour
     public static int creditos;
     private float NewPrecioAgrandar;
     private float newValueAgrandar;
-    private float NewPrecioEliminar;
-    private float newValueEliminar;
+    private float NewPrecioTurnoExtra;
+    private float newValueTurnoExtra;
     private float NewPrecioBarrera;
     private float newValueBarrera;
+	private int precioChapaCredito;
+	private int precioChapaCoin;
     //public GameObject banner;
 
     // Use this for initialization
@@ -45,7 +47,7 @@ public class menuTienda : MonoBehaviour
         int dinero = PlayerPrefs.GetInt("PlayerMoney");
         int creditos = PlayerPrefs.GetInt("PlayerCredits");
         GameObject.Find("DisponibleAgrandar").GetComponent<Text>().text = PlayerPrefs.GetInt("Agrandar").ToString();
-        GameObject.Find("DisponibleEliminar").GetComponent<Text>().text = PlayerPrefs.GetInt("Eliminar").ToString();
+//        GameObject.Find("DisponibleEliminar").GetComponent<Text>().text = PlayerPrefs.GetInt("Eliminar").ToString();
         GameObject.Find("DisponibleBarrera").GetComponent<Text>().text = PlayerPrefs.GetInt("Barrera").ToString();
         GameObject.Find("Dinero").GetComponent<Text>().text = dinero.ToString();
         Debug.Log(dinero);
@@ -62,7 +64,9 @@ public class menuTienda : MonoBehaviour
     //******************************
     //Metodo cuando hace click boton comprar
     //******************************
-    public void comprarChapa(int index)
+    
+
+	public void comprarChapa(int index)
     {
         precioItem = totalChapas[index].GetComponent<ShopItemProperties>().itemPrice;
         nombreBoton = totalChapas[index].GetComponent<ShopItemProperties>().useButton;
@@ -485,13 +489,13 @@ public class menuTienda : MonoBehaviour
     public void Slider_Changed2(float newValue1)
     {
 
-        GameObject TextoPrecio = GameObject.Find("TextoPrecioEliminar");
-        float.TryParse(TextoPrecio.GetComponent<Text>().text, out NewPrecioEliminar);
-        NewPrecioEliminar = 1000 * newValue1;
-        TextoPrecio.GetComponent<Text>().text = NewPrecioEliminar.ToString();
-        GameObject ValorSlider = GameObject.Find("ValorSliderEliminar");
+        GameObject TextoPrecio = GameObject.Find("TextoPrecioTurnoExtra");
+        float.TryParse(TextoPrecio.GetComponent<Text>().text, out NewPrecioTurnoExtra);
+        NewPrecioTurnoExtra = 1000 * newValue1;
+        TextoPrecio.GetComponent<Text>().text = NewPrecioTurnoExtra.ToString();
+        GameObject ValorSlider = GameObject.Find("ValorSliderTurnoExtra");
         ValorSlider.GetComponent<Text>().text = newValue1.ToString();
-        newValueEliminar = newValue1;
+        newValueTurnoExtra = newValue1;
     }
 
     public void Slider_Changed3(float newValue1)
@@ -530,18 +534,18 @@ public class menuTienda : MonoBehaviour
                 Debug.Log("compro");
             }
         }
-        if (nombreHabilidad.Equals("Eliminar"))
+        if (nombreHabilidad.Equals("TurnoExtra"))
         {
-            if (dinero >= NewPrecioEliminar)
+            if (dinero >= NewPrecioTurnoExtra)
             {
                 //Decrementamos el dinero 
-                dinero = dinero - (int)NewPrecioEliminar;
+                dinero = dinero - (int)NewPrecioTurnoExtra;
                 PlayerPrefs.SetInt("PlayerMoney", dinero);
-                int Eliminar = PlayerPrefs.GetInt("Eliminar");
+                int TurnoExtra = PlayerPrefs.GetInt("TurnoExtra");
                 GameObject.Find("Dinero").GetComponent<Text>().text = dinero.ToString();
-                Eliminar = Eliminar + (int)newValueEliminar;
-                PlayerPrefs.SetInt("Eliminar", Eliminar);
-                GameObject.Find("DisponibleEliminar").GetComponent<Text>().text = PlayerPrefs.GetInt("Eliminar").ToString();
+                TurnoExtra = TurnoExtra + (int)newValueTurnoExtra;
+                PlayerPrefs.SetInt("TurnoExtra", TurnoExtra);
+                GameObject.Find("DisponibleTurnoExtra").GetComponent<Text>().text = PlayerPrefs.GetInt("TurnoExtra").ToString();
 
 
             }
