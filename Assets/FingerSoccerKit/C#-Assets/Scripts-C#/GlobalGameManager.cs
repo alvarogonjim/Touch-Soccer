@@ -117,8 +117,13 @@ public class GlobalGameManager : MonoBehaviour
     public static int iPowerUpElimina;
     public static int soloUnaVezElimina;
 
-	//volumen del sonido al final del partido
-	private float volumen =0.6f;
+    public static bool llamadoPowerUpTurnoExtra = false;
+    public static bool powerUpTurnoExtra;
+    public static int iPowerUpTurnoExtra;
+    public static int soloUnaVezTurnoExtra;
+
+    //volumen del sonido al final del partido
+    private float volumen =0.6f;
 	private float reducir = 0.0f;
 	public static bool ok = false;
 	public int segundos = 1;
@@ -336,11 +341,22 @@ public class GlobalGameManager : MonoBehaviour
 		//If the time is 0 change the round --> change the turn
         else if (timeLeft <= 0 && round == 1)
         {
+
+            if(llamadoPowerUpTurnoExtra == true)
+            {
+                round = 1;
+                timeLeft = 15;
+                GameObject.Find("TimeBar1").GetComponent<Scrollbar>().size = 1;
+                roundTurnManager();
+            }
+
             round = 2;
             timeLeft = 15;
 			GameObject.Find ("TimeBar1").GetComponent < Scrollbar > ().size = 1;
-           
             roundTurnManager();
+         
+            
+            
             //If the time is 0 change the round --> change the turn
         }
         else if (timeLeft <= 0 && round == 2)
@@ -931,6 +947,41 @@ public class GlobalGameManager : MonoBehaviour
             }
         }
     }
+
+
+    public void PWTurnoExtra()
+    {
+        //Se ha llamado al powerup del elimina anteriormente?
+        if (llamadoPowerUpTurnoExtra == false)
+        {
+            //Si no vemos si tiene la habilidad disponible (mas de 0)
+            if (iPowerUpTurnoExtra > 0)
+            {
+
+                //PlayGamesPlatform.Instance.Events.IncrementEvent("CgkIqKW33aMMEAIQDA", 1);
+
+                Debug.Log(powerUpTurnoExtra.ToString());
+                //Decrementamos la habilidad
+                iPowerUpTurnoExtra--;
+                GameObject.Find("DisponibleTurno").GetComponent<Text>().text = iPowerUpTurnoExtra.ToString();
+                //La habilidad la tiene
+                powerUpTurnoExtra = true;
+
+                //SOLO UN USO DE LA HABILIDAD:
+                soloUnaVezTurnoExtra = 1;
+                //Ponemos el llamado de elimina a true
+                llamadoPowerUpTurnoExtra = true;
+
+            }
+            //En caso contrario falso
+            else
+            {
+                powerUpTurnoExtra = false;
+            }
+        }
+    }
+
+
     public void PWBarrera()
     {
         //Se ha llamado al powerup de la barrera anteriormente?
@@ -965,6 +1016,7 @@ public class GlobalGameManager : MonoBehaviour
             }
         }
     }
+
     IEnumerator subeBarrera()
     {
         if (estaSubida == true)
