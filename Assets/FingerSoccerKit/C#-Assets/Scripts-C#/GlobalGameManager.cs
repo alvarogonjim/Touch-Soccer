@@ -140,7 +140,7 @@ public class GlobalGameManager : MonoBehaviour
     public static bool estaSubida;
     public GameObject barrera;
 
-
+	public GameObject[] playerTeam2;
 
     public AudioSource sonidoBarrera;
 
@@ -173,7 +173,6 @@ public class GlobalGameManager : MonoBehaviour
 		int index = PlayerPrefs.GetInt("Skin");
 		Sprite mat = Resources.Load(index.ToString(), typeof(Sprite)) as Sprite;
 		GameObject.Find ("EscudoJugador1").GetComponent<Image> ().sprite = mat;
-			
 
 
         iPowerUpTamano=PlayerPrefs.GetInt("Agrandar");
@@ -244,6 +243,8 @@ public class GlobalGameManager : MonoBehaviour
                 {
                     unit.SetActive(false);
                 }
+
+
                 break;
 
             case 1:
@@ -275,6 +276,12 @@ public class GlobalGameManager : MonoBehaviour
 
     IEnumerator Start()
     {
+		if (GlobalGameManager.gameMode == 1)
+		{
+			StartCoroutine(playerAIController.GetComponent<PlayerAI>().changeFormation(GameObject.FindGameObjectsWithTag("Player_2"),  PlayerPrefs.GetInt("PlayerFormation"), 0.6f, -1));
+		}
+
+
         //AnimGoal = GetComponent<Animation> ();
         roundTurnManager();
         yield return new WaitForSeconds(1.5f);
@@ -653,7 +660,7 @@ public class GlobalGameManager : MonoBehaviour
         //if this is player-1 vs player-2 match:
         if (GlobalGameManager.gameMode == 1)
         {
-            StartCoroutine(playerAIController.GetComponent<PlayerAI>().changeFormation(PlayerAI.player2Team, PlayerPrefs.GetInt("Player2Formation"), 0.6f, -1));
+			StartCoroutine(playerAIController.GetComponent<PlayerAI>().changeFormation(GameObject.FindGameObjectsWithTag("Player_2"),  PlayerPrefs.GetInt("PlayerFormation"), 0.6f, -1));
         }
         else
         {   //if this is player-1 vs AI match:
