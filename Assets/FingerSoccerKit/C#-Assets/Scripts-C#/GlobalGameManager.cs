@@ -179,10 +179,12 @@ public class GlobalGameManager : MonoBehaviour
         iPowerUpTamano=PlayerPrefs.GetInt("Agrandar");
         iPowerUpElimina=PlayerPrefs.GetInt("Eliminar");
         iPowerUpBarrera=PlayerPrefs.GetInt("Barrera");
+		iPowerUpTurnoExtra = PlayerPrefs.GetInt ("TurnoExtra");
 
         GameObject.Find("DisponibleAgrandar").GetComponent<Text>().text = iPowerUpTamano.ToString();
 //        GameObject.Find("DisponibleEliminar").GetComponent<Text>().text = iPowerUpElimina.ToString();
         GameObject.Find("DisponibleBarrera").GetComponent<Text>().text = iPowerUpBarrera.ToString();
+		GameObject.Find ("DisponibleTurno").GetComponent<Text> ().text = iPowerUpTurnoExtra.ToString ();
 
   //hide gameStatusPlane
         gameStatusPlane.SetActive(false);
@@ -335,13 +337,7 @@ public class GlobalGameManager : MonoBehaviour
         else if (timeLeft <= 0 && round == 1)
         {
 
-            if(llamadoPowerUpTurnoExtra == true)
-            {
-                round = 1;
-                timeLeft = 15;
-                GameObject.Find("TimeBar1").GetComponent<Scrollbar>().size = 1;
-                roundTurnManager();
-            }
+            
 
             round = 2;
             timeLeft = 15;
@@ -578,9 +574,13 @@ public class GlobalGameManager : MonoBehaviour
             //add to round counters
             switch (_shootBy)
             {
-                case "Player":
-                    round = 2;
-                    break;
+			case "Player":
+				if (powerUpTurnoExtra == true) {
+					round = 1;
+					powerUpTurnoExtra = false;
+				}else{
+				    round = 2;
+				}break;
                 case "Player_2":
                     round = 1;
                     break;

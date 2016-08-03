@@ -44,8 +44,9 @@ public class menuTienda : MonoBehaviour
     }
     void Start()
     {
-         dinero = PlayerPrefs.GetInt("PlayerMoney");
-        creditos = PlayerPrefs.GetInt("PlayerCredits");
+		PlayerPrefs.SetInt("PlayerMoney",5000);
+		dinero = PlayerPrefs.GetInt("PlayerMoney");
+      		creditos = PlayerPrefs.GetInt("PlayerCredits");
         GameObject.Find("DisponibleAgrandar").GetComponent<Text>().text = PlayerPrefs.GetInt("Agrandar").ToString();
 //        GameObject.Find("DisponibleEliminar").GetComponent<Text>().text = PlayerPrefs.GetInt("Eliminar").ToString();
         GameObject.Find("DisponibleBarrera").GetComponent<Text>().text = PlayerPrefs.GetInt("Barrera").ToString();
