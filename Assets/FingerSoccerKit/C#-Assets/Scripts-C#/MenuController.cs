@@ -76,8 +76,8 @@ public class MenuController : MonoBehaviour
 
 
             //Necesitamos el ID del Leaderboard y probar que funciona correctamente.
-         /*   PlayGamesPlatform.Instance.LoadScores(
-                   //ID,
+          /* PlayGamesPlatform.Instance.LoadScores(
+                   "CgkIqKW33aMMEAIQFQ",
                    LeaderboardStart.TopScores,
                    10,
                    LeaderboardCollection.Public,
@@ -99,6 +99,7 @@ public class MenuController : MonoBehaviour
                    
             */
         }      
+
 		    }
 
 	    void Update (){
@@ -112,6 +113,10 @@ public class MenuController : MonoBehaviour
             Sprite sprite = Sprite.Create(imagen, rect, new Vector2(0.5f, 0.5f));
             GameObject.Find("ImagenJugador").GetComponent<Image>().sprite = sprite;
 			GameObject.Find("ImagenJugadorPerfil").GetComponent<Image>().sprite = sprite;
+            GameObject.Find("Estadisticas").GetComponent<Text>().text = "Victorias: " + PlayerPrefs.GetInt("PlayerWin").ToString() +
+                " \n Derrotas: " + PlayerPrefs.GetInt("PlayerLoses").ToString() +
+                " \n Goles: " + PlayerPrefs.GetInt("PlayerGoals").ToString() +
+                " \n Porcentajes de Victorias: " + (PlayerPrefs.GetInt("PlayerWin") / PlayerPrefs.GetInt("PlayerLoses")).ToString();
         }
 
         if (canTap) {
@@ -282,7 +287,7 @@ public class MenuController : MonoBehaviour
 	        {
 		        if (Social.localUser.authenticated)
 			        {
-			            ((PlayGamesPlatform)Social.Active).ShowLeaderboardUI("CgkIqKW33aMMEAIQBQ");
+			            ((PlayGamesPlatform)Social.Active).ShowLeaderboardUI("CgkIqKW33aMMEAIQFQ");
 			        }
 		        else
 			        {

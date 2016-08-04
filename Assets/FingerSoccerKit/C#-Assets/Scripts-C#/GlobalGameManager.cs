@@ -150,6 +150,11 @@ public class GlobalGameManager : MonoBehaviour
 
     GameObject myButton;
     private string liga;
+
+    private int win;
+    private int lose;
+    private int goals;
+
     //*****************************************************************************
     // Init. 
     //*****************************************************************************
@@ -169,6 +174,13 @@ public class GlobalGameManager : MonoBehaviour
         estaSubida = false;
         cambiarCampo();
 
+        win = PlayerPrefs.GetInt("PlayerWin");
+        lose = PlayerPrefs.GetInt("PlayerLoses");
+        goals = PlayerPrefs.GetInt("PlayerGoals");
+        player1Name = Social.localUser.userName;
+
+        player2Name = "Jugador 2";
+        cpuName = "CPU";
 
 		int index = PlayerPrefs.GetInt("Skin");
 		Sprite mat = Resources.Load(index.ToString(), typeof(Sprite)) as Sprite;
@@ -625,6 +637,8 @@ public class GlobalGameManager : MonoBehaviour
                 if (fueGol == false)
                 {
                     playerGoals++;
+                    goals = goals + 1;
+                    PlayerPrefs.SetInt("PlayerGoals", goals);
                     round = 2; //goal by player-1 and opponent should start the next round
                     fueGol = true;
                 }
@@ -759,6 +773,12 @@ public class GlobalGameManager : MonoBehaviour
                 playerMoney = playerMoney + 200;
 				Rewards.GetComponent<Text> ().text = "+ 200";
                 PlayerPrefs.SetInt("PlayerMoney", playerMoney);
+                win = win + 1;
+                PlayerPrefs.SetInt("PlayerWin", win);
+
+                Social.ReportScore(win, "CgkIqKW33aMMEAIQFQ", (bool success) => {
+                    // handle success or failure
+                });
 
 
 
@@ -773,7 +793,8 @@ public class GlobalGameManager : MonoBehaviour
 				ParticleWin.SetActive(false);
 				Rewards.GetComponent<Text> ().text = " ";
                 statusTextureObject.GetComponent<Text>().text = statusModes[1];
-
+                lose = lose + 1;
+                PlayerPrefs.SetInt("PlayerLoses", lose);
             }
             else if (opponentGoals == playerGoals)
             {
@@ -793,6 +814,14 @@ public class GlobalGameManager : MonoBehaviour
                 //PlayGamesPlatform.Instance.Events.IncrementEvent("CgkIqKW33aMMEAIQBg", 1);
                 print("Player 1 is the winner!!");
                 statusTextureObject.GetComponent<Text>().text = statusModes[2];
+                win = win + 1;
+                PlayerPrefs.SetInt("PlayerWin", win);
+
+                Social.ReportScore(win, "CgkIqKW33aMMEAIQFQ", (bool success) => {
+                    // handle success or failure
+                });
+
+
 
             }
             else if (playerGoals == opponentGoals)
@@ -808,6 +837,8 @@ public class GlobalGameManager : MonoBehaviour
                 //PlayGamesPlatform.Instance.Events.IncrementEvent("CgkIqKW33aMMEAIQBw", 1);
                 print("Player 2 is the winner!!");
                 statusTextureObject.GetComponent<Text>().text = statusModes[3];
+                lose = lose + 1;
+                PlayerPrefs.SetInt("PlayerLoses", lose);
             }
         }
        
