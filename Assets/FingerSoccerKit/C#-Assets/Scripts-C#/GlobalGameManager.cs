@@ -966,7 +966,7 @@ public class GlobalGameManager : MonoBehaviour
                 GameObject.Find("DisponibleTurno").GetComponent<Text>().text = iPowerUpTurnoExtra.ToString();
                 //La habilidad la tiene
                 powerUpTurnoExtra = true;
-
+					StartCoroutine("AnimacionTurnoExtra");	
                 //SOLO UN USO DE LA HABILIDAD:
                 soloUnaVezTurnoExtra = 1;
                 //Ponemos el llamado de elimina a true
@@ -981,6 +981,13 @@ public class GlobalGameManager : MonoBehaviour
         }
     }
 
+	private IEnumerator AnimacionTurnoExtra(){
+				
+		Animation anim = GameObject.Find ("Camera").GetComponent<Animation> ();
+		anim.Play ("TurnoExtra");
+		yield return new WaitForSeconds (anim.clip.length);
+								
+		}
 
     public void PWBarrera()
     {
