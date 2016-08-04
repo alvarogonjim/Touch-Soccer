@@ -31,22 +31,26 @@ public class MenuController : MonoBehaviour
 	    //*****************************************************************************
 	    private string name;
 	    private Texture2D imagen;
+	public GameObject estadisticas;
+
 	    
 	    public AudioSource audioMute;
 	    public static bool toggle = false;
-		
+		private int dinero;
+		public GameObject Dinero;
+
 	    void Awake() {
 				//PlayerPrefs.DeleteKey ("PlayerMoney");
-				int dinero = PlayerPrefs.GetInt ("PlayerMoney");
-		        PlayGamesPlatform.Activate();
+			dinero = PlayerPrefs.GetInt ("PlayerMoney");
+		    	    PlayGamesPlatform.Activate();
 		        PlayGamesPlatform.DebugLogEnabled = true;
 		        Time.timeScale = 1.0f;
 		        Time.fixedDeltaTime = 0.005f;
-//		GameObject.Find ("Dinero").GetComponent<Text> ().text = dinero.ToString();
+				//GameObject.Find ("Dinero").GetComponent<Text> ().text = dinero.ToString();
 						
 
 				Debug.Log (dinero);
-				
+//				GameObject.Find ("Dinero").GetComponent<Text> ().text = dinero.ToString ();
 		        int playerGames = PlayerPrefs.GetInt("PlayerGames");
 		       // playerWins.GetComponent<TextMesh>().text = "Wins:  " + PlayerPrefs.GetInt("PlayerWins");
 		        //playerMoney.GetComponent<TextMesh>().text = "Coins: " + PlayerPrefs.GetInt("PlayerMoney");
@@ -73,6 +77,7 @@ public class MenuController : MonoBehaviour
             Rect rect = new Rect(0, 0, imagen.width, imagen.height);
             Sprite sprite = Sprite.Create(imagen,rect,new Vector2(0.5f, 0.5f));
             GameObject.Find("ImagenJugador").GetComponent<Image>().sprite = sprite;
+
 
 
             //Necesitamos el ID del Leaderboard y probar que funciona correctamente.
@@ -103,7 +108,17 @@ public class MenuController : MonoBehaviour
 		    }
 
 	    void Update (){
-
+		Dinero.GetComponent<Text> ().text = PlayerPrefs.GetInt ("PlayerMoney").ToString ();
+		int win = PlayerPrefs.GetInt ("PlayerWin");
+		int lose = PlayerPrefs.GetInt ("PlayerLoses");
+		if (lose <= 0) {
+			lose = 1;
+		}
+		estadisticas.GetComponent<Text> ().text = " Victorias: " + win.ToString () +
+		" \n Derrotas: " + PlayerPrefs.GetInt ("PlayerLoses").ToString () +
+		" \n Goles: " + PlayerPrefs.GetInt ("PlayerGoals").ToString () +
+			" \n Porcentajes de Victorias: " + (PlayerPrefs.GetInt ("PlayerWin") / lose).ToString();
+	
         if (Social.localUser.authenticated)
         {
             name = Social.localUser.userName;
@@ -113,7 +128,7 @@ public class MenuController : MonoBehaviour
             Sprite sprite = Sprite.Create(imagen, rect, new Vector2(0.5f, 0.5f));
             GameObject.Find("ImagenJugador").GetComponent<Image>().sprite = sprite;
 			GameObject.Find("ImagenJugadorPerfil").GetComponent<Image>().sprite = sprite;
-            GameObject.Find("Estadisticas").GetComponent<Text>().text = "Victorias: " + PlayerPrefs.GetInt("PlayerWin").ToString() +
+			estadisticas.GetComponent<Text>().text = "Victorias: " + PlayerPrefs.GetInt("PlayerWin").ToString() +
                 " \n Derrotas: " + PlayerPrefs.GetInt("PlayerLoses").ToString() +
                 " \n Goles: " + PlayerPrefs.GetInt("PlayerGoals").ToString() +
                 " \n Porcentajes de Victorias: " + (PlayerPrefs.GetInt("PlayerWin") / PlayerPrefs.GetInt("PlayerLoses")).ToString();
