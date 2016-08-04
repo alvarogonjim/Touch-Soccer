@@ -514,6 +514,97 @@ public class menuTienda : MonoBehaviour
     }
 
 
+    public void compra500000Coins()
+    {
+        creditos = PlayerPrefs.GetInt("PlayerCredits");
+        if(creditos >= 4000)
+        {
+            creditos = creditos - 4000;
+            PlayerPrefs.SetInt("PlayerCredits", creditos);
+            GameObject.Find("Creditos").GetComponent<Text>().text = creditos.ToString();
+            dinero = PlayerPrefs.GetInt("PlayerMoney");
+            dinero = dinero + 500000;
+
+            PlayerPrefs.SetInt("PlayerMoney", dinero);
+            GameObject.Find("Dinero").GetComponent<Text>().text = dinero.ToString();
+        }
+    }
+
+    public void compra160000Coins()
+    {
+        creditos = PlayerPrefs.GetInt("PlayerCredits");
+        if (creditos >= 1700)
+        {
+            creditos = creditos - 1700;
+            PlayerPrefs.SetInt("PlayerCredits", creditos);
+            GameObject.Find("Creditos").GetComponent<Text>().text = creditos.ToString();
+            dinero = PlayerPrefs.GetInt("PlayerMoney");
+            dinero = dinero + 160000;
+
+            PlayerPrefs.SetInt("PlayerMoney", dinero);
+            GameObject.Find("Dinero").GetComponent<Text>().text = dinero.ToString();
+        }
+    }
+    public void compra70000Coins()
+    {
+        creditos = PlayerPrefs.GetInt("PlayerCredits");
+        if (creditos >= 700)
+        {
+            creditos = creditos - 700;
+            PlayerPrefs.SetInt("PlayerCredits", creditos);
+            GameObject.Find("Creditos").GetComponent<Text>().text = creditos.ToString();
+            dinero = PlayerPrefs.GetInt("PlayerMoney");
+            dinero = dinero + 70000;
+
+            PlayerPrefs.SetInt("PlayerMoney", dinero);
+            GameObject.Find("Dinero").GetComponent<Text>().text = dinero.ToString();
+        }
+    }
+    public void compra32500Coins()
+    {
+        creditos = PlayerPrefs.GetInt("PlayerCredits");
+        if (creditos >= 300)
+        {
+            creditos = creditos - 300;
+            PlayerPrefs.SetInt("PlayerCredits", creditos);
+            GameObject.Find("Creditos").GetComponent<Text>().text = creditos.ToString();
+            dinero = PlayerPrefs.GetInt("PlayerMoney");
+            dinero = dinero + 32500;
+
+            PlayerPrefs.SetInt("PlayerMoney", dinero);
+            GameObject.Find("Dinero").GetComponent<Text>().text = dinero.ToString();
+        }
+    }
+    public void compra12500Coins()
+    {
+        creditos = PlayerPrefs.GetInt("PlayerCredits");
+        if (creditos >= 100)
+        {
+            creditos = creditos - 100;
+            PlayerPrefs.SetInt("PlayerCredits", creditos);
+            GameObject.Find("Creditos").GetComponent<Text>().text = creditos.ToString();
+            dinero = PlayerPrefs.GetInt("PlayerMoney");
+            dinero = dinero + 12500;
+
+            PlayerPrefs.SetInt("PlayerMoney", dinero);
+            GameObject.Find("Dinero").GetComponent<Text>().text = dinero.ToString();
+        }
+    }
+    public void compra6200Coins()
+    {
+        creditos = PlayerPrefs.GetInt("PlayerCredits");
+        if (creditos >= 50)
+        {
+            creditos = creditos - 50;
+            GameObject.Find("Creditos").GetComponent<Text>().text = creditos.ToString();
+            PlayerPrefs.SetInt("PlayerCredits", creditos);
+            dinero = PlayerPrefs.GetInt("PlayerMoney");
+            dinero = dinero + 6200;
+            PlayerPrefs.SetInt("PlayerMoney", dinero);
+            GameObject.Find("Dinero").GetComponent<Text>().text = dinero.ToString();
+        }
+    }
+
     public void comprarHabilidad(string nombreHabilidad)
     {
         Debug.Log("ESTAMOS EN LA HABILIDAD");
