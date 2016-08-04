@@ -140,7 +140,7 @@ public class GlobalGameManager : MonoBehaviour
     public static bool estaSubida;
     public GameObject barrera;
 
-
+	public GameObject[] playerTeam2;
 
     public AudioSource sonidoBarrera;
 
@@ -185,16 +185,17 @@ public class GlobalGameManager : MonoBehaviour
 		int index = PlayerPrefs.GetInt("Skin");
 		Sprite mat = Resources.Load(index.ToString(), typeof(Sprite)) as Sprite;
 		GameObject.Find ("EscudoJugador1").GetComponent<Image> ().sprite = mat;
-			
 
 
         iPowerUpTamano=PlayerPrefs.GetInt("Agrandar");
         iPowerUpElimina=PlayerPrefs.GetInt("Eliminar");
         iPowerUpBarrera=PlayerPrefs.GetInt("Barrera");
+		iPowerUpTurnoExtra = PlayerPrefs.GetInt ("TurnoExtra");
 
         GameObject.Find("DisponibleAgrandar").GetComponent<Text>().text = iPowerUpTamano.ToString();
 //        GameObject.Find("DisponibleEliminar").GetComponent<Text>().text = iPowerUpElimina.ToString();
         GameObject.Find("DisponibleBarrera").GetComponent<Text>().text = iPowerUpBarrera.ToString();
+		GameObject.Find ("DisponibleTurno").GetComponent<Text> ().text = iPowerUpTurnoExtra.ToString ();
 
   //hide gameStatusPlane
         gameStatusPlane.SetActive(false);
@@ -254,6 +255,8 @@ public class GlobalGameManager : MonoBehaviour
                 {
                     unit.SetActive(false);
                 }
+
+
                 break;
 
             case 1:
@@ -285,6 +288,12 @@ public class GlobalGameManager : MonoBehaviour
 
     IEnumerator Start()
     {
+		if (GlobalGameManager.gameMode == 1)
+		{
+			StartCoroutine(playerAIController.GetComponent<PlayerAI>().changeFormation(GameObject.FindGameObjectsWithTag("Player_2"),  PlayerPrefs.GetInt("PlayerFormation"), 0.6f, -1));
+		}
+
+
         //AnimGoal = GetComponent<Animation> ();
         roundTurnManager();
         yield return new WaitForSeconds(1.5f);
@@ -347,13 +356,7 @@ public class GlobalGameManager : MonoBehaviour
         else if (timeLeft <= 0 && round == 1)
         {
 
-            if(llamadoPowerUpTurnoExtra == true)
-            {
-                round = 1;
-                timeLeft = 15;
-                GameObject.Find("TimeBar1").GetComponent<Scrollbar>().size = 1;
-                roundTurnManager();
-            }
+            
 
             round = 2;
             timeLeft = 15;
@@ -590,9 +593,13 @@ public class GlobalGameManager : MonoBehaviour
             //add to round counters
             switch (_shootBy)
             {
-                case "Player":
-                    round = 2;
-                    break;
+			case "Player":
+				if (powerUpTurnoExtra == true) {
+					round = 1;
+					powerUpTurnoExtra = false;
+				}else{
+				    round = 2;
+				}break;
                 case "Player_2":
                     round = 1;
                     break;
@@ -667,7 +674,7 @@ public class GlobalGameManager : MonoBehaviour
         //if this is player-1 vs player-2 match:
         if (GlobalGameManager.gameMode == 1)
         {
-            StartCoroutine(playerAIController.GetComponent<PlayerAI>().changeFormation(PlayerAI.player2Team, PlayerPrefs.GetInt("Player2Formation"), 0.6f, -1));
+			StartCoroutine(playerAIController.GetComponent<PlayerAI>().changeFormation(GameObject.FindGameObjectsWithTag("Player_2"),  PlayerPrefs.GetInt("PlayerFormation"), 0.6f, -1));
         }
         else
         {   //if this is player-1 vs AI match:
@@ -990,7 +997,7 @@ public class GlobalGameManager : MonoBehaviour
                 GameObject.Find("DisponibleTurno").GetComponent<Text>().text = iPowerUpTurnoExtra.ToString();
                 //La habilidad la tiene
                 powerUpTurnoExtra = true;
-
+					StartCoroutine("AnimacionTurnoExtra");	
                 //SOLO UN USO DE LA HABILIDAD:
                 soloUnaVezTurnoExtra = 1;
                 //Ponemos el llamado de elimina a true
@@ -1005,6 +1012,13 @@ public class GlobalGameManager : MonoBehaviour
         }
     }
 
+	private IEnumerator AnimacionTurnoExtra(){
+				
+		Animation anim = GameObject.Find ("Camera").GetComponent<Animation> ();
+		anim.Play ("TurnoExtra");
+		yield return new WaitForSeconds (anim.clip.length);
+								
+		}
 
     public void PWBarrera()
     {
