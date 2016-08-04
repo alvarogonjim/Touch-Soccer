@@ -110,7 +110,7 @@ public static class LanguageDictionary {
 			stringList.Add ("Recompensa:", "Reward:");
 			stringList.Add ("Estadisticas:", "Statistics:");
 			stringList.Add ("División:", "Division:");
-
+			stringList.Add ("1 VS 1", "1 VS 1");
 
 		}
 	
@@ -205,7 +205,7 @@ public static class LanguageDictionary {
 			stringList.Add ("Recompensa:", "Récompense:");
 			stringList.Add ("Estadisticas:", "Statistiques:");
 			stringList.Add ("División:", "Division:");
-
+			stringList.Add ("1 VS 1", "1 VS 1");
 		}
 
 		//Now, let's add translations for Spanish
@@ -303,6 +303,7 @@ public static class LanguageDictionary {
 			stringList.Add ("Chapas", "Folhas");
 			stringList.Add ("Partida Online", "Jogo on-line");
 			stringList.Add ("Equipos", "Times de futebol");
+			stringList.Add ("1 VS 1", "1 VS 1");
 
 		}
 
