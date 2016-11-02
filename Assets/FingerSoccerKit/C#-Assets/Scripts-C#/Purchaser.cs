@@ -25,17 +25,17 @@ public class Purchaser : MonoBehaviour, IStoreListener
     public static string kProductIDSubscription = "subscription";
 
 
-    public static string coins_5750 = "coins_5750";
+	public static string coins_5750 = "5750_coins";
 
-    public static string coin_1800 = "coin_1800";
+	public static string coin_1800 = "1800_coins";
 
-    public static string coin_800 = "coin_800";
+	public static string coin_800 = "800_coins";
 
-    public static string coin_355 = "coin_355";
+	public static string coin_355 = "355_coins";
 
-    public static string coin_125 = "coin_125";
+	public static string coin_125 = "125_coins";
 
-    public static string coin_60 = "coin_60";
+	public static string coin_60 = "60_coins";
 
 
     private int coins;

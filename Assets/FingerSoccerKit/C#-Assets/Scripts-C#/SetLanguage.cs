@@ -9,8 +9,7 @@ public class SetLanguage : MonoBehaviour {
         //first we'll set "en" (english) as the default language
         res = PlayerPrefs.GetString("Language");
 
-        LanguageDictionary.SetLanguage(SystemLanguage.English);
-
+        
         if (res.Equals("English"))
         {
             LanguageDictionary.SetLanguage(SystemLanguage.English);
@@ -25,6 +24,7 @@ public class SetLanguage : MonoBehaviour {
         }
 
 
+
         //if the system language isn't included in here, then the game will show the texts only in the default language
 
         Debug.Log ("Language set: " + Application.systemLanguage);
@@ -32,7 +32,7 @@ public class SetLanguage : MonoBehaviour {
 
     void Update()
     {
-
+		res = PlayerPrefs.GetString ("PlayerLanguage");
         if (res.Equals("English"))
         {
             LanguageDictionary.SetLanguage(SystemLanguage.English);

@@ -29,7 +29,7 @@ public static class LanguageDictionary {
 			stringList.Add ("Comprar" , "Buy");
 			stringList.Add ("Tienda" , "Store");
 			stringList.Add ("Partida Rapida", "Quick Match");
-			stringList.Add ("Creditos\nGratis", "Free\nCredits");
+			stringList.Add ("Creditos Gratis", "Free Credits");
 			stringList.Add ("Monedas\nGratis", "Free\nCoins");
 			stringList.Add ("Habilidades", "Skills");
 			stringList.Add ("Agrandar", "Magnify");
@@ -111,6 +111,11 @@ public static class LanguageDictionary {
 			stringList.Add ("Estadisticas:", "Statistics:");
 			stringList.Add ("División:", "Division:");
 			stringList.Add ("1 VS 1", "1 VS 1");
+			stringList.Add ("Proximamente", "Coming Soon");
+			stringList.Add ("Perfil", "Profile");
+			stringList.Add ("Obtenido", "Obtained");
+			stringList.Add ("Salir", "Exit");
+
 
 		}
 	
@@ -124,7 +129,7 @@ public static class LanguageDictionary {
 			stringList.Add ("Comprar" , "Acheter");
 			stringList.Add ("Tienda" , "Boutique");
 			stringList.Add ("Partida Rapida", "Quickplay");
-			stringList.Add ("Creditos\nGratis", "Gratuit\nCredits");
+			stringList.Add ("Creditos Gratis", "Gratuit Credits");
 			stringList.Add ("Monedas\nGratis", "Gratuit\nPièces");
 			stringList.Add ("Habilidades", "Compétences");
 			stringList.Add ("Agrandar", "Agrandir");
@@ -206,6 +211,10 @@ public static class LanguageDictionary {
 			stringList.Add ("Estadisticas:", "Statistiques:");
 			stringList.Add ("División:", "Division:");
 			stringList.Add ("1 VS 1", "1 VS 1");
+			stringList.Add ("Proximamente", "Arrive bientot");
+			stringList.Add ("Perfil", "Profil");
+			stringList.Add ("Obtenido", "Obtenu");
+			stringList.Add ("Salir", "Sortie");
 		}
 
 		//Now, let's add translations for Spanish
@@ -304,7 +313,8 @@ public static class LanguageDictionary {
 			stringList.Add ("Partida Online", "Jogo on-line");
 			stringList.Add ("Equipos", "Times de futebol");
 			stringList.Add ("1 VS 1", "1 VS 1");
-
+			stringList.Add ("Proximamente", "Em breve");
+			stringList.Add ("Salir", "Saída");
 		}
 
 		//You can add as many new keys to the stringList as you need

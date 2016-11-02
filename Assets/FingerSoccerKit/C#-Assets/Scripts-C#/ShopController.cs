@@ -35,6 +35,26 @@ public class ShopController : MonoBehaviour
         //Updates 3d text with saved values fetched from playerprefs
         availableMoney = PlayerPrefs.GetInt("PlayerMoney");
         playerMoney.GetComponent<TextMesh>().text = "Coins: " + availableMoney;
+		string res = PlayerPrefs.GetString ("PlayerLanguage");
+
+
+
+		if (res.Equals("English"))
+		{
+			LanguageDictionary.SetLanguage(SystemLanguage.English);
+			PlayerPrefs.SetString ("PlayerLanguage", "English");
+		}
+		else if (res.Equals("French"))
+		{
+			LanguageDictionary.SetLanguage(SystemLanguage.French);
+			PlayerPrefs.SetString ("PlayerLanguage", "French");
+		}
+		else if (res.Equals("Spanish"))
+		{
+			LanguageDictionary.SetLanguage(SystemLanguage.Spanish);
+			PlayerPrefs.SetString ("PlayerLanguage", "Spanish");
+		}
+
 
         //check if we previously purchased these items.
         for (int i = 0; i < totalItemsForSale.Length; i++)

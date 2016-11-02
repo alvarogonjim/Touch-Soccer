@@ -50,11 +50,11 @@ public class FormationManager : MonoBehaviour {
 			
 		case 1:
 			
-				if(_UnitIndex == 0) output = new Vector3(-19.51f, 0.97f + yFixer, fixedZ);
-				if(_UnitIndex == 1) output = new Vector3(-5.19f, 1.2f + yFixer, fixedZ);
+				if(_UnitIndex == 0) output = new Vector3(-19.51f, 1.97f + yFixer, fixedZ);
+				if(_UnitIndex == 1) output = new Vector3(-5.19f, 1.97f + yFixer, fixedZ);
 				if(_UnitIndex == 2) output = new Vector3(-15.07f, -2.72f + yFixer, fixedZ);
-				if(_UnitIndex == 3) output = new Vector3(-15.01f, 5.24f + yFixer, fixedZ);
-				if(_UnitIndex == 4) output = new Vector3(-10.29f, 1.13f + yFixer, fixedZ);
+				if(_UnitIndex == 3) output = new Vector3(-15.01f, 6.24f + yFixer, fixedZ);
+				if(_UnitIndex == 4) output = new Vector3(-10.29f, 1.97f + yFixer, fixedZ);
 				break;
 			
 		case 2:
@@ -63,7 +63,7 @@ public class FormationManager : MonoBehaviour {
 				if(_UnitIndex == 1) output = new Vector3(-3, 9 + yFixer, fixedZ);
 				if(_UnitIndex == 2) output = new Vector3(-3, 6.08f + yFixer, fixedZ);
 				if(_UnitIndex == 3) output = new Vector3(-3, -3.07f + yFixer, fixedZ);
-				if(_UnitIndex == 4) output = new Vector3(-3, -7.31f + yFixer, fixedZ);
+				if(_UnitIndex == 4) output = new Vector3(-3, -8.31f + yFixer, fixedZ);
 				break;
 			
 		case 3:

@@ -160,6 +160,7 @@ public class GlobalGameManager : MonoBehaviour
     //*****************************************************************************
     void Awake()
     {
+//		PlayerPrefs.DeleteAll ();
         //init
         liga = MenuController.getPlayerLiga();
         goalHappened = false;
@@ -186,6 +187,11 @@ public class GlobalGameManager : MonoBehaviour
 		Sprite mat = Resources.Load(index.ToString(), typeof(Sprite)) as Sprite;
 		GameObject.Find ("EscudoJugador1").GetComponent<Image> ().sprite = mat;
 
+		llamadoPowerUpTurnoExtra = false;
+		llamadoPowerUpTamano = false;
+		llamadoPowerUpElimina = false;
+		llamadoPowerUpBarrera = false;
+
 
         iPowerUpTamano=PlayerPrefs.GetInt("Agrandar");
         iPowerUpElimina=PlayerPrefs.GetInt("Eliminar");
@@ -193,9 +199,9 @@ public class GlobalGameManager : MonoBehaviour
 		iPowerUpTurnoExtra = PlayerPrefs.GetInt ("TurnoExtra");
 
         GameObject.Find("DisponibleAgrandar").GetComponent<Text>().text = iPowerUpTamano.ToString();
-//        GameObject.Find("DisponibleEliminar").GetComponent<Text>().text = iPowerUpElimina.ToString();
         GameObject.Find("DisponibleBarrera").GetComponent<Text>().text = iPowerUpBarrera.ToString();
 		GameObject.Find ("DisponibleTurno").GetComponent<Text> ().text = iPowerUpTurnoExtra.ToString ();
+
 
   //hide gameStatusPlane
         gameStatusPlane.SetActive(false);
@@ -399,7 +405,7 @@ public class GlobalGameManager : MonoBehaviour
 			volumen = 1.0f;
 			reducir = 0f;
 		}
-		GetComponent<AudioSource>().volume = volumen;
+
     }
 
     void UpdateOnlineMode()
@@ -472,12 +478,14 @@ public class GlobalGameManager : MonoBehaviour
             {
                 Debug.Log(playerController.contadorPowerUpTamano);
                 playerController.contadorPowerUpTamano--;
+
             }
 
             if (llamadoPowerUpElimina == true)
             {
                 Debug.Log(playerController.contadorPowerUpElimina);
                 playerController.contadorPowerUpElimina--;
+
             }
 
             if (llamadoPowerUpBarrera == true)
@@ -507,6 +515,7 @@ public class GlobalGameManager : MonoBehaviour
                 Debug.Log(llamadoPowerUpTamano);
                 Debug.Log(playerController.contadorPowerUpTamano);
                 playerController.contadorPowerUpTamano = playerController.contadorPowerUpTamano - 1;
+				PlayerPrefs.SetInt ("Tamano", playerController.contadorPowerUpTamano);
 
             }
 
@@ -514,8 +523,7 @@ public class GlobalGameManager : MonoBehaviour
             {
                 Debug.Log(llamadoPowerUpElimina);
                 Debug.Log(playerController.contadorPowerUpElimina);
-                playerController.contadorPowerUpElimina = playerController.contadorPowerUpElimina - 1;
-
+               
             }
         }
         if (llamadoPowerUpBarrera == true)
@@ -929,6 +937,7 @@ public class GlobalGameManager : MonoBehaviour
                 Debug.Log(powerUpTamano.ToString());
                 //Decrementamos la habilidad
                 iPowerUpTamano--;
+				PlayerPrefs.SetInt ("Agrandar", iPowerUpTamano);
                 GameObject.Find("DisponibleAgrandar").GetComponent<Text>().text = iPowerUpTamano.ToString();
                 //La habilidad la tiene
                 powerUpTamano = true;
@@ -994,6 +1003,7 @@ public class GlobalGameManager : MonoBehaviour
                 Debug.Log(powerUpTurnoExtra.ToString());
                 //Decrementamos la habilidad
                 iPowerUpTurnoExtra--;
+				PlayerPrefs.SetInt ("TurnoExtra", iPowerUpTurnoExtra);
                 GameObject.Find("DisponibleTurno").GetComponent<Text>().text = iPowerUpTurnoExtra.ToString();
                 //La habilidad la tiene
                 powerUpTurnoExtra = true;
@@ -1023,29 +1033,32 @@ public class GlobalGameManager : MonoBehaviour
     public void PWBarrera()
     {
         //Se ha llamado al powerup de la barrera anteriormente?
-        if (llamadoPowerUpBarrera == false)
+		if (llamadoPowerUpBarrera == false)
         {
+			Debug.Log ("ESTA ANTES");
+				//Si no vemos si tiene la habilidad disponible (mas de 0)
+				if (iPowerUpBarrera > 0) {
+              
+					//PlayGamesPlatform.Instance.Events.IncrementEvent("CgkIqKW33aMMEAIQDQ", 1);
 
-            //Si no vemos si tiene la habilidad disponible (mas de 0)
-            if (iPowerUpBarrera > 0)
-            {
-                estaSubida = true;
-                StartCoroutine("subeBarrera");
-                //PlayGamesPlatform.Instance.Events.IncrementEvent("CgkIqKW33aMMEAIQDQ", 1);
+				Debug.Log ("ESTA DESPUES");
 
-                Debug.Log(powerUpBarrera.ToString());
-                //Decrementamos la habilidad
-                iPowerUpBarrera--;
-                GameObject.Find("DisponibleBarrera").GetComponent<Text>().text = iPowerUpBarrera.ToString();
-                //La habilidad la tiene
-                powerUpBarrera = true;
+					//Decrementamos la habilidad
+					iPowerUpBarrera--;
+					PlayerPrefs.SetInt ("Barrera", iPowerUpBarrera);
+					GameObject.Find ("DisponibleBarrera").GetComponent<Text> ().text = iPowerUpBarrera.ToString ();
+					powerUpBarrera = true;
+					estaSubida = true;
+					StartCoroutine ("subeBarrera");
+					//SOLO UN USO DE LA HABILIDAD:
+					soloUnaVezBarrera = 1;
+					//La habilidad la tiene
+				contadorTurnoBarrera = 2;
+					//Ponemos el llamado de barrera a true
+					llamadoPowerUpBarrera = true;
 
-                //SOLO UN USO DE LA HABILIDAD:
-                soloUnaVezBarrera = 1;
-                //Ponemos el llamado de barrera a true
-                llamadoPowerUpBarrera = true;
 
-            }
+			}
             //En caso contrario falso
             else
             {

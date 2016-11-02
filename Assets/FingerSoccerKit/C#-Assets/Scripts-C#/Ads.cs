@@ -4,6 +4,11 @@ using UnityEngine.UI;
 
 public class Ads : MonoBehaviour
 {
+	private int creditos;
+	void Start(){
+		creditos = PlayerPrefs.GetInt ("PlayerCredits");
+	}
+
 	public void ShowAd()
 	{
 		if (Advertisement.IsReady())
@@ -27,10 +32,11 @@ public class Ads : MonoBehaviour
 		{
 		case ShowResult.Finished:
 			Debug.Log ("The ad was successfully shown.");
-			int creditos = PlayerPrefs.GetInt ("PlayerCredits");
+			creditos = PlayerPrefs.GetInt("PlayerCredits");
 			creditos = creditos + 5;
-			Debug.Log ("Funciona cabeza");
-			GameObject.Find ("Creditos").GetComponent<Text> ().text = creditos.ToString ();
+			PlayerPrefs.SetInt ("PlayerCredits", creditos);
+			Debug.Log (creditos);
+			GameObject.FindGameObjectWithTag("Creditos").GetComponent<Text> ().text = creditos.ToString ();
 
 			break;
 		case ShowResult.Skipped:
@@ -42,3 +48,4 @@ public class Ads : MonoBehaviour
 		}
 	}
 }
+

@@ -40,18 +40,24 @@ public class MenuController : MonoBehaviour
 		public GameObject Dinero;
 
 	    void Awake() {
-				//PlayerPrefs.DeleteKey ("PlayerMoney");
+		//PlayerPrefs.DeleteAll ();
 			dinero = PlayerPrefs.GetInt ("PlayerMoney");
 		    	    PlayGamesPlatform.Activate();
-		        PlayGamesPlatform.DebugLogEnabled = true;
+		        //PlayGamesPlatform.DebugLogEnabled = true;
 		        Time.timeScale = 1.0f;
 		        Time.fixedDeltaTime = 0.005f;
 				//GameObject.Find ("Dinero").GetComponent<Text> ().text = dinero.ToString();
 						
 
-				Debug.Log (dinero);
 //				GameObject.Find ("Dinero").GetComponent<Text> ().text = dinero.ToString ();
 		        int playerGames = PlayerPrefs.GetInt("PlayerGames");
+				
+		string res = PlayerPrefs.GetString ("Language");
+		Debug.Log (res);
+
+
+	
+
 		       // playerWins.GetComponent<TextMesh>().text = "Wins:  " + PlayerPrefs.GetInt("PlayerWins");
 		        //playerMoney.GetComponent<TextMesh>().text = "Coins: " + PlayerPrefs.GetInt("PlayerMoney");
 		    }
@@ -324,7 +330,7 @@ public class MenuController : MonoBehaviour
 
 	    public void Exit()
 	    {
-		        Application.Quit();
+		Application.Quit ();
 		    }
 
 	    public void GoOnlineQuickMatch()
@@ -374,7 +380,6 @@ public class MenuController : MonoBehaviour
                     (string)(
                         (user != null) ? user.userName : "**unk_" + score.userID + "**");
             }
-            Debug.Log(status);
         });
     }
 

@@ -38,7 +38,7 @@ public class menuTienda : MonoBehaviour
     // Use this for initialization
     void Awake()
     {
-       
+
       
 
     }
@@ -47,12 +47,12 @@ public class menuTienda : MonoBehaviour
 		
 		dinero = PlayerPrefs.GetInt("PlayerMoney");
       		creditos = PlayerPrefs.GetInt("PlayerCredits");
-        GameObject.Find("DisponibleAgrandar").GetComponent<Text>().text = PlayerPrefs.GetInt("Agrandar").ToString();
+//        GameObject.Find("DisponibleAgrandar").GetComponent<Text>().text = PlayerPrefs.GetInt("Agrandar").ToString();
 //        GameObject.Find("DisponibleEliminar").GetComponent<Text>().text = PlayerPrefs.GetInt("Eliminar").ToString();
         GameObject.Find("DisponibleBarrera").GetComponent<Text>().text = PlayerPrefs.GetInt("Barrera").ToString();
         GameObject.Find("Dinero").GetComponent<Text>().text = dinero.ToString();
         GameObject.Find("Creditos").GetComponent<Text>().text = creditos.ToString();
-        Debug.Log(dinero);
+   
         StartCoroutine("ocultarPaneles");
 
         //	banner.SetActive (true);
@@ -61,7 +61,7 @@ public class menuTienda : MonoBehaviour
     void Update()
     {
         creditos = PlayerPrefs.GetInt("PlayerCredits");
-        Debug.Log(creditos);
+        
     }
 
     //******************************
